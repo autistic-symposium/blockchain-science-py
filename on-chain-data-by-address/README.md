@@ -1,6 +1,6 @@
 ## Extracting on-chain data from a list of Ethereum public addresses
 
-In this notebook, we leverage Etherscan API to extract the following information from a list of public addresses (retrieved from the file defined on `ADRESS_LIST`):
+In this notebook, we leverage Etherscan API to extract the following information from a list of public addresses (retrieved from the file defined on `ADDRESS_LIST`):
 
 * Current ETH balance
 * Token transfers and swaps
