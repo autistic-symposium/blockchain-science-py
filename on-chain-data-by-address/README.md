@@ -25,7 +25,7 @@ mv .env_example .env
 vim .env
 ```
 
-### Start Jupyter servr:
+### Start Jupyter server:
 
 ```
 jupyter notebook
