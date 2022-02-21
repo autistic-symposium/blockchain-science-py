@@ -6,6 +6,7 @@ In this notebook, we leverage Etherscan API to extract the following information
 * Token transfers and swaps
 * Current tokens balance
 
+To run this notebook locally, follow the steps below:
 
 ### Install dependencies:
 
@@ -24,7 +25,7 @@ mv .env_example .env
 vim .env
 ```
 
-### Run:
+### Start Jupyter servr:
 
 ```
 jupyter notebook
