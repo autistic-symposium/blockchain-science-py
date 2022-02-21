@@ -21,7 +21,7 @@ pip3 install -r requirements.txt
 Please add your Etherscan API info and the public address list to the `.env` file:
 
 ```
-mv .env_example .env
+cp .env_example .env
 vim .env
 ```
 
