@@ -1,0 +1,5 @@
+btc
+eth
+sushi
+alcx
+index
