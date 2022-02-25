@@ -1,4 +1,4 @@
-## 👩🏻‍🔬 Blockchain Data Science
+## 🔬🧱⛓ Blockchain Data Science [Scratch Space]
 
 This repository contains notebooks with my research for on-chain data on Ethereum, leveraging several APIs and libraries, including:
 
