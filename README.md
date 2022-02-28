@@ -1,4 +1,6 @@
-## 🔬🧱⛓ Blockchain Data Science [Scratch Space]
+## 🔬🧱⛓ [scratch space] Blockchain Data Science
+
+<br>
 
 This repository contains notebooks with my research for on-chain data on Ethereum, leveraging several APIs and libraries, including:
 
@@ -6,6 +8,8 @@ This repository contains notebooks with my research for on-chain data on Ethereu
 * [The Graph with Uniswap subgraph GraphQL API](https://thegraph.com/hosted-service/subgraph/uniswap/uniswap-v3)
 * [Python web3.py library](https://web3py.readthedocs.io/en/stable/)
 
+<br>
+<br>
 
 
 ### Notebooks
@@ -23,5 +27,9 @@ This repository contains notebooks with my research for on-chain data on Ethereu
     * Use [Messari API]() to retrieve market data for a list of tokens.
 
 
+<br>
+<br>
 
-Installation and setup instructions are available in the directories above.
+
+
+#### Installation and setup instructions are available in the directories above.
