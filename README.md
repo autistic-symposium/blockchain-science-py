@@ -23,8 +23,11 @@ This repository contains notebooks with my research for on-chain data on Ethereu
 * [Retrieving DAO tokens and pools data](https://github.com/aquario-crypto/Blockchain-Data-Science/tree/main/dao-data):
     * Use The Graph Explorer to access the Uniswap subgraph and analyze the data related to a list of DAO tokens.
 
-* [Messari API for token market data](https://web3py.readthedocs.io/en/stable/):
+* [Messari API for token market data](https://github.com/bt3gl-labs/Blockchain-Data-Science/tree/main/messari-assets-data):
     * Use [Messari API]() to retrieve market data for a list of tokens.
+
+* [Exploring Terra SDK](https://github.com/bt3gl-labs/Blockchain-Data-Science/tree/main/terra-sdk):
+    * Some experiments looking at Terra SDK in Python.
 
 
 <br>
