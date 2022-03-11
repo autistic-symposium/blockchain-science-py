@@ -27,7 +27,7 @@ This repository contains notebooks with my research for on-chain data on Ethereu
     * Use [Messari API]() to retrieve market data for a list of tokens.
 
 * [Exploring Terra SDK](https://github.com/bt3gl-labs/Blockchain-Data-Science/tree/main/terra-sdk):
-    * Some experiments looking at Terra SDK in Python.
+    * Some experiments looking at [Terra SDK in Python](https://terra-money.github.io/terra.py/).
 
 
 <br>
