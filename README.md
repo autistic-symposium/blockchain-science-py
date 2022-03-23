@@ -1,4 +1,4 @@
-## 🧱⛓ [Scratch Space] Blockchain Data Science
+## 🧱⛓ [Scratch Space] Blockchain data science and intel
 
 <br>
 
