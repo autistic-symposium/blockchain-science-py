@@ -1,4 +1,4 @@
-## 🧱⛓ [scratch space] Blockchain Data Science
+## 🧱⛓ [Scratch Space] Blockchain Data Science
 
 <br>
 
