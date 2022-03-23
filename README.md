@@ -1,4 +1,4 @@
-## 🔬🧱⛓ [scratch space] Blockchain Data Science
+##🧱⛓ [scratch space] Blockchain Data Science
 
 <br>
 
@@ -12,7 +12,7 @@ This repository contains notebooks with my research for on-chain data on Ethereu
 <br>
 
 
-### Notebooks
+### Some of my code (notebooks):
 
 * [Extracting on-data from a list of Ethereum public addresses](https://github.com/aquario-crypto/Blockchain-Data-Science/tree/main/on-chain-data-by-address):
     * Given a list of public addresses, extract the current token balance, and parse the transaction history for token transfers/swaps.
