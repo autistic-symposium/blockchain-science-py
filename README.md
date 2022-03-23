@@ -9,7 +9,7 @@ This repository contains notebooks with my research for on-chain data on Ethereu
 * [Python web3.py library](https://web3py.readthedocs.io/en/stable/)
 
 <br>
-<br>
+
 
 
 ### Some of my code (notebooks):
