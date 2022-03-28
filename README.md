@@ -2,7 +2,7 @@
 
 <br>
 
-This repository contains notebooks with my research for on-chain data on Ethereum, leveraging several APIs and libraries, including:
+#### This repository contains notebooks with my research for on-chain data on Ethereum, leveraging several APIs and libraries, including:
 
 * [Etherscan API](https://docs.etherscan.io/api-endpoints/accounts)
 * [The Graph with Uniswap subgraph GraphQL API](https://thegraph.com/hosted-service/subgraph/uniswap/uniswap-v3)
@@ -27,9 +27,4 @@ This repository contains notebooks with my research for on-chain data on Ethereu
     * Use [Messari API](https://messari.io/api) to retrieve market data for a list of tokens.
 
 
-<br>
-<br>
 
-
-
-#### Installation and setup instructions are available in the directories above.
