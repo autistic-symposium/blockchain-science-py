@@ -1,4 +1,4 @@
-## 🧱⛓ My notes and code on Blockchain data science and intel
+## 🧱⛓ My notes and code on Blockchain intel
 
 <br>
 
