@@ -1,4 +1,4 @@
-# 🧱⛓ Blockchain Data Sc ience
+# 🧱⛓ Blockchain Data Science
 
 <br>
 
