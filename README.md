@@ -1,4 +1,4 @@
-## 🧱⛓ Blockchain data science and intel
+## 🧱⛓ My notes on Blockchain data science and intel
 
 <br>
 
