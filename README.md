@@ -2,7 +2,7 @@
 
 <br>
 
-#### This repository contains notebooks with my research for on-chain data on Ethereum, leveraging several APIs and libraries, including:
+#### This repository contains notebooks with my research for on-chain data on Ethereum, leveraging several APIs and libraries:
 
 * [Etherscan API](https://docs.etherscan.io/api-endpoints/accounts)
 * [The Graph with Uniswap subgraph GraphQL API](https://thegraph.com/hosted-service/subgraph/uniswap/uniswap-v3)
@@ -12,7 +12,7 @@
 
 
 
-### Some of my code (notebooks):
+### Some of my code (Python notebooks):
 
 * [Extracting on-data from a list of Ethereum public addresses](https://github.com/aquario-crypto/Blockchain-Data-Science/tree/main/on-chain-data-by-address):
     * Given a list of public addresses, extract the current token balance, and parse the transaction history for token transfers/swaps.
