@@ -1,4 +1,4 @@
-# 🧱⛓ Blockchain Data Science
+# 🧱⛓ 1337 blockchain research
 
 <br>
 
