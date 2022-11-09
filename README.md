@@ -23,5 +23,5 @@
 
 ### scripts and strategies for algorithmic trading:
 
-* [Trading strategies](strategies/)
+* [Trading strategies](trading-bots-and-scripts/)
 
