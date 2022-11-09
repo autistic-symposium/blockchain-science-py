@@ -4,10 +4,10 @@
 # Statistics API methods.
 
 import math
-import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+import pandas as pd
 import statsmodels.api as sm
+import matplotlib.pyplot as plt
 
 from src.utils import open_json, format_path, create_dir
 
@@ -55,12 +55,12 @@ def get_cointegrated_pairs(price_history_pair) -> dict:
     return open_json(price_history_pair)
 
 
-def calculate_cointegration(series_1, series_2, z_score_window) -> dict:
+def calculate_cointegration(series1, series2, z_score_window) -> dict:
     """Calculate co-integration for two tokens."""
 
-    model = sm.OLS(series_1, series_2).fit()
+    model = sm.OLS(series1, series2).fit()
     hedge_ratio = model.params[0]
-    spread = calculate_spread(series_1, series_2, hedge_ratio)
+    spread = calculate_spread(series1, series2, hedge_ratio)
     zscore = calculate_zscore(spread, z_score_window)
     
     return {
@@ -71,9 +71,9 @@ def calculate_cointegration(series_1, series_2, z_score_window) -> dict:
     }
 
 
-def calculate_spread(series_1, series_2, hedge_ratio) -> float:
+def calculate_spread(series1, series2, hedge_ratio) -> float:
 
-    return pd.Series(series_1) - (pd.Series(series_2) * hedge_ratio)
+    return pd.Series(series1) - (pd.Series(series2) * hedge_ratio)
 
 
 def calculate_zscore(spread, z_score_window) -> float:
@@ -120,8 +120,8 @@ def get_percentage_changes(data) -> None:
     series_1 = df[f'{token1}_pct'].astype(float).values
     series_2 = df[f'{token2}_pct'].astype(float).values
 
-    data['series_1'] = series_1
-    data['series_2'] = series_2
+    data['series1'] = series1
+    data['series2'] = series2
 
     return data
 
@@ -131,9 +131,11 @@ def plot_cointegrated_pairs(data) -> None:
     fig, axis = plt.subplots(3, figsize=(16, 8))
     fig.suptitle(f"Price + Spread - {data['token1']} vs {data['token2']}")
 
-    axis[0].plot(data['series_1'])
-    axis[0].plot(data['series_2'])
+    axis[0].plot(data['series1'])
+    axis[0].plot(data['series2'])
     axis[1].plot(data['spread'])
     axis[2].plot(data['zscore'])
 
     plt.show()
+
+

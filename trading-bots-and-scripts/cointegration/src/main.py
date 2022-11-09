@@ -5,6 +5,7 @@
 
 import argparse
 
+from src.bot import run_bot
 from src.utils import load_config, pprint
 from src.stats import plot_cointegrated_pairs, save_backtest, get_pair_trends, get_percentage_changes
 from src.cexes import start_buybit_session, get_tradeable_symbols, get_price_history, save_price_history
@@ -22,6 +23,7 @@ def run_menu() -> argparse.ArgumentParser:
     parser.add_argument('-i', dest='pairs', nargs=3,
                         help='Get cointegration for a pair of tokens \
                             Example: cointbot <price history file.json> maticusdt stxusdt')
+    parser.add_argument('-b', dest='bot', help='Start bot')
     return parser
 
 
@@ -98,6 +100,12 @@ def run() -> None:
         data = get_percentage_changes(data)
         plot_cointegrated_pairs(data)
 
+
+    ############################
+    #        Start bot         #
+    ############################
+    elif args.bot:
+        run_bot()
 
     ############################
     #    Any invalid option    #
