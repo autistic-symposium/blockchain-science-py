@@ -9,6 +9,7 @@
 * check latest zscore signal (long when zscore is negative).
 * if "hot": confirm long vs. short tokens and confirm initial capital.
 * in any case, average in limit postonly orders or place market orders.
+* monitor zscore for close signal.
 
 
 > A perpetual contract is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.
