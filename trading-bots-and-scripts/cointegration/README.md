@@ -54,9 +54,4 @@ make install
 cointbot
 ```
 
-<br>
 
-#### Deploying the bot
-
-
-<br>
