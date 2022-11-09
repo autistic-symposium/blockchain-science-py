@@ -5,7 +5,7 @@
 import datetime
 from pybit.inverse_perpetual import HTTP
 
-from util import save_output, create_dir, format_path
+from src.utils import save_output, create_dir, format_path
 
 
 #########################

@@ -2,7 +2,7 @@
 
 <br>
 
-### Bots and strategies
+### Strategies
 
 <br>
 

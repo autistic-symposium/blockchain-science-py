@@ -1,0 +1,4 @@
+python-dotenv==0.20.0pybit==2.4.1
+pandas==1.5.1
+statsmodels==0.13.5
+matplotlib==3.6.2

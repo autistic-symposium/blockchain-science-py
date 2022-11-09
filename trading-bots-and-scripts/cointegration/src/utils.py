@@ -12,7 +12,7 @@ from pprint import PrettyPrinter
 def load_config() -> dict:
     """Load and set environment variables."""
 
-    env_file = Path('..') / '.env'
+    env_file = Path('.') / '.env'
     if not os.path.isfile(env_file):
         print('Please create an .env file')
 
@@ -27,6 +27,7 @@ def load_config() -> dict:
         env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
+        env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
         env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
         
         return env_vars
