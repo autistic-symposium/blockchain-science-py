@@ -12,7 +12,8 @@
 
 <br>
 
-![Figure_1](https://user-images.githubusercontent.com/1130416/200725753-ed0b3da4-72d9-494a-b63a-9a5eff54e3f8.png)
+![Figure_1](https://user-images.githubusercontent.com/1130416/200736166-a8672149-7e49-4522-8cfa-f72f891ca00f.png)
+
 
 
 <br>
