@@ -17,6 +17,6 @@
 
 ### Resources
 
-* [Pair tradig](https://robotwealth.com/practical-pairs-trading/)
+* [Pair trading](https://robotwealth.com/practical-pairs-trading/)
 * [Interpreting cointegration test results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
 
