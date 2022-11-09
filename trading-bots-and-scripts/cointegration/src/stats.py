@@ -12,55 +12,6 @@ import statsmodels.api as sm
 from src.utils import open_json, format_path, create_dir
 
 
-def get_cointegrated_pairs(price_history_pair) -> dict:
-    """Load price history json and return the data."""
-    return open_json(price_history_pair)
-
-
-def extract_close_prices(prices, key):
-    """Extract all close prices info into a list."""
-
-    close_prices = []
-    for price_values in prices:
-        if not math.isnan(price_values[key]):
-            close_prices.append(float(price_values[key]))
-
-    return close_prices
-
-
-def calculate_cointegration(series_1, series_2, z_score_window) -> dict:
-    """Calculate co-integration for two tokens."""
-
-    model = sm.OLS(series_1, series_2).fit()
-    hedge_ratio = model.params[0]
-    spread = calculate_spread(series_1, series_2, hedge_ratio)
-    zscore = calculate_zscore(spread, z_score_window)
-    
-    return {
-        'hedge_ratio': round(hedge_ratio, 2),
-        'spread': len(np.where(np.diff(np.sign(spread)))[0]),
-        'zscore': zscore
-    }
-
-
-def calculate_spread(series_1, series_2, hedge_ratio) -> float:
-
-    return pd.Series(series_1) - (pd.Series(series_2) * hedge_ratio)
-
-
-def calculate_zscore(spread, z_score_window) -> float:
-
-    df = pd.DataFrame(spread)
-
-    mean = df.rolling(center=False, window=z_score_window).mean()
-    std = df.rolling(center=False, window=z_score_window).std()
-
-    x = df.rolling(center=False, window=1).mean()
-    df['ZSCORE'] = (x - mean) / std
-
-    return df['ZSCORE'].astype(float).values
-
-
 def get_pair_trends(price_history_file, token1, token2, z_score_window) -> None:
     """Plot prices and trends."""
 
@@ -86,6 +37,56 @@ def get_pair_trends(price_history_file, token1, token2, z_score_window) -> None:
         'token1': token1,
         'token2': token2
     }
+
+
+def extract_close_prices(prices, key):
+    """Extract all close prices info into a list."""
+
+    close_prices = []
+    for price_values in prices:
+        if not math.isnan(price_values[key]):
+            close_prices.append(float(price_values[key]))
+
+    return close_prices
+
+
+def get_cointegrated_pairs(price_history_pair) -> dict:
+    """Load price history json and return the data."""
+    return open_json(price_history_pair)
+
+
+def calculate_cointegration(series_1, series_2, z_score_window) -> dict:
+    """Calculate co-integration for two tokens."""
+
+    model = sm.OLS(series_1, series_2).fit()
+    hedge_ratio = model.params[0]
+    spread = calculate_spread(series_1, series_2, hedge_ratio)
+    zscore = calculate_zscore(spread, z_score_window)
+    
+    return {
+        'hedge_ratio': round(hedge_ratio, 2),
+        'spread': len(np.where(np.diff(np.sign(spread)))[0]),
+        'zscore': zscore,
+        'spread': spread
+    }
+
+
+def calculate_spread(series_1, series_2, hedge_ratio) -> float:
+
+    return pd.Series(series_1) - (pd.Series(series_2) * hedge_ratio)
+
+
+def calculate_zscore(spread, z_score_window) -> float:
+
+    df = pd.DataFrame(spread)
+
+    mean = df.rolling(center=False, window=z_score_window).mean()
+    std = df.rolling(center=False, window=z_score_window).std()
+
+    x = df.rolling(center=False, window=1).mean()
+    df['ZSCORE'] = (x - mean) / std
+
+    return df['ZSCORE'].astype(float).values
 
 
 def save_backtest(data, backtest_outfile, outdir) -> None:

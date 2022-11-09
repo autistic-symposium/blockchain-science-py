@@ -4,7 +4,7 @@
 
 ### tl; dr
 
-* search for all possible cryptos that we can long or short using some CEX api (e.g. [bybit testnet](https://testnet.bybit.com/), bitwithin their perpetual derivatives contracts. 
+* search for all possible cryptos that we can long or short using some CEX api (e.g. [bybit testnet](https://testnet.bybit.com/), with their perpetual derivatives contracts. 
 * then find what pairs are cointegrated.
 
 <br>
