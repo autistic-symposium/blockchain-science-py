@@ -1,6 +1,7 @@
 
 # -*- encoding: utf-8 -*-
 # src/stats.py
+# author: steinkirch
 # Statistics API methods.
 
 import math
