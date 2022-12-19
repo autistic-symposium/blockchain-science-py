@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # src/cexes.py
+# author: steinkirch
 # cexex API methods.
 
 import datetime
