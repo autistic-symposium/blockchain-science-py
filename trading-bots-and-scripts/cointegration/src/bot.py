@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # src/bot.py
+# author: steinkirch
 # Introducting the bot.
 
 import datetime
