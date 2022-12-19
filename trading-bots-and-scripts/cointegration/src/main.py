@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
 # src/main.py
+# author: steinkirch
 # Entry point for cointbot.
 
 import argparse
