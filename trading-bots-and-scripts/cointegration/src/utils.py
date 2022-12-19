@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 # src/util.py
+# author: steinkirch
 # Util methods.
 
 import os
