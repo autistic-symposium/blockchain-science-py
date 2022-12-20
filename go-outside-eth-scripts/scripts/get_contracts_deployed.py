@@ -3,8 +3,9 @@
 
 import os
 import ethereumetl
-from pandas import pd
-from lib.os import load_config, create_dir, open_csv, save_csv, plot_bar, run_exec
+import pandas as pd
+from util.os import load_config, create_dir, open_csv, save_csv, run_exec
+from util.plot import plot_bar
 
 
 def get_data_for_contracts_by_block() -> dict:
@@ -12,10 +13,10 @@ def get_data_for_contracts_by_block() -> dict:
     
     data = {}
     create_dir('data')
-    env_keys = ['YOUR_MAINNET_RPC_ENDPOINT']
+    env_keys = ['PROVIDER_URL']
+    env_vars = load_config(env_keys) 
 
-    data['provider_uri'] = env_keys['PROVIDER_URI']
-    data['env_vars'] = load_config(env_keys) 
+    data['provider_uri'] = env_vars['PROVIDER_URL']
     data['last_block_2015'] = 778482
     data['last_block_2016'] = 2912406
     data['last_block_2017'] = 4832685
@@ -25,16 +26,16 @@ def get_data_for_contracts_by_block() -> dict:
     data['last_block_2021'] = 13916165
     data['last_block_2022'] = 15978869 
     data['buffer_for_chunk_size'] = 10000
-    data['tx_file'] = 'data/transactions.csv'
+    data['tx_file'] = '../data/transactions.csv'
 
     return data
 
 
-def ethereumtl_export_blocks_and_transactions(start_block, end_block, data) -> dict:
+def export_blocks_and_transactions(start_block, end_block, data) -> dict:
     """Run ethereumetl export_blocks_and_transactions."""
 
-    run_exec(ethereumetl, \
-                [ 'export_blocks_and_transactions', \
+
+    run_exec(['ethereumetl', 'export_blocks_and_transactions', \
                   f'--start-block {start_block}', \
                   f'--end-block {end_block}', \
                   f'--provider-uri {data["provider_uri"]}', \
@@ -55,8 +56,8 @@ def get_contracts_by_block(data, year, start_block) -> dict:
     end_block = start_block + 9999
     while (end_block <= last_block_year + data['buffer_for_chunk_size']): 
         end_block_used = min(end_block, last_block_year)
-        contracts = ethereumtl_export_blocks_and_transactions(
-                                start_block, end_block_used, data)
+        contracts = export_blocks_and_transactions(
+                        start_block, end_block_used, data)
 
         start_block += data['buffer_for_chunk_size']
         end_block += data['buffer_for_chunk_size']
@@ -102,7 +103,7 @@ if __name__ == "__main__":
     # Plot data
     ###########
     y_data = [y for y in contracts_by_year[year] if year == years.revers().pop()]
-    plot_bar({'contract deployed': y_data}, x)
+    plot_bar({'contract deployed': y_data}, years)
 
 
 

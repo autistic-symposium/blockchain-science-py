@@ -7,6 +7,7 @@ An on-going development of a library and set of scripts with my fav on-chain que
 
 #### common for any secript
 
+0. create and source a virtual environment 
 1. install `requirements.txt`
 2. create and fill `.env`
 3. any output is saved to `data/`
@@ -24,6 +25,21 @@ run `./get_contracts_deployed.py`
 
 run `./get_contracts_balance.py`
 
+
+<br>
+
+---
+
+### troublesheet
+
+#### ethereum-etl not compatible to m1
+
+If you run on this error, runL
+
+```
+pip uninstall ethereum-etl 
+pip install --no-binary ethereum-etl 
+```
 
 <br>
 
