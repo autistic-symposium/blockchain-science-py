@@ -23,3 +23,12 @@ run `./get_contracts_deployed.py`
 #### get balances from these contracts
 
 run `./get_contracts_balance.py`
+
+
+<br>
+
+---
+
+### resources
+
+* [ethereum etl library](https://ethereum-etl.readthedocs.io/en/latest/quickstart/)
