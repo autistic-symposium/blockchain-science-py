@@ -10,8 +10,8 @@ An on-going development of a library and set of scripts with my fav on-chain que
 2. create and fill `.env`
 3. any output is saved to `data/`
 
-
 <br>
+
 
 ####  get contracts deployed to mainnet and testnets
 
