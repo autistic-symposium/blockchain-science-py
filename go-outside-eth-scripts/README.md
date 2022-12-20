@@ -5,6 +5,8 @@ An on-going development of a library and set of scripts with my fav on-chain que
 <br>
 
 
+### installing
+
 0. create and source a virtual environment 
 1. install `requirements.txt`
 2. create and fill `.env`
@@ -13,16 +15,16 @@ An on-going development of a library and set of scripts with my fav on-chain que
 <br>
 
 
+----
+
+### scripts
+
+<br>
+
 ####  get contracts deployed to mainnet and testnets
 
 run `./get_contracts_deployed.py`
 
-
-<br>
-
-#### get balances from these contracts
-
-run `./get_contracts_balance.py`
 
 
 <br>
