@@ -1,27 +1,35 @@
-# 🧱⛓ on-chain data research 
+# 🧱⛓ go outside labs on-chain science 
 
 <br>
 
+### my research notebooks:
 
-### notebooks from my research:
 
-
-* [Extracting on-data from a list of Ethereum public addresses](https://github.com/MEV-WAIFU-LABS/cryptocurrency_research/tree/main/on-chain-data-by-address):
+* [Extracting on-data from a list of Ethereum public addresses](on-chain-data-by-address):
     * Given a list of public addresses, extract the current token balance, and parse the transaction history for token transfers/swaps.
     
-* [Leveraging Uniswap subgraph to extract token pair information](https://github.com/MEV-WAIFU-LABS/cryptocurrency_research/tree/main/uniswap-data):
+* [Leveraging Uniswap subgraph to extract token pair information](uniswap-data):
     * Use The Graph Explorer to access the Uniswap subgraph and analyze the UNI and WETH token pair data. 
 
-* [Retrieving DAO tokens and pools data](https://github.com/MEV-WAIFU-LABS/cryptocurrency_research/tree/main/dao-data):
+* [Retrieving DAO tokens and pools data](dao-data):
     * Use The Graph Explorer to access the Uniswap subgraph and analyze the data related to a list of DAO tokens.
 
-* [Messari API for token market data](https://github.com/MEV-WAIFU-LABS/cryptocurrency_research/tree/main/messari-assets-data):
+* [Messari API for token market data](messari-assets-data):
     * Use [Messari API](https://messari.io/api) to retrieve market data for a list of tokens.
 
 
 <br>
 
-### scripts and strategies for algorithmic trading:
+### my algorithmic trading strategies:
 
 * [Trading strategies](trading-bots-and-scripts/)
+    * scripts for some of my statistical trading games
+
+
+<br>
+
+### my library and scripts for on-chain queries:
+
+* [go-outisde-eth-scripts](go-outisde-eth-scripts)
+    * a util lib and series of script that I am acumulating as I investigate ethereum
 

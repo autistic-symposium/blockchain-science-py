@@ -1,0 +1,2 @@
+ethereum-etl==2.1.2
+python-dotenvpython-dotenv==0.21.0
