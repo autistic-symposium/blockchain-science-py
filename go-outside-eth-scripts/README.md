@@ -1,4 +1,4 @@
-## 📚 goe: go-outisde-eth-scripts
+## 📚 goe: go-outside-eth-scripts
 
 An on-going development of a library and set of scripts with my fav on-chain queries.
 
