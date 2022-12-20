@@ -30,6 +30,10 @@
 
 ### my library and scripts for on-chain queries:
 
+<<<<<<< HEAD
 * [go-outisde-eth-scripts](go-outisde-eth-scripts)
+=======
+* [go-outisde-eth-scripts](go-outside-eth-scripts)
+>>>>>>> 476587fe5bd1743c929956ac1090ac91fb460793
     * a util lib and series of script that I am acumulating as I investigate ethereum
 
