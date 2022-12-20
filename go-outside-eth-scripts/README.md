@@ -2,16 +2,15 @@
 
 An on-going development of a library and set of scripts with my fav on-chain queries.
 
-<br>
 
-
-#### common for any secript
+#### common for any script
 
 0. create and source a virtual environment 
 1. install `requirements.txt`
 2. create and fill `.env`
 3. any output is saved to `data/`
 
+<br>
 
 
 ####  get contracts deployed to mainnet and testnets
@@ -30,7 +29,7 @@ run `./get_contracts_balance.py`
 
 ---
 
-### troublesheet
+### troubleshoot
 
 #### ethereum-etl not compatible to m1
 
