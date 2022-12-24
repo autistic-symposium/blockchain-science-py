@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 # -*- encoding: utf-8 -*-
+# author: steinkirch
 
 import os
 import ethereumetl
 import pandas as pd
 from utils.os import load_config, create_dir, open_csv, save_csv, run_exec
 from utils.plot import plot_bar
+
 
 
 def get_data_for_contracts_by_block() -> dict:
@@ -48,7 +50,7 @@ def export_blocks_and_transactions(start_block, end_block, data) -> dict:
 
 
 def get_contracts_by_block(data, year, start_block) -> dict:
-    """ Extract unique contracts by block for a given year."""
+    """Extract unique contracts by block for a given year."""
 
     last_block_year = data[f'last_block_{year}']
     contracts = []

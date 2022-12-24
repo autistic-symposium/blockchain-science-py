@@ -3,4 +3,3 @@ jupyter==1.0.0
 click==8.0.4
 python-dotenv==0.15.0
 moralis==0.1.12
-
