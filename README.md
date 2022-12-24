@@ -40,7 +40,7 @@
 
 ----
 
-### my algorithmic trading strategies:
+### my algorithmic trading stuff:
 
 * [Trading strategies](trading-bots-and-scripts/)
     * Set of scripts for some of my statistical trading games.
