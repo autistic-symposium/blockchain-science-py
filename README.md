@@ -50,12 +50,12 @@
 
 ----
 
-### my library and scripts for on-chain queries:
+### my library + scripts for on-chain queries + ops:
 
 * [eth-python-scripts](eth-python-scripts)
-    * util python library and scripts that I am accumulating as I investigate Ethereum:
+    * util python library and scripts that I am accumulating as I investigate Ethereum
         - get contracts deployed to mainnet and testnets
         - get reserve history by block number for a pair of addresses
 
 * [eth-rust-scripts](eth-rust-scripts)
-    * util rust library and scripts that I am accumulating as I investigate Ethereum:
+    * util rust library and scripts that I am accumulating as I investigate Ethereum
