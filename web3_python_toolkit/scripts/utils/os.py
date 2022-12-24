@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 # This class implements OS/file system util methods used by the other classes.
 
-
 import os
 import sys
 import json
@@ -100,16 +99,6 @@ def save_json(destination, data) -> None:
         log_error(f'Could not save {destination}: {e}')
 
 
-def save_csv(destination, data, index=False) -> None:
-    """Save data from memory to a csv destination in disk."""
-
-    try:
-        data.to_csv(destination, index=index)
-
-    except (IOError, TypeError) as e:
-        log_error(f'Could not save {destination}: {e}')
-
-
 def create_dir(result_dir) -> None:
     """Check whether a directory exists and create it if needed."""
 
@@ -148,6 +137,7 @@ def exit_with_error(message) -> None:
 
     log_error(message)
     sys.exit(1)
+
 
 def run_exec(command) -> None:
     """Exec a bash commnad (remember: not safe!)."""

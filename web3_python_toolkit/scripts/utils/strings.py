@@ -4,8 +4,8 @@
 
 from pprint import PrettyPrinter
 
-from src.util.os import log_error
-from src.util.arithmetics import to_decimal
+from utils.os import log_error
+from utils.arithmetics import to_decimal
 
 
 def to_decimal_str(value) -> str:

@@ -10,14 +10,12 @@ an on-going development of a library and set of python scripts with my fav on-ch
 ### installing
 
 ```
+brew install poetry
 virtualenv venv
-make install_deps
-cp .env.example
-vim .env
+make install
+cp .env.example .env
 ```
 
-
-any output is saved to `data/`.
 
 <br>
 
@@ -29,7 +27,10 @@ any output is saved to `data/`.
 
 #### get contracts deployed to mainnet and testnets
 
-run `./get_contracts_deployed.py`
+1. add info to `.env`
+2. run 
+   `poetry run python  get_contracts_deployed.py`
+3. any output is saved to `data/`.
 
 
 
@@ -38,7 +39,10 @@ run `./get_contracts_deployed.py`
 
 #### get reserve history by block for a pair of addresses
 
-run `./get_reserve_history_by_block.py`
+1. add the pair abi to `abi`
+2. add info to `.env`
+3. run 
+   `poetry run python get_reserve_history_by_block.py`
 
 
 
