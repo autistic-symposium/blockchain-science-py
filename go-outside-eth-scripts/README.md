@@ -1,5 +1,7 @@
 ## 📚 go-outside-eth-scripts
 
+<br>
+
 an on-going development of a library and set of scripts with my fav on-chain queries.
 
 <br>
@@ -62,6 +64,8 @@ pip install --no-binary ethereum-etl
 
 * [web3.py library](https://web3py.readthedocs.io/en/v5/)
 * [ethereum etl library](https://ethereum-etl.readthedocs.io/en/latest/quickstart/)
+
+<br>
 
 ---
 
