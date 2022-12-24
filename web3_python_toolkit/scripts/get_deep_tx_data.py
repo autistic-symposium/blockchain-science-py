@@ -26,12 +26,15 @@ def get_deep_tx_data(data) -> dict:
     
     w3 = Web3Wrapper(mode=data['provider_type'],
                      network=data['network'])  
-    return w3.get_tx(data['tx'])
+    tx_data = w3.get_tx(data['tx'])
+    tx_data.update(w3.get_tx_receipt(data['tx']))
+
+    return tx_data
 
 
 if __name__ == "__main__":
 
     data = get_data_for_connection()
-    results = get_deep_tx_data(data)
-    pprint(results)
+    tx_data = get_deep_tx_data(data)
+    pprint(tx_data)
     

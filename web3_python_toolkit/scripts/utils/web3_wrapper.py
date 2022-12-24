@@ -62,3 +62,6 @@ class Web3Wrapper():
     ##############
     def get_tx(self, tx) -> dict:
         return dict(self.w3.eth.get_transaction(tx))
+
+    def get_tx_receipt(self, tx) -> dict:
+        return dict(self.w3.eth.get_transaction_receipt(tx))
