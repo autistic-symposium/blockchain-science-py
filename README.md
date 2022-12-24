@@ -52,12 +52,12 @@
 
 ### my library + scripts for on-chain queries:
 
-* [eth-python-scripts](eth-python-scripts)
-    * A set of python library and scripts that I am accumulating as I investigate Ethereum:
+* [web3-python-toolkit](web3-python-toolkit)
+    * A set of python libraries and scripts that I am accumulating as I investigate Ethereum:
         - a suitable wrapper for web3 
         - get contracts deployed to mainnet and testnets
         - get reserve history by block number for a pair of addresses
 
-* [eth-rust-scripts](eth-rust-scripts)
-    * A set of rust library and scripts that I am accumulating as I investigate Ethereum:
+* [web3-rust-toolkit](web3-rust-toolkit)
+    * A set of rust libraries and scripts that I am accumulating as I investigate Ethereum:
         - a suitable wrapper for web3
