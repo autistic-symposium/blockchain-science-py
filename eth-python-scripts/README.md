@@ -1,8 +1,8 @@
-## 📚 go-outside-eth-scripts
+## 📚 eth-python-scripts
 
 <br>
 
-an on-going development of a library and set of scripts with my fav on-chain queries.
+an on-going development of a library and set of python scripts with my fav on-chain ops.
 
 <br>
 
@@ -15,7 +15,7 @@ make install_deps
 cp .env.example
 vim .env
 ```
-<br>
+
 
 any output is saved to `data/`.
 
@@ -26,7 +26,6 @@ any output is saved to `data/`.
 
 ### scripts
 
-<br>
 
 #### get contracts deployed to mainnet and testnets
 
