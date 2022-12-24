@@ -67,8 +67,11 @@ pip install --no-binary ethereum-etl
 
 ### lexicon
 
-* providers: how libraries such as web3 talk to the blockchain. providers take JSON-RPC requests and return responses, usually done by submitting the request to an http or ipc socket based server.
-* the most common ways to connect to your node are:
-   -IPC (uses local filesystem: fastest and most secure)
-Websockets (works remotely, faster than HTTP)
-HTTP (more nodes support it)
+##### providers
+ 
+- providers are how libraries such as `web3.py` talk to the blockchain. 
+- providers take `JSON-RPC` requests and return responses
+- the most common ways to connect to your node are:
+   - IPC (uses local filesystem, fastest and most secure)
+   - Websockets (works remotely, faster than HTTP)
+   - HTTP (more nodes support it)
