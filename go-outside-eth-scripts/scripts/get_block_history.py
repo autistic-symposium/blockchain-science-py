@@ -20,7 +20,6 @@ def get_data_for_connection() -> dict:
     data['network'] = env_vars['NETWORK_RPC_ENDPOINT']
     data['block'] = env_vars['BLOCK_NUMBER']
     data['abi'] = env_vars['ABI_JSON_PATH']
-
     return data
 
 
@@ -28,10 +27,8 @@ def get_reserve_by_block(data) -> None:
     """Establish connection to retrieve reserve history."""
 
     w3 = Web3_Wrapper(mode='http', network=data['network'])
-
     w3.inject_middleware()    
     w3.get_pair_contract(data['addresses'], open_json(data['abi']))
-
     reserve1, reserve2 = w3.get_reserves(data['block'])
     log_info(f'reserves: {reserve1}, {reserve2}')
 

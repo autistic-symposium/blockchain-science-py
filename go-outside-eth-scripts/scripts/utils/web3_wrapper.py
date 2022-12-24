@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# This class implements plot scripts
+# This class implements an (ongoing) wrapper for web3 libs.
 # author: steinkirch
 
 from web3 import HTTPProvider, Web3
