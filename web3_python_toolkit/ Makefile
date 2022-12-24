@@ -7,12 +7,14 @@ clean:
 	@rm -rf dist/
 	@rm -rf build/
 	@rm -rf *.egg-info
+	@rm -rf poetry.lock
 	@rm -rf .tox
 	@rm -rf venv/lib/python*/site-packages/*.egg
+	poetry cache clear
 
 
 install_deps:
-	pip3 install -r requirements.txt
+	poetry install
 
 lint:
 	tox -e lint

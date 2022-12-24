@@ -10,12 +10,11 @@ an on-going development of a library and set of python scripts with my fav on-ch
 ### installing
 
 ```
+brew install poetry
 virtualenv venv
 make install_deps
 cp .env.example .env
 ```
-
-
 
 
 <br>
