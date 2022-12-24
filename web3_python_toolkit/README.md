@@ -47,6 +47,16 @@ cp .env.example .env
 
 <br>
 
+#### get deep block data
+
+1. add info to `.env`
+3. run 
+   `poetry run python get_deep_block_data.py`
+
+
+
+<br>
+
 ---
 
 ### troubleshoot
@@ -81,3 +91,9 @@ pip install --no-binary ethereum-etl
    - IPC (uses local filesystem, fastest and most secure)
    - Websockets (works remotely, faster than HTTP)
    - HTTP (more nodes support it)
+
+<br>
+
+##### middleware
+
+* a web3.py instance can be configured via middleware, using an onion metaphor: each layer may affect both the request and response from the provider.

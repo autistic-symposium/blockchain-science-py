@@ -11,17 +11,17 @@ def get_data_for_connection() -> dict:
 
     data = {}
     env_keys = ['PAIR_ADDRESSES', 
-                'NETWORK_RPC_ENDPOINT',
+                'PROVIDER_URL',
                 'BLOCK_NUMBER',
                 'ABI_JSON_PATH',
-                'PROVIDE_TYPE']
+                'PROVIDER_TYPE']
     env_vars = load_config(env_keys) 
 
     data['addresses'] = env_vars['PAIR_ADDRESSES']
-    data['network'] = env_vars['NETWORK_RPC_ENDPOINT']
+    data['network'] = env_vars['PROVIDER_URL']
     data['block'] = env_vars['BLOCK_NUMBER']
     data['abi'] = env_vars['ABI_JSON_PATH']
-    data['provider_type'] = env_vars['PROVIDE_TYPE']  
+    data['provider_type'] = env_vars['PROVIDER_TYPE']  
     return data
 
 
