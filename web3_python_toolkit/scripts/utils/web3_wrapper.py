@@ -6,6 +6,7 @@ from web3 import Web3, HTTPProvider, WebsocketProvider, IPCProvider
 from web3.middleware import geth_poa_middleware
 from utils.os import log_info
 
+
 class Web3Wrapper():
 
     def __init__(self, mode, network):
@@ -21,6 +22,7 @@ class Web3Wrapper():
         self._get_web3_object()
 
     def _get_web3_object(self) -> None:
+        log_info(f'Setting mode {self.mode} for {self.network}')
         if self.mode == 'http' or self.mode == 'local_http':
             self.w3 = Web3(HTTPProvider(self.network))
         elif self.mode == 'ws' or self.mode == 'local_ws':

@@ -32,7 +32,7 @@ def get_reserve_by_block(data) -> None:
                      network=data['network'])
     w3.inject_middleware()    
     w3.get_pair_contract(data['addresses'], open_json(data['abi']))
-    return w3.get_reserves(data['block'])
+    return w3.get_reserves(int(data['block']))
     
 
 if __name__ == "__main__":
@@ -40,4 +40,3 @@ if __name__ == "__main__":
     data = get_data_for_connection()
     reserve1, reserve2 = get_reserve_by_block(data)
     log_info(f'reserves: {reserve1}, {reserve2}')
-    
