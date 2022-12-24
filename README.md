@@ -13,13 +13,13 @@
 <br>
 
 * [Leveraging Uniswap subgraph to extract token pair information](uniswap-data):
-    * Use The Graph Explorer to access the Uniswap subgraph and analyze the UNI and WETH token pair data. 
+    * Utilize The Graph Explorer to access the Uniswap subgraph and analyze the UNI and WETH token pair data. 
 
 <br>
     
 
 * [Retrieving DAO tokens and pools data](dao-data):
-    * Use The Graph Explorer to access the Uniswap subgraph and analyze the data related to a list of DAO tokens.
+    * Utilize The Graph Explorer to access the Uniswap subgraph and analyze the data related to a list of DAO tokens.
 
 
 <br>
@@ -33,7 +33,7 @@
     
 
 * [Messari API for token market data](messari-assets-data):
-    * Use [Messari API](https://messari.io/api) to retrieve market data for a list of tokens.
+    * Utilize [Messari API](https://messari.io/api) to retrieve market data for a list of tokens.
 
 
 <br>
@@ -43,7 +43,7 @@
 ### my algorithmic trading stuff:
 
 * [Trading strategies](trading-bots-and-scripts/)
-    * Set of scripts for some of my statistical trading games.
+    * A set of scripts for some of my statistical trading games.
 
 
 <br>
@@ -53,9 +53,11 @@
 ### my library + scripts for on-chain queries:
 
 * [eth-python-scripts](eth-python-scripts)
-    * util python library and scripts that I am accumulating as I investigate Ethereum
+    * A set of python library and scripts that I am accumulating as I investigate Ethereum:
+        - a suitable wrapper for web3 
         - get contracts deployed to mainnet and testnets
         - get reserve history by block number for a pair of addresses
 
 * [eth-rust-scripts](eth-rust-scripts)
-    * util rust library and scripts that I am accumulating as I investigate Ethereum
+    * A set of rust library and scripts that I am accumulating as I investigate Ethereum:
+        - a suitable wrapper for web3

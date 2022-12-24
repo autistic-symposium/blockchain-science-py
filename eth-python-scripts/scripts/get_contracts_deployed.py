@@ -5,8 +5,8 @@
 import os
 import ethereumetl
 import pandas as pd
-from utils.os import load_config, create_dir, open_csv, save_csv, run_exec
-from utils.plots import plot_bar
+from utils.os import load_config, create_dir, save_csv, run_exec
+from utils.plots import plot_bar, open_csv
 
 
 

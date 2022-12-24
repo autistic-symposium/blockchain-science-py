@@ -6,7 +6,7 @@ from web3 import HTTPProvider, Web3
 from web3.middleware import geth_poa_middleware
 
 
-class Web3_Wrapper():
+class Web3Wrapper():
 
     def __init__(self, mode, network):
         self.w3 = None
