@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "scripts"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "3.10"
 ethereum-etl = "2.1.2"
 python-dotenv = "0.21.0"
 web3 = "5.31.3"

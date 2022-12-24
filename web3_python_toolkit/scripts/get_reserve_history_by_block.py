@@ -28,7 +28,7 @@ def get_data_for_connection() -> dict:
 def get_reserve_by_block(data) -> None:
     """Establish connection to retrieve reserve history."""
 
-    w3 = Web3Wrapper(mode=data['http'],
+    w3 = Web3Wrapper(mode=data['provider_type'],
                      network=data['network'])
     w3.inject_middleware()    
     w3.get_pair_contract(data['addresses'], open_json(data['abi']))
@@ -37,7 +37,7 @@ def get_reserve_by_block(data) -> None:
 
 if __name__ == "__main__":
 
-    data = {}#get_data_for_connection()
+    data = get_data_for_connection()
     reserve1, reserve2 = get_reserve_by_block(data)
     log_info(f'reserves: {reserve1}, {reserve2}')
     
