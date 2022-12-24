@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 # This class implements OS/file system util methods used by the other classes.
 
+
 import os
 import sys
 import json
 import copy
 import logging
 import subprocess
-import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -42,6 +42,7 @@ def load_config(keys) -> dict:
     try:
         for key in keys:
             env_vars[key] = os.getenv(key)
+            set_logging(os.getenv("LOG_LEVEL"))
         return env_vars
     except KeyError as e:
         exit_with_error(f'Cannot extract env variables: {e}. Exiting.')
@@ -71,16 +72,6 @@ def open_json(filepath) -> dict:
     try:
         with open(filepath, 'r', encoding='utf-8') as infile:
             return json.load(infile)
-
-    except (IOError, FileNotFoundError, TypeError) as e:
-        exit_with_error(f'Failed to parse: "{filepath}": {e}')
-
-
-def open_csv(filepath) -> dict:
-    """Load and parse a csv file."""
-
-    try:
-        return pd.read_csv(filepath)
 
     except (IOError, FileNotFoundError, TypeError) as e:
         exit_with_error(f'Failed to parse: "{filepath}": {e}')

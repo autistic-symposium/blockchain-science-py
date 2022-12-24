@@ -4,8 +4,8 @@
 import os
 import ethereumetl
 import pandas as pd
-from util.os import load_config, create_dir, open_csv, save_csv, run_exec
-from util.plot import plot_bar
+from utils.os import load_config, create_dir, open_csv, save_csv, run_exec
+from utils.plot import plot_bar
 
 
 def get_data_for_contracts_by_block() -> dict:
@@ -104,7 +104,5 @@ if __name__ == "__main__":
     ###########
     y_data = [y for y in contracts_by_year[year] if year == years.revers().pop()]
     plot_bar({'contract deployed': y_data}, years)
-
-
 
 

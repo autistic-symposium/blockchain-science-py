@@ -53,5 +53,8 @@
 ### my library and scripts for on-chain queries:
 
 * [go-outside-eth-scripts](go-outside-eth-scripts)
-    * util library and a series of scripts that I am accumulating as I investigate Ethereum.
+    * util library and scripts that I am accumulating as I investigate Ethereum:
+        - get contracts deployed to mainnet and testnets
+        - get reserve history by block number for a pair of addresses
+
 

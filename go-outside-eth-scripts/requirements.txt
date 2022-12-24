@@ -1,2 +1,5 @@
 ethereum-etl==2.1.2
-python-dotenvpython-dotenv==0.21.0
+python-dotenv==0.21.0
+web3==5.31.3
+python-dotenv==0.20.0
+pandas
