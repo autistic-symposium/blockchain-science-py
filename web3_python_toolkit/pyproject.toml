@@ -13,6 +13,9 @@ python-dotenv = "0.21.0"
 web3 = "5.31.3"
 pandas = "^1.5.2"
 
+[tool.poetry.group.dev.dependencies]
+tox = "^4.0.16"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

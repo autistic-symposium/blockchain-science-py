@@ -15,11 +15,18 @@ def get_data_for_contracts_by_block() -> dict:
     
     data = {}
     create_dir('data')
-    env_keys = ['PROVIDER_URL', 'TX_FILE']
+    env_keys = ['PROVIDER_URL', 
+                'TX_FILE', 
+                'START_BLOCK',
+                'OUTPUT_FILE']
     env_vars = load_config(env_keys) 
 
     data['provider_uri'] = env_vars['PROVIDER_URL']
     data['tx_file'] = env_vars['TX_FILE']
+    data['start_block'] = env_vars['START_BLOCK']
+    data['output_file'] = env_vars['OUTPUT_FILE']
+
+    # adding this manually
     data['last_block_2015'] = 778482
     data['last_block_2016'] = 2912406
     data['last_block_2017'] = 4832685
@@ -33,22 +40,14 @@ def get_data_for_contracts_by_block() -> dict:
     return data
 
 
-def export_blocks_and_transactions(start_block, end_block, data) -> dict:
+def export_blocks_and_transactions(end_block, data) -> dict:
     """Run ethereumetl export_blocks_and_transactions."""
 
-    os.system(f'ethereumetl export_blocks_and_transactions ' + 
-              f'--start-block {start_block} --end-block {end_block} ' +
-              f'--blocks-output blocks-{start_block}-{end_block}.csv ' +
-              f'--transactions-output transactions-{start_block}-{end_block}.csv ' + 
-              f'--provider-uri https://mainnet.infura.io/v3/239a1d18eba14f0f9dc1c882de0dc872')
-
-    ''''
     run_exec(['ethereumetl', 'export_blocks_and_transactions', \
-                  f'--start-block {start_block}', \
+                  f'--start-block {data["start_block"]}', \
                   f'--end-block {end_block}', \
                   f'--provider-uri {data["provider_uri"]}', \
                   f'--transactions-output {data["tx_file"]}'])
-    '''
 
     txs = open_csv(data['tx_file'])
     contracts = txs[txs['to_address'].isnull()]
@@ -56,18 +55,17 @@ def export_blocks_and_transactions(start_block, end_block, data) -> dict:
     return contracts + txs['from_address'].unique().tolist()
 
 
-def get_contracts_by_block(data, year, start_block) -> dict:
+def get_contracts_by_block(data, year) -> dict:
     """Extract unique contracts by block for a given year."""
 
-    last_block_year = data[f'last_block_{year}']
     contracts = []
-
+    last_block_year = data[f'last_block_{year}']
+    start_block = int(data['start_block'])
     end_block = start_block + 9999
+
     while (end_block <= last_block_year + data['buffer_for_chunk_size']): 
         end_block_used = min(end_block, last_block_year)
-        contracts = export_blocks_and_transactions(
-                        start_block, end_block_used, data)
-
+        contracts.append(export_blocks_and_transactions(end_block_used, data))
         start_block += data['buffer_for_chunk_size']
         end_block += data['buffer_for_chunk_size']
 
@@ -79,7 +77,6 @@ def get_unique_contracts(contracts, year) -> None:
 
     unique_contract = [*set(contracts)]
     print(f"✅ Unique contract for {year})): {str(len(unique_contract))}")
-
     return pd.DataFrame(unique_contract, columns=["contracts"])
 
 
@@ -89,24 +86,23 @@ if __name__ == "__main__":
     # Set up
     ###########
     contracts_by_year = {}
-    start_block = 40000
-    results_file = 'mainnet_deployed_contracts.csv'
     all_contracts = pd.DataFrame()
     years = list(range(2015, 2022))
     data = get_data_for_contracts_by_block()
+    start_block = int(data['start_block'])
 
     ###########
     # Get data
     ###########
     for year in years:
-        contracts = get_contracts_by_block(data, year, start_block)
+        contracts = get_contracts_by_block(data, year)
         contracts_by_year[year] = len(contracts)
         all_contracts.append(get_unique_contracts(contracts, year))
         start_block += 1
 
     all_contracts = all_contracts['contract_deployers'].unique()
     all_contracts_df = pd.DataFrame(all_contracts, columns=['contract'])
-    save_csv(all_contracts_df, results_file)
+    save_csv(all_contracts_df, data['output_file'])
                                                      
     ###########
     # Plot data
