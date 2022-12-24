@@ -1,4 +1,4 @@
-.PHONY: clean install install_deps lint
+.PHONY: clean install_deps lint
 
 clean:
 	@find . -iname '*.py[co]' -delete
@@ -10,8 +10,6 @@ clean:
 	@rm -rf .tox
 	@rm -rf venv/lib/python*/site-packages/*.egg
 
-install:
-	python3 setup.py install
 
 install_deps:
 	pip3 install -r requirements.txt

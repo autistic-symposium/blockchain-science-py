@@ -7,10 +7,15 @@ an on-going development of a library and set of scripts with my fav on-chain que
 
 ### installing
 
-0. create and source a virtual environment 
-1. install `requirements.txt`
-2. create and fill `.env`
-3. any output is saved to `data/`
+```
+virtualenv venv
+make install_deps
+cp .env.example
+vim .env
+```
+<br>
+
+any output is saved to `data/`.
 
 <br>
 
@@ -42,9 +47,7 @@ run `./get_reserve_history_by_block.py`
 
 ### troubleshoot
 
-#### ethereum-etl not compatible to m1
-
-if you see this error, run:
+##### if you see `ethereum-etl not compatible to m1` run:
 
 ```
 pip uninstall ethereum-etl 
