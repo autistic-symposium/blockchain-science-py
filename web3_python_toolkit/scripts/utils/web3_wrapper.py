@@ -18,6 +18,9 @@ class Web3Wrapper():
 
         self._setup()
     
+    ##################
+    # PRIVATE METHODS
+    ##################
     def _setup(self) -> None:
         self._get_web3_object()
 
@@ -32,6 +35,17 @@ class Web3Wrapper():
         else:
             log_info(f'Provider type is invalid: {self.mode}. Fix .env.')
 
+
+    ##################
+    # BLOCK METHODS
+    ##################
+    def get_block(self, block_number='latest') -> dict:
+        return dict(self.w3.eth.get_block(block_number))
+
+
+    ##################
+    # LP PAIR METHODS
+    ##################
     def get_pair_contract(self, address, abi) -> str:
         self.pair_contract = self.w3.eth.contract(address=address, abi=abi)
 
@@ -41,4 +55,13 @@ class Web3Wrapper():
     
     def get_reserves(self, block) -> list:
         return self.pair_contract.functions.getReserves().call({}, block)[:2]
-        
+
+
+    ##############
+    # TX METHODS
+    ##############
+    def get_tx(self, tx) -> dict:
+        return dict(self.w3.eth.get_transaction(tx))
+
+    def get_tx_receipt(self, tx) -> dict:
+        return dict(self.w3.eth.get_transaction_receipt(tx))

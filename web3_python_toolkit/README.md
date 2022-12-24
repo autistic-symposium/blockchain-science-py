@@ -47,6 +47,16 @@ cp .env.example .env
 
 <br>
 
+#### get deep block data
+
+1. add info to `.env`
+3. run 
+   `poetry run python get_deep_block_data.py`
+
+
+
+<br>
+
 ---
 
 ### troubleshoot
@@ -71,7 +81,7 @@ pip install --no-binary ethereum-etl
 
 ---
 
-### lexicon
+### relevant info
 
 ##### providers
  
@@ -81,3 +91,12 @@ pip install --no-binary ethereum-etl
    - IPC (uses local filesystem, fastest and most secure)
    - Websockets (works remotely, faster than HTTP)
    - HTTP (more nodes support it)
+
+<br>
+
+##### middleware
+
+* a web3.py instance can be configured via middleware (sitting between the web3 methods and the provider).
+* middlewares use an onion metaphor: each layer may affect both the request and response from the provider.
+* each middleware layer gets invoked before the request reaches the provider, and then processes the result after the provider returns, in reverse order.
+* we often use `geth_poa_middleware`, to run with geth's Proof-of-Authority (PoA) consensus. this adds support for more than 32 bytes in each block (the `extraData` field).
