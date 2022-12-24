@@ -32,7 +32,7 @@ run `./get_contracts_deployed.py`
 
 #### get reserve history by block for a pair of addresses
 
-run `./get_block_history.py`
+run `./get_reserve_history_by_block.py`
 
 
 
