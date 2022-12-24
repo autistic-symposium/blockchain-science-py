@@ -12,7 +12,7 @@ an on-going development of a library and set of python scripts with my fav on-ch
 ```
 brew install poetry
 virtualenv venv
-make install_deps
+make install
 cp .env.example .env
 ```
 
@@ -28,7 +28,8 @@ cp .env.example .env
 #### get contracts deployed to mainnet and testnets
 
 1. add info to `.env`
-2. run `./get_contracts_deployed.py`
+2. run 
+   `poetry run python  get_contracts_deployed.py`
 3. any output is saved to `data/`.
 
 
@@ -40,7 +41,8 @@ cp .env.example .env
 
 1. add the pair abi to `abi`
 2. add info to `.env`
-3. run `./get_reserve_history_by_block.py`
+3. run 
+   `poetry run python get_reserve_history_by_block.py`
 
 
 

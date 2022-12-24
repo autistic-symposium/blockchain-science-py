@@ -1,4 +1,4 @@
-.PHONY: clean install_deps lint
+.PHONY: clean install lint
 
 clean:
 	@find . -iname '*.py[co]' -delete
@@ -11,9 +11,10 @@ clean:
 	@rm -rf .tox
 	@rm -rf venv/lib/python*/site-packages/*.egg
 	poetry cache clear
+	poetry env remove --all
 
 
-install_deps:
+install:
 	poetry install
 
 lint:

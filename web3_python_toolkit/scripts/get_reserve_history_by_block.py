@@ -37,7 +37,7 @@ def get_reserve_by_block(data) -> None:
 
 if __name__ == "__main__":
 
-    data = get_data_for_connection()
+    data = {}#get_data_for_connection()
     reserve1, reserve2 = get_reserve_by_block(data)
     log_info(f'reserves: {reserve1}, {reserve2}')
     
