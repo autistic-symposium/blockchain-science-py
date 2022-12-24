@@ -50,7 +50,7 @@
 
 ----
 
-### my library + scripts for on-chain queries + ops:
+### my library + scripts for on-chain queries:
 
 * [eth-python-scripts](eth-python-scripts)
     * util python library and scripts that I am accumulating as I investigate Ethereum
