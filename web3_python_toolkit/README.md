@@ -11,7 +11,6 @@ an on-going development of a library and set of python scripts with my fav on-ch
 
 ```
 brew install poetry
-virtualenv venv
 make install
 cp .env.example .env
 ```

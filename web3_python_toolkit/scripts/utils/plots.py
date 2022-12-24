@@ -3,7 +3,7 @@
 # author: steinkirch
 
 import pandas as pd
-from os import exit_with_error
+from utils.os import exit_with_error
 
 
 def open_csv(filepath) -> dict:

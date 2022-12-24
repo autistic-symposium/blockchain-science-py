@@ -5,8 +5,8 @@
 import os
 import ethereumetl
 import pandas as pd
-from utils.os import load_config, create_dir, save_csv, run_exec
-from utils.plots import plot_bar, open_csv
+from utils.os import load_config, create_dir, run_exec
+from utils.plots import plot_bar, open_csv, save_csv
 
 
 
@@ -19,7 +19,7 @@ def get_data_for_contracts_by_block() -> dict:
     env_vars = load_config(env_keys) 
 
     data['provider_uri'] = env_vars['PROVIDER_URL']
-    data['tx_fil'] = env_vars['TX_FILE']
+    data['tx_file'] = env_vars['TX_FILE']
     data['last_block_2015'] = 778482
     data['last_block_2016'] = 2912406
     data['last_block_2017'] = 4832685

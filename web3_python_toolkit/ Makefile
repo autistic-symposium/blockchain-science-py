@@ -13,7 +13,6 @@ clean:
 	poetry cache clear
 	poetry env remove --all
 
-
 install:
 	poetry install
 
