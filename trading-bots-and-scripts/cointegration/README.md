@@ -51,7 +51,7 @@ make install
 #### CLI usage
 
 ``` 
-cointbot
+cointbot -s buybit usdt
 ```
 
 

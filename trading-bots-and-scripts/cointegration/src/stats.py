@@ -53,6 +53,7 @@ def extract_close_prices(prices, key):
 
 def get_cointegrated_pairs(price_history_pair) -> dict:
     """Load price history json and return the data."""
+
     return open_json(price_history_pair)
 
 
@@ -73,11 +74,12 @@ def calculate_cointegration(series1, series2, z_score_window) -> dict:
 
 
 def calculate_spread(series1, series2, hedge_ratio) -> float:
-
+    """Calculate spread."""
     return pd.Series(series1) - (pd.Series(series2) * hedge_ratio)
 
 
 def calculate_zscore(spread, z_score_window) -> float:
+    """Calculate z-score."""
 
     df = pd.DataFrame(spread)
 
@@ -91,7 +93,8 @@ def calculate_zscore(spread, z_score_window) -> float:
 
 
 def save_backtest(data, backtest_outfile, outdir) -> None:
-    
+    """Save backtest data."""
+
     df_2 = pd.DataFrame()
     df_2[data['token1']] = data['prices_token1']
     df_2[data['token2']] = data['prices_token2']
@@ -106,6 +109,7 @@ def save_backtest(data, backtest_outfile, outdir) -> None:
 
 
 def get_percentage_changes(data) -> None:
+    """Get percentage changes for both tokens."""
 
     token1 = data['token1']
     token2 = data['token2']
@@ -118,16 +122,14 @@ def get_percentage_changes(data) -> None:
     df[f'{token1}_pct'] = df[token1] / data['prices_token1'][0]
     df[f'{token2}_pct'] = df[token2] / data['prices_token2'][0]
 
-    series_1 = df[f'{token1}_pct'].astype(float).values
-    series_2 = df[f'{token2}_pct'].astype(float).values
-
-    data['series1'] = series1
-    data['series2'] = series2
+    data['series1'] =  df[f'{token1}_pct'].astype(float).values
+    data['series2'] = df[f'{token2}_pct'].astype(float).values
 
     return data
 
 
 def plot_cointegrated_pairs(data) -> None:
+    """Plot cointegrated pairs."""
     
     fig, axis = plt.subplots(3, figsize=(16, 8))
     fig.suptitle(f"Price + Spread - {data['token1']} vs {data['token2']}")

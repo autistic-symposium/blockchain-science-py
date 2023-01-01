@@ -43,7 +43,7 @@
 ### my algorithmic trading stuff:
 
 * [Trading strategies](trading-bots-and-scripts/)
-    * A set of scripts for some of my statistical trading games.
+    * A set of scripts for some statistical trading games.
 
 
 <br>
