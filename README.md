@@ -1,8 +1,8 @@
-# 🧱⛓ go outside labs on-chain science 
+# 🧱⛓ go outside labs: on-chain science 
 
 <br>
 
-### my research notebooks:
+### my research notebooks
 
 <br>
     
@@ -40,7 +40,7 @@
 
 ----
 
-### my algorithmic trading stuff:
+### my algorithmic trading stuff
 
 * [Trading strategies](trading-bots-and-scripts/)
     * A set of scripts for some of my statistical trading games.
