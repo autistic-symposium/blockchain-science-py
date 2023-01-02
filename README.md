@@ -1,5 +1,13 @@
 # 🧱⛓ go outside labs: on-chain science 
 
+
+<br>
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/1130416/210285240-704036f1-0a9a-41d7-bca8-a98de0be63a1.png" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+ </p>
+
+
 <br>
 
 ### my research notebooks
