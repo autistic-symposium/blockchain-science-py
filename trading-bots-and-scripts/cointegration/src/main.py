@@ -18,7 +18,7 @@ def run_menu() -> argparse.ArgumentParser:
                         help='Get data for a currency (coin). \
                             Example: cointbot usdt')
     parser.add_argument('-p', dest='price', nargs=1,
-                        help='Get price history for CEX and QUOTE CURRENCY. \
+                        help='Save price history for currency (coin). \
                             Example: cointbot usdt')
     parser.add_argument('-i', dest='pairs', nargs=3,
                         help='Get cointegration for a pair of tokens \
@@ -57,6 +57,35 @@ def run() -> None:
         elif cex == 'BITMEX':
             # TODO: implement bitmex
             pass
+        else:
+            utils.exit_with_error(f'CEX not supoorted: {cex}')
+
+    ############################
+    #     Get price list      #
+    ############################
+    elif args.price:
+        coin = args.price[0].upper()
+
+        if cex == 'BUYBIT':
+            b = BuybitCex(env_vars)
+            price_history = b.get_price_history(coin)
+
+            if price_history:
+                prices_outfile = env_vars['PRICE_HISTORY_FILE']
+                outdir = env_vars['OUTPUTDIR']
+
+                utils.save_price_history(price_history, outdir, prices_outfile)
+                utils.pprint(price_history)
+    
+            else:
+                utils.exit_with_error(f'Could not retrieve price history for {cex}')
+        
+        elif cex == 'BINANCE':
+            pass
+    
+        elif cex == 'BITMEX':
+            pass
+
         else:
             utils.exit_with_error(f'CEX not supoorted: {cex}')
 

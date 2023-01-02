@@ -124,15 +124,16 @@ def load_config() -> dict:
     try:
         env_vars['CEX'] = os.getenv("CEX")
         env_vars['BUYBIT_URL'] = os.getenv("BUYBIT_URL")
+        env_vars['KLINES_LIMIT'] = os.getenv("KLINES_LIMIT")
+        env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
+        env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
+        env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
+
 
         env_vars['API_KEY'] = os.getenv("API_KEY")
         env_vars['API_SECRET'] = os.getenv("API_SECRET")
         env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")
-        env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")
-        env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
-        env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
         env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
-        env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
         env_vars['WS_PRIVATE_URL'] = os.getenv("WS_PRIVATE_URL")
         env_vars['WS_PUBLIC_URL'] = os.getenv("WS_PUBLIC_URL")
         env_vars['TOKEN1'] = os.getenv("TOKEN1")
