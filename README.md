@@ -8,6 +8,7 @@
  </p>
 
 
+
 <br>
 
 ### my research notebooks
@@ -46,9 +47,11 @@
 
 <br>
 
-----
+
 
 ### my algorithmic trading stuff
+
+<br>
 
 * [Trading strategies](trading-bots-and-scripts/)
     * A set of scripts for some of my statistical trading games.
