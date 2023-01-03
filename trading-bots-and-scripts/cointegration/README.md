@@ -162,6 +162,14 @@ example of output:
 
 #### Get latest z-core signal for a pair of assets.
 
+<br>
+
+> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trading to generate **buy and sell signals**.*
+
+<br>
+
+To see the latest z-score for an asset, run:
+
 ``` 
 cointbot -z ethusdt btcusdt
 ```
@@ -179,6 +187,15 @@ example of output:
 ---
 
 #### Run backtests
+
+<br>
+
+> *I*n the context of crypto trading, **backtesting** is accomplished by **reconstructing**, with **historical data**, trades that would have occurred in the past using rules defined by a given strategy, gauging the **effectiveness of the strategy**.*
+
+<br>
+
+
+To run backtests, run:
 
 ``` 
 cointbot -t
