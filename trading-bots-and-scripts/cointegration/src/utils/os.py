@@ -147,23 +147,32 @@ def load_config() -> dict:
     load_dotenv(env_file)
 
     try:
+        # General
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
         env_vars['COINTEGRATION_FILE'] = os.getenv("COINTEGRATION_FILE")
         env_vars['ZSCORE_FILE'] = os.getenv("ZSCORE_FILE")
         env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
         env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
-
         env_vars['CEX'] = os.getenv("CEX")
-        env_vars['API_KEY'] = os.getenv("API_KEY")
-        env_vars['API_SECRET'] = os.getenv("API_SECRET")
 
-        env_vars['BYBIT_URL'] = os.getenv("BYBIT_URL")
+        # CEX variables
+        if env_vars['CEX'].upper() == 'BYBIT':
+            env_vars['BYBIT_URL'] = os.getenv("BYBIT_HTTP_PUBLIC")
+            env_vars['BYBIT_PRIV_URL'] = os.getenv("BYBIT_HTTP_PRIVATE")
+            env_vars['BYBIT_WS_PUBLIC'] = os.getenv("BYBIT_WS_PUBLIC")    
+            env_vars['BYBIT_WS_PRIVATE'] = os.getenv("BYBIT_WS_PRIVATE")
+            env_vars['BYBIT_API_KEY'] = os.getenv("BYBIT_API_KEY")
+            env_vars['BYBIT_API_SECRET'] = os.getenv("BYBIT_API_SECRET")
+            env_vars['IS_TESTNET'] = os.getenv("IS_TESTNET")
+            env_vars['IS_PUBLIC'] = os.getenv("IS_PUBLIC_CONNECTION")
+
+        # Statistical variables
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
         env_vars['PLIMIT'] = os.getenv("PLIMIT")
         env_vars['TOKEN1'] = os.getenv("TOKEN1")
         env_vars['TOKEN2'] = os.getenv("TOKEN2")
         env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")   
-        env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")       
+        env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")    
 
         set_logging(os.getenv("LOG_LEVEL"))
 

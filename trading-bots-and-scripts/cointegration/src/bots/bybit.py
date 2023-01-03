@@ -356,14 +356,15 @@ def run_bot() -> None:
         initialise_order_execution(ws_public, long_ticker, "Long", position_capital_allowance_total / max_trades_per_signal)
         initialise_order_execution(ws_public, short_ticker, "Short", position_capital_allowance_total / max_trades_per_signal)
 
-
-if __name__ == "__main__":
-    run_bot()
-
 '''
 
 def run_bot():
     """
     Run bot
     """
-    pass
+    print('aaa')
+
+
+
+if __name__ == "__main__":
+    run_bot() 

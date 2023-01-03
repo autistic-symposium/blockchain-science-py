@@ -4,11 +4,13 @@
 # author: steinkirch
 # Entry point for cointbot.
 
+
+import asyncio
 import argparse
 
 import src.utils.os as util
-import src.utils.bot as bot
-import src.utils.plots as plot
+import src.bots.bybit as bbbot
+import src.utils.plots as plots
 from src.markets.bybit import BybitCex
 from src.strategies.cointegration import Cointegrator
 
@@ -31,10 +33,13 @@ def run_menu() -> argparse.ArgumentParser:
                             Example: cointbot -z')
     parser.add_argument('-t', dest='test', nargs=2, help='Generate backtests. \
                             Example: cointbot -t ethusdt btcusdt')
-    parser.add_argument('-b', dest='bot', action='store_true', help='Deploy and start bot. \
+    parser.add_argument('-n', dest='network', nargs=3, help='Test websockets for orderbooks, \
+                            for either inverse or spot markets. \
+                            Example: cointbot -n ethusdt btcusdt spot')
+    parser.add_argument('-b', dest='bot', action='store_true', help='Deploy trading bot. \
                             Example: cointbot -b')
-    return parser
 
+    return parser
 
 
 def run() -> None:
@@ -77,9 +82,7 @@ def run() -> None:
             if price_history:
                 prices_outfile = env_vars['PRICE_HISTORY_FILE']
                 outdir = env_vars['OUTPUTDIR']
-
                 util.save_price_history(price_history, outdir, prices_outfile)
-    
             else:
                 util.exit_with_error(f'Could not retrieve price history for {coin}')
 
@@ -135,10 +138,35 @@ def run() -> None:
 
             if not backtests_results.empty:
                 print(backtests_results)
-                plot.plot_cointegrated_pair(backtests_results, coin1, coin2, env_vars)
-    
+                plots.plot_cointegrated_pair(backtests_results, coin1, coin2, env_vars)
             else:
                 util.exit_with_error(f'Could not get backtests for {cex}.')
+
+        else:
+            util.exit_with_error(f'CEX not supported: {cex}')
+
+
+    ############################
+    #     Test network         #
+    ############################
+    elif args.network:
+        coin1 = args.network[0].upper()
+        coin2 = args.network[1].upper()
+        market = args.network[2].upper()
+
+
+        if cex == 'BYBIT':
+            
+            if market == "SPOT":
+                b = BybitCex(env_vars, ws=True, inverse=False)
+                asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
+
+            elif market == "INVERSE":
+                b = BybitCex(env_vars, ws=True, inverse=True)
+                asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
+            
+            else:
+                util.exit_with_error(f'Market not supported: {market}')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')
@@ -150,11 +178,10 @@ def run() -> None:
     elif args.bot:
 
         if cex == 'BYBIT':
-            bot_results = bot.run_bot()
+            bot_results = bbbot.run_bot()
 
             if bot_results:
-                util.pprint(bot_results)
-    
+                print(bot_results)
             else:
                 util.exit_with_error(f'Could not deploy bot for {cex}.')
 

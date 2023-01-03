@@ -4,19 +4,27 @@
 # bybit API methods.
 
 import time
+import asyncio 
 import datetime
 import src.utils.os as utils
 from pybit import HTTP
-
+from pybit.inverse_perpetual import WebSocket as InverseWebSocket
+from pybit.spot import WebSocket as SpotWebSocket
 
 class BybitCex():
     """Methods for Bybit."""
 
-    def __init__(self, env_vars: dict):
+    def __init__(self, env_vars: dict, ws=False, inverse=False):
         """Initialize Bybit class."""
 
-        self._url = env_vars['BYBIT_URL']
-
+        self._env_vars = env_vars
+        self._is_websocket = ws
+        self._is_inverse = inverse
+        self._is_public = bool(env_vars['IS_PUBLIC'])
+        self._url = self._set_url()
+        self._api_key = None
+        self._api_secret = None
+        
         self.timeframe = env_vars['TIMEFRAME']
         self.kline_limit = int(env_vars['KLINE_LIMIT'])
 
@@ -26,9 +34,47 @@ class BybitCex():
     #########################
     #   private methods     #
     #########################
+    def _set_url(self) -> None:
+        """Set the URL for the API."""
+        
+        if self._is_public:
+            if self._is_websocket:
+                return self._env_vars['BYBIT_WS_PUBLIC']
+            else:
+                return self._env_vars['BYBIT_HTTP_PUBLIC']
+        else:  
+            self._api_key = self._env_vars['BYBIT_API_KEY']
+            self._api_secret = self._env_vars['BYBIT_SECRET_KEY']
+
+            if self._is_websocket:
+                return self._env_vars['BYBIT_WS_PRIVATE'] 
+            else:
+                return self._env_vars['BYBIT_HTTP_PRIVATE']
+
     def _start_bybit_session(self) -> object:
         """Start a bybit session."""
-        return HTTP(self._url)
+        
+        if self._is_websocket:
+            if self._is_public and self._is_inverse:
+                return InverseWebSocket(
+                        test=bool(self._env_vars['IS_TESTNET']))
+            elif self._is_public and not self._is_inverse:
+                return SpotWebSocket(
+                            test=bool(self._env_vars['IS_TESTNET']))
+            elif not self._is_public and self._is_inverse:
+                return InverseWebSocket(
+                        test=bool(self._env_vars['IS_TESTNET']),
+                        api_key=self._api_key, 
+                        api_secret=self._api_secret)
+            else:
+                return SpotWebSocket(
+                        test=bool(self._env_vars['IS_TESTNET']),
+                        api_key=self._api_key, 
+                        api_secret=self._api_secret)
+        else:
+            return HTTP(self._url, 
+                        self.api_key, 
+                        self.api_secret)
 
     def _parse_symbols(self, coin: str) -> list:
         """Parse coin data for cex data"""
@@ -98,6 +144,11 @@ class BybitCex():
         except Exception as e:
             utils.log_error(f'Could not get k-lines for {coin}: {e}')
 
+    def _handle_orderbook_ws(self, msg: dict) -> None:
+        """Handle orderbook data from websocket."""
+        utils.log_info(msg)
+        orderbook_data = msg['data']
+
 
     ###########################
     #      public methods     #
@@ -129,4 +180,18 @@ class BybitCex():
                 utils.exit_with_error(f'Could not retrieve price history for {coin}: {e}')
 
         return price_history_dict  
-    
+
+    async def orderbook_ws(self, coin1: str, coin2: str) -> None:
+        """Connect to websocket for spot or inverse orderbook."""
+
+        while True:
+            if self._is_inverse:
+                self._session.orderbook_25_stream(
+                    self._handle_orderbook_ws, 
+                    [coin1, coin2])
+            else:
+                self._session.depth_v2_stream(
+                    self._handle_orderbook_ws, 
+                    [coin1, coin2])
+
+            await asyncio.sleep(300)
