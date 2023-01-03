@@ -81,13 +81,20 @@ make install
 
 <img width="732" alt="Screen Shot 2023-01-02 at 4 35 53 PM" src="https://user-images.githubusercontent.com/1130416/210287522-124f344d-5bf1-442a-849b-eb505b08d722.png">
 
+<br>
 
 <br>
 
-#### getting data for a derivative 
+#### getting derivatives data for a currency 
+
+<br>
+
+> **Crypto derivatives** are financial contracts that derive their values from underlying assets.
+
+<br>
 
 ``` 
-cointbot -d usdt
+cointbot -c usdt
 ```
 
 
@@ -124,7 +131,7 @@ example of output:
 
 ----
 
-#### Save price history for a derivative
+#### saving price history for a derivative
 
 ``` 
 cointbot -p usdt
@@ -142,7 +149,7 @@ example of output:
 
 ---
 
-#### Get cointegration for a pair of assets
+#### getting cointegration for a pair of assets
 
 ``` 
 cointbot -i ethusdt btcusdt
@@ -160,7 +167,7 @@ example of output:
 
 ---
 
-#### Get latest z-core signal for a pair of assets.
+#### getting latest z-core signal for a pair of assets.
 
 <br>
 
@@ -186,7 +193,7 @@ example of output:
 
 ---
 
-#### Run backtests
+#### running backtests
 
 <br>
 
@@ -213,7 +220,7 @@ example of output:
 
 ---
 
-#### Deploy and start bot
+#### deploying and starting bot
 
 ``` 
 cointbot -b
