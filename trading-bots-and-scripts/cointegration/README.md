@@ -284,6 +284,23 @@ cointbot -t
 example of output:
 
 ```
+ℹ️ Cointegration loaded from results/cointegration_results.csv
+ℹ️ Price history loaded from results/price_history.json
+ℹ️ Metrics saved to results/backtest_results.csv
+     symbol1   symbol2    spread    zscore
+0    1218.23  16832.82  2.214971  0.443941
+1    1216.79  16824.00  1.412135  0.283846
+2    1217.95  16834.47  1.815774  0.364337
+3    1217.98  16832.03  2.022042  0.405469
+4    1220.95  16857.36  3.162184  0.632827
+..       ...       ...       ...       ...
+195  1215.65  16697.00  9.446706  1.886035
+196  1214.21  16678.00  9.379280  1.872589
+197  1214.18  16673.12  9.701814  1.936907
+198  1215.70  16692.62  9.813120  1.959102
+199  1213.82  16688.65  8.219916  1.641398
+
+[200 rows x 4 columns]
 ```
 
 <br>
