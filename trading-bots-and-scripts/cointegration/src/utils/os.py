@@ -24,6 +24,7 @@ def save_output(destination, data) -> None:
         print(f'Could not save {destination}: {e}')
 
 
+
 def create_dir(result_dir) -> None:
     """Check whether a directory exists and create it if needed."""
 
@@ -144,3 +145,10 @@ def load_config() -> dict:
     except KeyError as e:
         print(f'Cannot extract env variables: {e}. Exiting.')
 
+
+def save_price_history(price_history_dict, outdir, outfile) -> None:
+    """Handle saving the results for price history."""
+
+    create_dir(outdir) 
+    destination = format_path(outdir, outfile)
+    save_output(destination, price_history_dict)
