@@ -130,3 +130,4 @@ class BuybitCex():
                 utils.exit_with_error(f'Could not retrive price history for {coin}: {e}')
 
         return price_history_dict  
+    

@@ -82,13 +82,20 @@ make install
 <img width="732" alt="Screen Shot 2023-01-02 at 4 35 53 PM" src="https://user-images.githubusercontent.com/1130416/210290204-12d18855-cbb8-423f-9ee3-1e6d75013e3a.png">
 
 
+<br>
 
 <br>
 
-#### getting data for a derivative 
+#### getting derivatives data for a currency 
+
+<br>
+
+> **Crypto derivatives** are financial contracts that derive their values from underlying assets.
+
+<br>
 
 ``` 
-cointbot -d usdt
+cointbot -c usdt
 ```
 
 
@@ -125,7 +132,7 @@ example of output:
 
 ----
 
-#### Save price history for a derivative
+#### saving price history for a derivative
 
 ``` 
 cointbot -p usdt
@@ -143,7 +150,7 @@ example of output:
 
 ---
 
-#### Get cointegration for a pair of assets
+#### getting cointegration for a pair of assets
 
 ``` 
 cointbot -i ethusdt btcusdt
@@ -161,7 +168,15 @@ example of output:
 
 ---
 
-#### Get latest z-core signal for a pair of assets.
+#### getting latest z-core signal for a pair of assets.
+
+<br>
+
+> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trading to generate **buy and sell signals**.*
+
+<br>
+
+To see the latest z-score for an asset, run:
 
 ``` 
 cointbot -z ethusdt btcusdt
@@ -179,7 +194,16 @@ example of output:
 
 ---
 
-#### Run backtests
+#### running backtests
+
+<br>
+
+> *I*n the context of crypto trading, **backtesting** is accomplished by **reconstructing**, with **historical data**, trades that would have occurred in the past using rules defined by a given strategy, gauging the **effectiveness of the strategy**.*
+
+<br>
+
+
+To run backtests, run:
 
 ``` 
 cointbot -t
@@ -197,7 +221,7 @@ example of output:
 
 ---
 
-#### Deploy and start bot
+#### deploying and starting bot
 
 ``` 
 cointbot -b
