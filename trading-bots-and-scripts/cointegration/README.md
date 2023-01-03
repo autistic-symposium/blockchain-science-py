@@ -12,7 +12,7 @@
 ```
 1. search for possible crypto perpetual derivative contracts that can be longed/shorted
 2. calculate what pairs are cointegrated (by price history)
-3. check the latest z-score signal, longing when zscore < 0
+3. check the latest z-score signal, longing when z-score < 0
 4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
 5. in any case, average in limit orders or place market orders
 6. also, continue monitoring the z-score for close signals in the future
@@ -33,7 +33,7 @@ The code basically does the following:
 
 ```
 1. get tradeable symbols
-2. get price history and save to JSON
+2. get price history and save it to JSON
 3. calculate and plot cointegration
 4. backtest on a testnet
 ```
@@ -54,7 +54,7 @@ An example of a result:
 ---
 ### setting up
 
-Add info to an `.env` file:
+Add info to a `.env` file:
 
 ```
 cp .env.example .env
@@ -93,6 +93,9 @@ make install
 > **Crypto derivatives** are financial contracts that derive their values from underlying assets.
 
 <br>
+
+
+Run API calls to bybit to query the market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. 
 
 ``` 
 cointbot -c usdt
@@ -134,6 +137,7 @@ example of output:
 
 #### saving price history for a derivative
 
+Retrieve market price kline for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 ``` 
 cointbot -p usdt
 ```
@@ -144,16 +148,29 @@ cointbot -p usdt
 example of output:
 
 ```
+ℹ️ Retriving k-lines for 10000NFTUSDT
+ℹ️ Retriving k-lines for 1000BTTUSDT
+ℹ️ Retriving k-lines for 1000LUNCUSDT
+ℹ️ Retriving k-lines for 1000XECUSDT
+ℹ️ Retriving k-lines for 1INCHUSDT
+(...)
+ℹ️ Retriving k-lines for ZILUSDT
+ℹ️ Retriving k-lines for ZRXUSDT
+ℹ️ Price history saved to results/price_history.json
 ```
 
 <br>
 
 ---
 
-#### getting cointegration for a pair of assets
+#### getting cointegration data
+
+With the price history data (e.g., directly generated in the previous option, inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration data frame (in Pandas).
+
+For that, set the desired `PLIMIT` (p-value limit) and run:
 
 ``` 
-cointbot -i ethusdt btcusdt
+cointbot -i 
 ```
 
 
@@ -162,17 +179,51 @@ cointbot -i ethusdt btcusdt
 example of output:
 
 ```
+ℹ️ Price history loaded from results/price_history.json
+ℹ️ Calculating cointegration for 10000NFTUSDT...
+ℹ️    ✅ Found a hot pair: 10000NFTUSDT and AAVEUSDT
+ℹ️    ✅ Found a hot pair: 10000NFTUSDT and XRPUSDT
+ℹ️    ✅ Found a hot pair: 10000NFTUSDT and ZRXUSDT
+ℹ️ Calculating cointegration for 1000BTTUSDT...
+ℹ️    ✅ Found a hot pair: 1000BTTUSDT and 1INCHUSDT
+ℹ️    ✅ Found a hot pair: 1000BTTUSDT and ACHUSDT
+ℹ️    ✅ Found a hot pair: 1000BTTUSDT and XNOUSDT
+ℹ️ Calculating cointegration for 1000LUNCUSDT...
+ℹ️    ✅ Found a hot pair: 1000LUNCUSDT and LUNA2USDT
+ℹ️ Calculating cointegration for 1000XECUSDT...
+ℹ️    ✅ Found a hot pair: 1000XECUSDT and BATUSDT
+ℹ️    ✅ Found a hot pair: 1000XECUSDT and BICOUSDT
+(...)
+ℹ️ Price history loaded from results/cointration_results.csv
+      hot  pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings    symbol1       symbol2
+299  True   0.039            -3.427942       -3.367006   186.709153              47    DARUSDT   1000BTTUSDT
+569  True   0.008            -3.952940       -3.367006   814.468122              46   QTUMUSDT      REEFUSDT
+99   True   0.002            -4.403082       -3.367006     0.374482              46   ASTRUSDT      CTSIUSDT
+61   True   0.007            -3.992374       -3.367006     0.002553              45    ADAUSDT       BCHUSDT
+80   True   0.034            -3.480315       -3.367006    37.053379              43  ALICEUSDT       XEMUSDT
+..    ...     ...                  ...             ...          ...             ...        ...           ...
+320  True   0.039            -3.427692       -3.367006     1.118496               1   DUSKUSDT     ALPHAUSDT
+322  True   0.039            -3.426715       -3.367006     0.073619               1   DUSKUSDT      API3USDT
+258  True   0.004            -4.211679       -3.367006  9955.362104               1    BNXUSDT  SHIB1000USDT
+265  True   0.030            -3.523876       -3.367006    50.182586               1    BNXUSDT     WAVESUSDT
+172  True   0.003            -4.288047       -3.367006  4335.680819               1    BNBUSDT      COTIUSDT
+
+[662 rows x 8 columns]
 ```
+
+<br>
+
+This table is saved in `OUTPUTDIR/COINTEGRATION_FILE `.
 
 <br>
 
 ---
 
-#### getting latest z-core signal for a pair of assets.
+#### getting the latest z-core signal for a pair of assets.
 
 <br>
 
-> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trading to generate **buy and sell signals**.*
+> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trade to generate **buy and sell signals**.*
 
 <br>
 

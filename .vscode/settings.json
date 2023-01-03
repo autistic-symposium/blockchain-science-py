@@ -1,0 +1,4 @@
+"[vue]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "Vue.volar"
+},
