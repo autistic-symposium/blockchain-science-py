@@ -8,7 +8,6 @@ import argparse
 
 import src.utils.os as util
 import src.utils.bot as bot
-import src.utils.backtesting as test
 from src.markets.bybit import BybitCex
 from src.strategies.cointegration import Cointegrator
 
@@ -29,8 +28,8 @@ def run_menu() -> argparse.ArgumentParser:
     parser.add_argument('-z', dest='zscore', action='store_true',
                         help='Get latest z-core signal. \
                             Example: cointbot -z')
-    parser.add_argument('-t', dest='test', action='store_true', help='Run backtests. \
-                            Example: cointbot -t')
+    parser.add_argument('-t', dest='test', nargs=2, help='Generate backtests. \
+                            Example: cointbot -t ethusdt btcusdt')
     parser.add_argument('-b', dest='bot', action='store_true', help='Deploy and start bot. \
                             Example: cointbot -b')
     return parser
@@ -123,18 +122,21 @@ def run() -> None:
 
 
     ############################
-    #     Run backtests        #
+    #     Get backtests        #
     ############################
     elif args.test:
+        coin1 = args.test[0].upper()
+        coin2 = args.test[1].upper()
 
         if cex == 'BYBIT':
-            backtests_results = test.run_backtests()
+            s = Cointegrator(env_vars)
+            backtests_results = s.get_backtests(coin1, coin2)
 
-            if backtests_results:
-                util.pprint(backtests_results)
+            if not backtests_results.empty:
+                print(backtests_results)
     
             else:
-                util.exit_with_error(f'Could not run backtests for {cex}.')
+                util.exit_with_error(f'Could not get backtests for {cex}.')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')

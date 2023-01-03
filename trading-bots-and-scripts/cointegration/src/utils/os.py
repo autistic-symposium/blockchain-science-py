@@ -150,6 +150,7 @@ def load_config() -> dict:
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
         env_vars['COINTEGRATION_FILE'] = os.getenv("COINTEGRATION_FILE")
         env_vars['ZSCORE_FILE'] = os.getenv("ZSCORE_FILE")
+        env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
         env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
 
         env_vars['CEX'] = os.getenv("CEX")
@@ -204,26 +205,40 @@ def save_cointegration(data: list, key: str, outdir: str, outfile: str) -> pd.Da
     return df
 
 
-def open_zscore(indir: str, infile: str) -> dict:
-    """Handle opening the results for price history."""
+def open_cointegration(indir: str, infile: str) -> dict:
+    """Handle opening the results for cointegration."""
 
     filepath = format_path(indir, infile)
     try:
-        zscore = open_csv(filepath)
-        log_info(f'Zscore loaded from {filepath}')
-        return zscore
+        cointegration = open_csv(filepath)
+        log_info(f'Cointegration loaded from {filepath}')
+        return cointegration
     except FileNotFoundError:
-        log_error(f'Zscore file not found at {filepath}')
+        log_error(f'Cointegration file not found at {filepath}')
         return False
 
 
-def save_zscore(zscore: list, outdir: str, outfile: str) -> None:
-    """Handle saving the results for cointegration."""
+def save_metrics(data: list, outdir: str, outfile: str) -> None:
+    """Handle saving the results for metrics."""
 
-    df = pd.DataFrame(zscore)
+    df = pd.DataFrame(data)
 
-    destination = format_path(outdir, outfile)
-    save_csv(df, destination)
-    log_info(f'Zscore saved to {destination}')
+    if not df.empty:
+        destination = format_path(outdir, outfile)
+        save_csv(df, destination)
+        log_info(f'Metrics saved to {destination}')
 
     return df
+
+
+def open_metrics(indir: str, infile: str) -> dict:
+    """Handle opening the results for metrics."""
+
+    filepath = format_path(indir, infile)
+    try:
+        metrics = open_csv(filepath)
+        log_info(f'Metrics loaded from {filepath}')
+        return metrics
+    except FileNotFoundError:
+        log_error(f'Metrics file not found at {filepath}')
+        return False
