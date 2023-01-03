@@ -168,7 +168,7 @@ example of output:
 
 With the price history data (e.g., directly generated in the previous option, inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration data frame (in Pandas).
 
-For that, set the desired `PLIMIT` (p-value limit that define a "hot" pair) and run:
+For that, set the desired `PLIMIT` (p-value limit that defines a "hot" pair) and run:
 
 ``` 
 cointbot -i 
@@ -275,32 +275,41 @@ example of output:
 Run:
 
 ``` 
-cointbot -t
+cointbot -t <coin1> <coin2>
 ```
 
 
 <br>
 
-example of output:
+example of output for ETHUSDT vs. BTCUSDT:
 
 ```
 ℹ️ Cointegration loaded from results/cointegration_results.csv
 ℹ️ Price history loaded from results/price_history.json
-ℹ️ Metrics saved to results/backtest_results.csv
-     symbol1   symbol2    spread    zscore
-0    1218.23  16832.82  2.214971  0.443941
-1    1216.79  16824.00  1.412135  0.283846
-2    1217.95  16834.47  1.815774  0.364337
-3    1217.98  16832.03  2.022042  0.405469
-4    1220.95  16857.36  3.162184  0.632827
-..       ...       ...       ...       ...
-195  1215.65  16697.00  9.446706  1.886035
-196  1214.21  16678.00  9.379280  1.872589
-197  1214.18  16673.12  9.701814  1.936907
-198  1215.70  16692.62  9.813120  1.959102
-199  1213.82  16688.65  8.219916  1.641398
+ℹ️ Metrics loaded from results/ETHUSDT_BTCUSDT_backtest.csv
+     ETHUSDT   BTCUSDT  ETHUSDT_perc  BTCUSDT_perc    spread    zscore
+0    1218.23  16832.82      1.000000      1.000000  2.214971       NaN
+1    1216.79  16824.00      0.998818      0.999476  1.412135       NaN
+2    1217.95  16834.47      0.999770      1.000098  1.815774       NaN
+3    1217.98  16832.03      0.999795      0.999953  2.022042       NaN
+4    1220.95  16857.36      1.002233      1.001458  3.162184       NaN
+..       ...       ...           ...           ...       ...       ...
+195  1215.65  16697.00      0.997882      0.991931  9.446706  0.533320
+196  1214.21  16678.00      0.996700      0.990802  9.379280  0.443960
+197  1214.18  16673.12      0.996676      0.990513  9.701814  0.499004
+198  1215.70  16692.62      0.997923      0.991671  9.813120  0.685415
+199  1213.82  16688.65      0.996380      0.991435  8.219916 -1.210695
 
-[200 rows x 4 columns]
+[200 rows x 6 columns]
+ℹ️ Saving plot to results/ETHUSDT_BTCUSDT_cointegration.png
+```
+
+The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and backtest file is saved at `OUTPUTDIR/{coin1}_{coin2}_BACKTEST_FILE`.
+
+If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with:
+
+```
+make clean
 ```
 
 <br>
@@ -332,7 +341,6 @@ example of output:
 
 
 * [pair trading](https://robotwealth.com/practical-pairs-trading/)
-* [interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
 * [pybit documentation](https://openbase.com/python/pybit/documentation)
 * [bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
-
+* [interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)

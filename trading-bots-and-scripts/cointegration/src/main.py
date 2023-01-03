@@ -8,6 +8,7 @@ import argparse
 
 import src.utils.os as util
 import src.utils.bot as bot
+import src.utils.plots as plot
 from src.markets.bybit import BybitCex
 from src.strategies.cointegration import Cointegrator
 
@@ -134,6 +135,7 @@ def run() -> None:
 
             if not backtests_results.empty:
                 print(backtests_results)
+                plot.plot_cointegrated_pair(backtests_results, coin1, coin2, env_vars)
     
             else:
                 util.exit_with_error(f'Could not get backtests for {cex}.')

@@ -9,6 +9,7 @@ clean:
 	@rm -rf *.egg-info
 	@rm -rf .tox
 	@rm -rf venv/lib/python*/site-packages/*.egg
+	@rm -rf results/*csv results/*png
 
 install:
 	python3 setup.py install

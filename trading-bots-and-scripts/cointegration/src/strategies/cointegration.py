@@ -70,8 +70,6 @@ class Cointegrator:
         x = df.rolling(center=False, window=1).mean()
         
         df["zscore"] = (x - mean) / std
-        df["zscore"] = df["zscore"].fillna(0)
-        df["zscore"] = (spread - np.mean(spread)) / np.std(spread)
 
         zscore = df["zscore"].astype(float).values
         self.zscore_list.append(zscore)
@@ -120,10 +118,13 @@ class Cointegrator:
         second_set = self._extract_close_prices(price_history[coin2])
 
         df = pd.DataFrame()
-        df['symbol1'] = first_set
-        df['symbol2'] = second_set
-        df["spread"] = self._calculate_spread(first_set, second_set, self._calculate_hedge_ration(first_set, second_set))
-        df["zscore"] = self._calculate_zscore(df["spread"])
+        df[coin1] = first_set
+        df[coin2] = second_set
+        df[f'{coin1}_perc'] = df[coin1] / first_set[0]
+        df[f'{coin2}_perc'] = df[coin2] / second_set[0]
+        df['spread'] = self._calculate_spread(first_set, second_set, \
+                                    self._calculate_hedge_ration(first_set, second_set))
+        df['zscore'] = self._calculate_zscore(df['spread'])
         self.backtest_df = df
 
         utils.save_metrics(self.backtest_df, \
@@ -186,6 +187,8 @@ class Cointegrator:
 
     def get_backtests(self, coin1: str, coin2: str) -> pd.DataFrame:
         """Run backtests for all pairs, based on spread and zscore."""
+
+        self._backtest_file = f'{coin1}_{coin2}_backtest.csv'
 
         if utils.file_exists(self._outdir, self._backtest_file):
             return utils.open_metrics(self._outdir, self._backtest_file)
