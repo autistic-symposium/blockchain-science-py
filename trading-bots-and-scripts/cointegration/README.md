@@ -168,7 +168,7 @@ example of output:
 
 With the price history data (e.g., directly generated in the previous option, inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration data frame (in Pandas).
 
-For that, set the desired `PLIMIT` (p-value limit) and run:
+For that, set the desired `PLIMIT` (p-value limit that define a "hot" pair) and run:
 
 ``` 
 cointbot -i 

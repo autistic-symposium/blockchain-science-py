@@ -17,7 +17,14 @@ class Cointegrator:
     def __init__(self, env_vars: dict):
         self._env_vars = env_vars
         self._pvalue_limit = float(self._env_vars['PLIMIT'])
+        self._outdir = self._env_vars['OUTPUTDIR']
+        self._price_file = self._env_vars['PRICE_HISTORY_FILE']
+        self._cointegration_file = self._env_vars['COINTEGRATION_FILE']
+        self._backtest_file = self._env_vars['BACKTEST_FILE']
+        self._zscore_file = self._env_vars['ZSCORE_FILE']
+
         self.zscore_list = []
+        self.backtest_list = []
 
     #########################
     #   private methods     #
@@ -25,8 +32,7 @@ class Cointegrator:
     def _get_price_history(self) -> dict:
         """Get price history for a given derivative."""
         
-        return utils.open_price_history(self._env_vars['OUTPUTDIR'],
-                                        self._env_vars['PRICE_HISTORY_FILE'])
+        return utils.open_price_history(self._outdir, self._price_file)
 
     def _extract_close_prices(self, prices_list: list) -> list:
         """Extract all close prices info into a list."""
@@ -71,6 +77,15 @@ class Cointegrator:
 
         return df["zscore"].astype(float).values
 
+    def _save_backtest_data(self, first_set: list, second_set: list, spread: list):
+        """Save backtest data."""
+
+        df = pd.DataFrame()
+        df['symbol1'] = first_set
+        df['symbol2'] = second_set
+        df["spread"] = spread
+        #df["zscore"] = self.zscore_list
+
     def _get_cointegration_for_pair(self, first_set: list, second_set: list) -> dict:
         """Calculate co-integration for two tokens."""
 
@@ -91,6 +106,9 @@ class Cointegrator:
 
         # calculate zscore
         self.zscore_list.append(self._calculate_zscore(spread))
+        
+        # save backtest data
+        self._save_backtest_data(first_set, second_set, spread)
 
         # if pvalue is less than 0.05, we can reject the null hypothesis
         if pvalue < self._pvalue_limit and cointegration_value < critical_value:
@@ -104,6 +122,7 @@ class Cointegrator:
                 "hedge_ratio": hedge_ratio,
                 "zero_crossings": zero_crossings
                 }
+
 
     ###########################
     #      public methods     #
@@ -139,17 +158,31 @@ class Cointegrator:
                         cointegration_dict['symbol2'] = symbol2
                         results.append(cointegration_dict)
         
-        utils.save_zscore(self.zscore_list, \
-                    self._env_vars['OUTPUTDIR'], self._env_vars['ZSCORE_FILE'])
+        utils.save_metrics(self.zscore_list, \
+                    self._outdir, self._zscore_file)
+        utils.save_metrics(self.backtest_list, \
+                    self._outdir, self._backtest_file)
         return utils.save_cointegration(results, 'zero_crossings', \
-                    self._env_vars['OUTPUTDIR'], self._env_vars['COINTEGRATION_FILE'])
+                    self._outdir, self._cointegration_file)
 
 
     def get_zscore(self) -> list:
         """Get z-score for a given window."""
 
-        if utils.file_exists(self._env_vars['OUTPUTDIR'], self._env_vars['ZSCORE_FILE']):
-            return utils.open_zscore(self._env_vars['OUTPUTDIR'], self._env_vars['ZSCORE_FILE'])
+        if utils.file_exists(self._outdir, self._zscore_file):
+            return utils.metrics(self._outdir, self._zscore_file)
+        
         else:   
             self.get_cointegration()
             return pd.DataFrame(self.zscore_list)
+
+
+    def get_backtests(self) -> None:
+        """Run backtests for all pairs, based on spread and zscore."""
+
+        if utils.file_exists(self._outdir, self._backtest_file):
+            return utils.open_metrics(self._outdir, self._backtest_file)
+        
+        else:   
+            self.get_cointegration()
+            return pd.DataFrame(self.backtest_list)
