@@ -305,7 +305,7 @@ make clean
 
 ---
 
-#### deploying and starting bot
+#### deploying and starting a trading bot
 
 ``` 
 cointbot -b
