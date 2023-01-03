@@ -46,8 +46,6 @@ An example of a result:
 
 
 
-
-
 <br>
 
 
@@ -79,7 +77,10 @@ make install
 
 <br>
 
-<img width="732" alt="Screen Shot 2023-01-02 at 4 35 53 PM" src="https://user-images.githubusercontent.com/1130416/210290204-12d18855-cbb8-423f-9ee3-1e6d75013e3a.png">
+
+<img width="598" src="https://user-images.githubusercontent.com/1130416/210302882-9c74be58-a2f2-4fd6-8ff6-7112f2c63667.png">
+
+
 
 
 <br>
@@ -137,7 +138,7 @@ example of output:
 
 #### saving price history for a derivative
 
-Retrieve market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
+Retrieve market price kline for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 ``` 
 cointbot -p usdt
 ```
@@ -148,14 +149,14 @@ cointbot -p usdt
 example of output:
 
 ```
-ℹ️ Retrieving k-lines for 10000NFTUSDT
-ℹ️ Retrieving k-lines for 1000BTTUSDT
-ℹ️ Retrieving k-lines for 1000LUNCUSDT
-ℹ️ Retrieving k-lines for 1000XECUSDT
-ℹ️ Retrieving k-lines for 1INCHUSDT
+ℹ️ Retriving k-lines for 10000NFTUSDT
+ℹ️ Retriving k-lines for 1000BTTUSDT
+ℹ️ Retriving k-lines for 1000LUNCUSDT
+ℹ️ Retriving k-lines for 1000XECUSDT
+ℹ️ Retriving k-lines for 1INCHUSDT
 (...)
-ℹ️ Retrieving k-lines for ZILUSDT
-ℹ️ Retrieving k-lines for ZRXUSDT
+ℹ️ Retriving k-lines for ZILUSDT
+ℹ️ Retriving k-lines for ZRXUSDT
 ℹ️ Price history saved to results/price_history.json
 ```
 
