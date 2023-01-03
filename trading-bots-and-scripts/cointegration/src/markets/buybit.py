@@ -16,7 +16,7 @@ class BuybitCex():
 
         self._url = env_vars['BUYBIT_URL']
         self.timeframe = env_vars['TIMEFRAME']
-        self.kline_limit = int(env_vars['KLINES_LIMIT'])
+        self.kline_limit = int(env_vars['KLINE_LIMIT'])
 
         self._symbols_dict = None
         self._session = self._start_buybit_session()

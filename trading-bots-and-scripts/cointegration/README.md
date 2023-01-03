@@ -54,7 +54,7 @@ An example of a result:
 ---
 ### setting up
 
-Add info to an `.env` file:
+Add info to a `.env` file:
 
 ```
 cp .env.example .env
@@ -172,7 +172,7 @@ example of output:
 
 <br>
 
-> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trading to generate **buy and sell signals**.*
+> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trade to generate **buy and sell signals**.*
 
 <br>
 

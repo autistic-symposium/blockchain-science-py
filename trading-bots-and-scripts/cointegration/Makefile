@@ -1,4 +1,4 @@
-.PHONY: clean install install_deps
+.PHONY: clean install install_deps deploy_bot
 
 clean:
 	@find . -iname '*.py[co]' -delete
@@ -15,3 +15,6 @@ install:
 
 install_deps:
 	pip3 install -r requirements.txt
+
+deploy_bot:
+	cointbot -b

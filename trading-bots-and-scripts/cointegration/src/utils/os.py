@@ -122,39 +122,21 @@ def load_config() -> dict:
     load_dotenv(env_file)
 
     try:
-        env_vars['CEX'] = os.getenv("CEX")
-        env_vars['BUYBIT_URL'] = os.getenv("BUYBIT_URL")
-        env_vars['KLINES_LIMIT'] = os.getenv("KLINES_LIMIT")
-        env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
-        env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
+        env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
+        env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
 
-
+        env_vars['CEX'] = os.getenv("CEX")
         env_vars['API_KEY'] = os.getenv("API_KEY")
         env_vars['API_SECRET'] = os.getenv("API_SECRET")
-        env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")
-        env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
-        env_vars['WS_PRIVATE_URL'] = os.getenv("WS_PRIVATE_URL")
-        env_vars['WS_PUBLIC_URL'] = os.getenv("WS_PUBLIC_URL")
+
+        env_vars['BUYBIT_URL'] = os.getenv("BUYBIT_URL")
+        env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
+
         env_vars['TOKEN1'] = os.getenv("TOKEN1")
         env_vars['TOKEN2'] = os.getenv("TOKEN2")
-        env_vars['API_URL'] = os.getenv("API_URL")
-        env_vars['API_KEY'] = os.getenv("API_KEY")
-        env_vars['API_SECRET'] = os.getenv("API_SECRET")
-        env_vars['SIGNAL_POSTIVE'] = os.getenv("SIGNAL_POSTIVE")
-        env_vars['SIGNAL_NEGATIVE'] = os.getenv("SIGNAL_NEGATIVE")
-        env_vars['ROUDING_TOKEN1'] = os.getenv("ROUDING_TOKEN1")
-        env_vars['ROUNDING_TOKEN2'] = os.getenv("ROUNDING_TOKEN2")
-        env_vars['QTY_TOKEN1'] = os.getenv("SIGNAL_NQTY_TOKEN1EGATIVE")
-        env_vars['QTY_TOKEN2'] = os.getenv("QTY_TOKEN2")
-        env_vars['MASS_LOSS_USDT'] = os.getenv("MASS_LOSS_USDT")                
-        env_vars['LIMIT_ORDER_BASIS'] = os.getenv("LIMIT_ORDER_BASIS")      
-        env_vars['TRADEABLE_CAPITAL'] = os.getenv("TRADEABLE_CAPITAL")      
-        env_vars['MAX_TRADES_PER_SIGNAL'] = os.getenv("MAX_TRADES_PER_SIGNAL")      
-        env_vars['STOP_LOSS_FAIL_SAFE'] = os.getenv("STOP_LOSS_FAIL_SAFE")      
-        env_vars['HALTING_TRADE'] = os.getenv("HALTING_TRADE")   
-        env_vars['SIGNAL_TRIGGER_THRESH'] = os.getenv("SIGNAL_TRIGGER_THRESH")   
-        
+        env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")       
+
         set_logging(os.getenv("LOG_LEVEL"))
 
         return env_vars

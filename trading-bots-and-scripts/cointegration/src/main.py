@@ -82,7 +82,7 @@ def run() -> None:
                 util.pprint(price_history)
     
             else:
-                util.exit_with_error(f'Could not retrieve price history for {cex}')
+                util.exit_with_error(f'Could not retrieve price history for {coin}')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')
@@ -99,10 +99,10 @@ def run() -> None:
             cointegration = s.get_cointegration()
 
             if cointegration:
-                print('tba')
-    
+                util.pprint(cointegration)
+                print(f'Data and plot saved to {env_vars["OUTPUTDIR"]}/{env_vars["COINTEGRATION_FILE"]}')
             else:
-                util.exit_with_error(f'Could not retrieve cointegration for {coin1}, {coin2}')
+                util.exit_with_error(f'No data found for {coin1}, {coin2}.')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')
@@ -120,7 +120,7 @@ def run() -> None:
             zscore = s.get_zscore()
 
             if zscore:
-                print('tba')
+                util.pprint(zscore)
     
             else:
                 util.exit_with_error(f'Could not retrieve zscore for {coin1}, {coin2}')
@@ -138,7 +138,7 @@ def run() -> None:
             backtests_results = test.run_backtests()
 
             if backtests_results:
-                print('tba')
+                util.pprint(backtests_results)
     
             else:
                 util.exit_with_error(f'Could not run backtests')
@@ -156,7 +156,7 @@ def run() -> None:
             bot_results = bot.run_bot()
 
             if bot_results:
-                print('tba')
+                util.pprint(bot_results)
     
             else:
                 util.exit_with_error(f'Could not deploy bot')
