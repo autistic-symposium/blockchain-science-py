@@ -24,7 +24,7 @@
 
 ---
 
-### code
+### strategy code
 
 
 We are using [bybit testnet](https://testnet.bybit.com/) for this example.
@@ -78,7 +78,13 @@ make install
 ### usage
 
 <br>
-##### getting data for a derivative 
+
+<img width="732" alt="Screen Shot 2023-01-02 at 4 35 53 PM" src="https://user-images.githubusercontent.com/1130416/210287522-124f344d-5bf1-442a-849b-eb505b08d722.png">
+
+
+<br>
+
+#### getting data for a derivative 
 
 ``` 
 cointbot -d usdt
@@ -117,7 +123,8 @@ example of output:
 <br>
 
 ----
-##### Save price history for a derivative
+
+#### Save price history for a derivative
 
 ``` 
 cointbot -p usdt
@@ -135,7 +142,7 @@ example of output:
 
 ---
 
-##### Get cointegration for a pair of assets
+#### Get cointegration for a pair of assets
 
 ``` 
 cointbot -i ethusdt btcusdt
@@ -153,7 +160,7 @@ example of output:
 
 ---
 
-##### Get latest z-core signal for a pair of assets.
+#### Get latest z-core signal for a pair of assets.
 
 ``` 
 cointbot -z ethusdt btcusdt
@@ -171,8 +178,7 @@ example of output:
 
 ---
 
-
-##### Run backtests
+#### Run backtests
 
 ``` 
 cointbot -t
@@ -190,8 +196,7 @@ example of output:
 
 ---
 
-
-##### Deploy and start bot
+#### Deploy and start bot
 
 ``` 
 cointbot -b
