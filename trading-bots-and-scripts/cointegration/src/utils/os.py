@@ -8,13 +8,14 @@ import sys
 import json
 import copy
 import logging
+import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
 from pprint import PrettyPrinter
 
 
-def save_output(destination: str, data: dict) -> None:
-    """Save data to a destination in disk."""
+def save_json(destination: str, data: dict) -> None:
+    """Save JSON data to a destination in disk."""
 
     try:
         with open(destination, 'w', encoding='utf-8') as outfile:
@@ -23,9 +24,8 @@ def save_output(destination: str, data: dict) -> None:
     except (IOError, TypeError) as e:
         print(f'Could not save {destination}: {e}')
 
-
-def open_input(filepath: str) -> dict:
-    """Load and parse a file."""
+def open_json(filepath: str) -> dict:
+    """Load and parse a JSON file."""
 
     try:
         with open(filepath, 'r', encoding='utf-8') as infile:
@@ -34,6 +34,12 @@ def open_input(filepath: str) -> dict:
     except (IOError, FileNotFoundError, TypeError) as e:
         print(f'Failed to parse: "{filepath}": {e}')
 
+
+def save_csv(df: pd.DataFrame, destination: str) -> None:
+    """Save CSV data to a destination in disk."""
+    
+    df.to_csv(destination, index=False)
+            
 
 def create_dir(result_dir: str) -> None:
     """Check whether a directory exists and create it if needed."""
@@ -132,7 +138,7 @@ def load_config() -> dict:
 
         env_vars['BUYBIT_URL'] = os.getenv("BUYBIT_URL")
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
-
+        env_vars['PLIMIT'] = os.getenv("PLIMIT")
         env_vars['TOKEN1'] = os.getenv("TOKEN1")
         env_vars['TOKEN2'] = os.getenv("TOKEN2")
         env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")       
@@ -150,7 +156,7 @@ def save_price_history(price_history: dict, outdir: str, outfile: str) -> None:
 
     create_dir(outdir) 
     destination = format_path(outdir, outfile)
-    save_output(destination, price_history)
+    save_json(destination, price_history)
     log_info(f'Price history saved to {destination}')
 
 
@@ -158,8 +164,20 @@ def open_price_history(indir: str, infile: str) -> dict:
     """Handle opening the results for price history."""
 
     filepath = format_path(indir, infile)
-    price_history = open_input(filepath)
+    price_history = open_json(filepath)
     log_info(f'Price history loaded from {filepath}')
 
     return price_history
 
+
+def save_cointegration(data: list, key: str, outdir: str, outfile: str) -> pd.DataFrame:
+    """Handle saving the results for cointegration."""
+
+    df = pd.DataFrame(data)
+    df = df.sort_values(key, ascending=False)
+
+    filepath = format_path(outdir, outfile)
+    save_csv(df, filepath)
+    log_info(f'Price history loaded from {filepath}')
+
+    return df

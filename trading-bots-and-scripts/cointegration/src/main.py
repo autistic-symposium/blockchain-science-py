@@ -97,7 +97,6 @@ def run() -> None:
 
             if not cointegration.empty:
                 print(cointegration)
-                print(f'Data and plot saved to {env_vars["OUTPUTDIR"]}/{env_vars["COINTEGRATION_FILE"]}')
             else:
                 util.exit_with_error(f'No cointegration data found for {cex}.')
 
@@ -115,8 +114,7 @@ def run() -> None:
             zscore = s.get_zscore()
 
             if zscore:
-                util.pprint(zscore)
-    
+                print(zscore)
             else:
                 util.exit_with_error(f'No z-score data found for {cex}.')
 

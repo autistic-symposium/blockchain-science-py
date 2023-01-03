@@ -16,6 +16,7 @@ class Cointegrator:
 
     def __init__(self, env_vars: dict):
         self._env_vars = env_vars
+        self._pvalue = float(self._env_vars['PLIMIT'])
 
 
     #########################
@@ -71,7 +72,7 @@ class Cointegrator:
         zero_crossings = len(np.where(np.diff(np.sign(spread)))[0])
 
         # if pvalue is less than 0.05, we can reject the null hypothesis
-        if pvalue < 0.05 and cointegration_value < critical_value:
+        if pvalue < self._pvalue and cointegration_value < critical_value:
             hot = True
 
         return {
@@ -93,10 +94,8 @@ class Cointegrator:
 
         results = []        
         pairs_list = []
-
         price_history = self._get_price_history()
 
-        count = 0
         for symbol1 in price_history.keys():
             utils.log_info(f'Calculating cointegration for {symbol1}...')
 
@@ -113,31 +112,15 @@ class Cointegrator:
                     cointegration_dict = self._calculate_cointegration(first_set, second_set)
 
                     if cointegration_dict['hot'] == True:
-                        utils.log_info(f'Found a hot pair: {symbol1} and {symbol2}')
+                        utils.log_info(f'   ✅ Found a hot pair: {symbol1} and {symbol2}')
                         pairs_list.append(this_symbol)
                         cointegration_dict['symbol1'] = symbol1
                         cointegration_dict['symbol2'] = symbol2
                         results.append(cointegration_dict)
-
-                    count += 1
-            if count > 100:
-                break
-
         
-        #self._output_results(results)
-        
-        df_coint = pd.DataFrame(results)
-        df_coint = df_coint.sort_values('zero_crossings', ascending=False)
-        df_coint.to_csv(self._env_vars["OUTPUTDIR"] + "/" + self._env_vars["COINTEGRATION_FILE"], index=False)
-        
-        return df_coint
+        return utils.save_cointegration(results, 'zero_crossings', \
+                    self._env_vars['OUTPUTDIR'], self._env_vars['COINTEGRATION_FILE'])
 
-
-
-
-                    
-
-        
 
     def get_zscore(self) -> list:
         """Get zscore for a given window."""
