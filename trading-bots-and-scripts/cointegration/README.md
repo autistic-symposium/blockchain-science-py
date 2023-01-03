@@ -222,7 +222,7 @@ This table is saved in `OUTPUTDIR/COINTEGRATION_FILE`.
 
 ---
 
-#### getting the z-core signal from cointegration
+#### getting z-score signal from cointegration
 
 <br>
 
@@ -263,16 +263,16 @@ example of output:
 
 ---
 
-#### running backtests
+#### getting backtest metrics
 
 <br>
 
-> *I*n the context of crypto trading, **backtesting** is accomplished by **reconstructing**, with **historical data**, trades that would have occurred in the past using rules defined by a given strategy, gauging the **effectiveness of the strategy**.*
+> *In the context of crypto trading, **backtesting** is accomplished by **reconstructing**, with **historical data**, trades that would have occurred in the past using rules defined by a given strategy, gauging the **effectiveness of the strategy**.*
 
 <br>
 
 
-To run backtests, run:
+Run:
 
 ``` 
 cointbot -t

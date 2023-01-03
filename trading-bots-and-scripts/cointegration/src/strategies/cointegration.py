@@ -24,7 +24,7 @@ class Cointegrator:
         self._zscore_file = self._env_vars['ZSCORE_FILE']
 
         self.zscore_list = []
-        self.backtest_list = []
+        self.backtest_df = None
 
     #########################
     #   private methods     #
@@ -59,11 +59,9 @@ class Cointegrator:
         model = sm.OLS(first_set, second_set)
         return model.fit().params[0]
 
-    def _calculate_zscore(self, spread: list) -> float:
-        """
-            Calculate zscore.
-            e.g., (spread - np.mean(spread)) / np.std(spread)
-        """
+    def _calculate_zscore(self, spread: list) -> list:
+        """Calculate zscore."""
+
         df = pd.DataFrame(spread)
 
         window = int(self._env_vars['ZSCORE_WINDOW'])
@@ -75,16 +73,9 @@ class Cointegrator:
         df["zscore"] = df["zscore"].fillna(0)
         df["zscore"] = (spread - np.mean(spread)) / np.std(spread)
 
-        return df["zscore"].astype(float).values
-
-    def _save_backtest_data(self, first_set: list, second_set: list, spread: list):
-        """Save backtest data."""
-
-        df = pd.DataFrame()
-        df['symbol1'] = first_set
-        df['symbol2'] = second_set
-        df["spread"] = spread
-        #df["zscore"] = self.zscore_list
+        zscore = df["zscore"].astype(float).values
+        self.zscore_list.append(zscore)
+        return zscore
 
     def _get_cointegration_for_pair(self, first_set: list, second_set: list) -> dict:
         """Calculate co-integration for two tokens."""
@@ -105,10 +96,7 @@ class Cointegrator:
         zero_crossings = len(np.where(np.diff(np.sign(spread)))[0])
 
         # calculate zscore
-        self.zscore_list.append(self._calculate_zscore(spread))
-        
-        # save backtest data
-        self._save_backtest_data(first_set, second_set, spread)
+        self._calculate_zscore(spread)
 
         # if pvalue is less than 0.05, we can reject the null hypothesis
         if pvalue < self._pvalue_limit and cointegration_value < critical_value:
@@ -124,12 +112,33 @@ class Cointegrator:
                 }
 
 
+    def _save_backtest_data(self, coin1: str, coin2: str) -> None:
+        """Save backtest data to file."""
+
+        price_history = self._get_price_history()
+        first_set = self._extract_close_prices(price_history[coin1])
+        second_set = self._extract_close_prices(price_history[coin2])
+
+        df = pd.DataFrame()
+        df['symbol1'] = first_set
+        df['symbol2'] = second_set
+        df["spread"] = self._calculate_spread(first_set, second_set, self._calculate_hedge_ration(first_set, second_set))
+        df["zscore"] = self._calculate_zscore(df["spread"])
+        self.backtest_df = df
+
+        utils.save_metrics(self.backtest_df, \
+                    self._outdir, self._backtest_file)
+
+
     ###########################
     #      public methods     #
     ###########################
 
     def get_cointegration(self) -> dict:
         """Get and store price history for all available pairs."""
+
+        if utils.file_exists(self._outdir, self._cointegration_file):
+            return utils.open_cointegration(self._outdir, self._cointegration_file)
 
         results = []        
         pairs_list = []
@@ -160,8 +169,6 @@ class Cointegrator:
         
         utils.save_metrics(self.zscore_list, \
                     self._outdir, self._zscore_file)
-        utils.save_metrics(self.backtest_list, \
-                    self._outdir, self._backtest_file)
         return utils.save_cointegration(results, 'zero_crossings', \
                     self._outdir, self._cointegration_file)
 
@@ -177,7 +184,7 @@ class Cointegrator:
             return pd.DataFrame(self.zscore_list)
 
 
-    def get_backtests(self) -> None:
+    def get_backtests(self, coin1: str, coin2: str) -> pd.DataFrame:
         """Run backtests for all pairs, based on spread and zscore."""
 
         if utils.file_exists(self._outdir, self._backtest_file):
@@ -185,4 +192,5 @@ class Cointegrator:
         
         else:   
             self.get_cointegration()
-            return pd.DataFrame(self.backtest_list)
+            self._save_backtest_data(coin1, coin2)
+            return self.backtest_df
