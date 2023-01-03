@@ -79,7 +79,8 @@ make install
 
 <br>
 
-<img width="732" alt="Screen Shot 2023-01-02 at 4 35 53 PM" src="https://user-images.githubusercontent.com/1130416/210287522-124f344d-5bf1-442a-849b-eb505b08d722.png">
+<img width="732" alt="Screen Shot 2023-01-02 at 4 35 53 PM" src="https://user-images.githubusercontent.com/1130416/210290204-12d18855-cbb8-423f-9ee3-1e6d75013e3a.png">
+
 
 
 <br>
