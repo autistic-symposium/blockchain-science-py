@@ -7,42 +7,19 @@
 
 <br>
 
-### strategy tl; dr
+### tl; dr
+
+* we are using [bybit testnet](https://testnet.bybit.com/) for backtesting.
+* this bot does the following:
 
 ```
-1. search for possible crypto perpetual derivative contracts that can be longed/shorted
-2. calculate what pairs are cointegrated (by price history)
-3. check the latest z-score signal, longing when z-score < 0
-4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
-5. in any case, average in limit orders or place market orders
-6. also, continue monitoring the z-score for close signals in the future
+        1. search for possible crypto perpetual derivative contracts that can be longed/shorted
+        2. calculate what pairs are cointegrated (by price history)
+        3. check the latest z-score signal, backtest, and long when z-score < 0
+        4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
+        5. average in limit orders or place market orders
+        6. continue monitoring the z-score for close signals in the future
 ```
-
-
-
-<br>
-
----
-
-### strategy code
-
-
-We are using [bybit testnet](https://testnet.bybit.com/) for this example.
-
-The code basically does the following:
-
-```
-1. get tradeable symbols
-2. get price history and save it to JSON
-3. calculate and plot cointegration
-4. backtest on a testnet
-```
-
-<br>
-
-An example of a result:
-
-![Figure_1](https://user-images.githubusercontent.com/1130416/200736166-a8672149-7e49-4522-8cfa-f72f891ca00f.png)
 
 
 
@@ -78,7 +55,8 @@ make install
 <br>
 
 
-<img width="598" src="https://user-images.githubusercontent.com/1130416/210302882-9c74be58-a2f2-4fd6-8ff6-7112f2c63667.png">
+<img width="598" src="https://user-images.githubusercontent.com/1130416/210318231-36c74dac-351a-4aea-95c0-6da15d907823.png">
+
 
 
 
@@ -304,7 +282,18 @@ example of output for ETHUSDT vs. BTCUSDT:
 ℹ️ Saving plot to results/ETHUSDT_BTCUSDT_cointegration.png
 ```
 
+<br>
+
 The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and backtest file is saved at `OUTPUTDIR/{coin1}_{coin2}_BACKTEST_FILE`.
+
+<br>
+
+
+<img width="1391" alt="Screen Shot 2023-01-02 at 11 44 09 PM" src="https://user-images.githubusercontent.com/1130416/210318333-4542e096-74fd-4381-8aae-886893a875c6.png">
+
+
+<br>
+
 
 If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with:
 
