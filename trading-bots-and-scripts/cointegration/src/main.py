@@ -79,7 +79,6 @@ def run() -> None:
                 outdir = env_vars['OUTPUTDIR']
 
                 util.save_price_history(price_history, outdir, prices_outfile)
-                util.pprint(price_history)
     
             else:
                 util.exit_with_error(f'Could not retrieve price history for {coin}')

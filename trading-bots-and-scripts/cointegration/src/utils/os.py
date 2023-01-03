@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-# src/utils.py
+# src/utils/os.py
 # author: steinkirch
 # Utils methods.
 
@@ -13,7 +13,7 @@ from dotenv import load_dotenv
 from pprint import PrettyPrinter
 
 
-def save_output(destination, data) -> None:
+def save_output(destination: str, data: dict) -> None:
     """Save data to a destination in disk."""
 
     try:
@@ -24,32 +24,7 @@ def save_output(destination, data) -> None:
         print(f'Could not save {destination}: {e}')
 
 
-
-def create_dir(result_dir) -> None:
-    """Check whether a directory exists and create it if needed."""
-
-    try:
-        if not os.path.isdir(result_dir):
-            os.mkdir(result_dir)
-
-    except OSError as e:
-        print(f'Could not create {result_dir}: {e}')
-
-
-def deep_copy(dict_to_clone) -> dict:
-    """Deep copy (not reference copy) to a dict."""
-
-    return copy.deepcopy(dict_to_clone)
-
-
-def exit_with_error(message) -> None:
-    """Log an error message and halt the program."""
-
-    log_error(message)
-    sys.exit(1)
-
-
-def open_json(filepath) -> dict:
+def open_input(filepath: str) -> dict:
     """Load and parse a file."""
 
     try:
@@ -60,13 +35,37 @@ def open_json(filepath) -> dict:
         print(f'Failed to parse: "{filepath}": {e}')
 
 
-def format_path(dir_path, filename) -> str:
+def create_dir(result_dir: str) -> None:
+    """Check whether a directory exists and create it if needed."""
+
+    try:
+        if not os.path.isdir(result_dir):
+            os.mkdir(result_dir)
+
+    except OSError as e:
+        print(f'Could not create {result_dir}: {e}')
+
+
+def deep_copy(dict_to_clone: dict) -> dict:
+    """Deep copy (not reference copy) to a dict."""
+
+    return copy.deepcopy(dict_to_clone)
+
+
+def exit_with_error(message: str) -> None:
+    """Log an error message and halt the program."""
+
+    log_error(message)
+    sys.exit(1)
+
+
+def format_path(dir_path: str, filename: str) -> str:
     """Format a OS full filepath."""
 
     return os.path.join(dir_path, filename)
 
 
-def pprint(data, indent=None) -> None:
+def pprint(data: dict, indent=None) -> None:
     """Print dicts and data in a suitable format"""
 
     print()
@@ -76,25 +75,25 @@ def pprint(data, indent=None) -> None:
     print()
 
 
-def log_error(string) -> None:
+def log_error(string: str) -> None:
     """Print STDOUT error using the logging library."""
 
     logging.error('🚨 %s', string)
 
 
-def log_info(string) -> None:
+def log_info(string: str) -> None:
     """Print STDOUT info using the logging library."""
 
     logging.info('ℹ️ %s', string)
 
 
-def log_debug(string) -> None:
+def log_debug(string: str) -> None:
     """Print STDOUT debug using the logging library."""
 
     logging.debug('🟨 %s', string)
 
 
-def set_logging(log_level) -> None:
+def set_logging(log_level: str) -> None:
     """Set logging level according to .env config."""
 
     if log_level.lower() == 'info':
@@ -146,9 +145,21 @@ def load_config() -> dict:
         print(f'Cannot extract env variables: {e}. Exiting.')
 
 
-def save_price_history(price_history_dict, outdir, outfile) -> None:
+def save_price_history(price_history: dict, outdir: str, outfile: str) -> None:
     """Handle saving the results for price history."""
 
     create_dir(outdir) 
     destination = format_path(outdir, outfile)
-    save_output(destination, price_history_dict)
+    save_output(destination, price_history)
+    log_info(f'Price history saved to {destination}')
+
+
+def open_price_history(indir: str, infile: str) -> dict:
+    """Handle opening the results for price history."""
+
+    filepath = format_path(indir, infile)
+    price_history = open_input(filepath)
+    log_info(f'Price history loaded from {filepath}')
+
+    return price_history
+

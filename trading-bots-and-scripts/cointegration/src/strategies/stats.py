@@ -1,6 +1,6 @@
 
 # -*- encoding: utf-8 -*-
-# src/stats.py
+# src/strategies/stats.py
 # author: steinkirch
 # Statistics API methods.
 
@@ -11,13 +11,6 @@ import statsmodels.api as sm
 import matplotlib.pyplot as plt
 
 from src.utils import open_json, format_path, create_dir
-
-
-def get_cointegration(coin1, coin2) -> dict:
-        """Get and store price histry for all available pairs."""
-        pass
-
-    
 
 def get_pair_trends(price_history_file, token1, token2, z_score_window) -> None:
     """Plot prices and trends."""
