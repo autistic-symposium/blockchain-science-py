@@ -46,7 +46,7 @@ class BuybitCex():
                     result.append(symbol)
 
         except KeyError as e:
-            utils.exit_with_error(f'Could not retrive symbols for {coin}: {e}')
+            utils.exit_with_error(f'Could not retrieve symbols for {coin}: {e}')
 
         return result
     
@@ -110,7 +110,7 @@ class BuybitCex():
 
 
     def get_price_history(self, coin) -> dict:
-        """Get and store price histry for all available pairs."""
+        """Get and store price history for all available pairs."""
 
         price_history_dict = {}
         coin_info = self.get_coin_info(coin)
@@ -127,7 +127,7 @@ class BuybitCex():
                     price_history_dict[ticker] = price_history
 
             except KeyError as e:
-                utils.exit_with_error(f'Could not retrive price history for {coin}: {e}')
+                utils.exit_with_error(f'Could not retrieve price history for {coin}: {e}')
 
         return price_history_dict  
     

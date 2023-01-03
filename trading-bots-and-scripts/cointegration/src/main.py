@@ -62,7 +62,7 @@ def run() -> None:
             else:
                 util.exit_with_error(f'No data found for {coin}.')
         else:
-            util.exit_with_error(f'CEX not supoorted: {cex}')
+            util.exit_with_error(f'CEX not supported: {cex}')
 
     ############################
     #     Get price history    #
