@@ -9,7 +9,7 @@ import argparse
 import src.utils.os as util
 import src.utils.bot as bot
 import src.utils.backtesting as test
-from src.markets.buybit import BuybitCex
+from src.markets.bybit import BybitCex
 from src.strategies.cointegration import Cointegrator
 
 
@@ -53,8 +53,8 @@ def run() -> None:
     if args.coin:
         coin = args.coin[0].upper()
 
-        if cex == 'BUYBIT':
-            b = BuybitCex(env_vars)
+        if cex == 'BYBIT':
+            b = BybitCex(env_vars)
             coin_info = b.get_coin_info(coin)
 
             if coin_info:
@@ -70,8 +70,8 @@ def run() -> None:
     elif args.price:
         coin = args.price[0].upper()
 
-        if cex == 'BUYBIT':
-            b = BuybitCex(env_vars)
+        if cex == 'BYBIT':
+            b = BybitCex(env_vars)
             price_history = b.get_price_history(coin)
 
             if price_history:
@@ -91,7 +91,7 @@ def run() -> None:
     ############################
     elif args.cointegration:
 
-        if cex == 'BUYBIT':
+        if cex == 'BYBIT':
             s = Cointegrator(env_vars)
             cointegration = s.get_cointegration()
 
@@ -109,7 +109,7 @@ def run() -> None:
     ############################
     elif args.zscore:
 
-        if cex == 'BUYBIT':
+        if cex == 'BYBIT':
             s = Cointegrator(env_vars)
             zscore = s.get_zscore()
 
@@ -127,7 +127,7 @@ def run() -> None:
     ############################
     elif args.test:
 
-        if cex == 'BUYBIT':
+        if cex == 'BYBIT':
             backtests_results = test.run_backtests()
 
             if backtests_results:
@@ -145,7 +145,7 @@ def run() -> None:
     ############################
     elif args.bot:
 
-        if cex == 'BUYBIT':
+        if cex == 'BYBIT':
             bot_results = bot.run_bot()
 
             if bot_results:

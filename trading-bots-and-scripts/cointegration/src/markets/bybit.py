@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
-# src/markets/buybit.py
+# src/markets/bybit.py
 # author: steinkirch
-# buybit API methods.
+# bybit API methods.
 
 import time
 import datetime
@@ -9,25 +9,25 @@ import src.utils.os as utils
 from pybit import HTTP
 
 
-class BuybitCex():
-    """Methods for Buybit."""
+class BybitCex():
+    """Methods for Bybit."""
 
     def __init__(self, env_vars: dict):
-        """Initialize Buybit class."""
+        """Initialize Bybit class."""
 
-        self._url = env_vars['BUYBIT_URL']
+        self._url = env_vars['BYBIT_URL']
 
         self.timeframe = env_vars['TIMEFRAME']
         self.kline_limit = int(env_vars['KLINE_LIMIT'])
 
         self._symbols_dict = None
-        self._session = self._start_buybit_session()
+        self._session = self._start_bybit_session()
 
     #########################
     #   private methods     #
     #########################
-    def _start_buybit_session(self) -> object:
-        """Start a buybit session."""
+    def _start_bybit_session(self) -> object:
+        """Start a bybit session."""
         return HTTP(self._url)
 
     def _parse_symbols(self, coin: str) -> list:

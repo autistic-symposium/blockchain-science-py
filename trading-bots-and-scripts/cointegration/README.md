@@ -298,4 +298,6 @@ example of output:
 
 * [pair trading](https://robotwealth.com/practical-pairs-trading/)
 * [interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
+* [pybit documentation](https://openbase.com/python/pybit/documentation)
+* [bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
 

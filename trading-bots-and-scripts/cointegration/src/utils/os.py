@@ -136,7 +136,7 @@ def load_config() -> dict:
         env_vars['API_KEY'] = os.getenv("API_KEY")
         env_vars['API_SECRET'] = os.getenv("API_SECRET")
 
-        env_vars['BUYBIT_URL'] = os.getenv("BUYBIT_URL")
+        env_vars['BYBIT_URL'] = os.getenv("BYBIT_URL")
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
         env_vars['PLIMIT'] = os.getenv("PLIMIT")
         env_vars['TOKEN1'] = os.getenv("TOKEN1")
