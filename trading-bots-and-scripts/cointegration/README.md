@@ -137,7 +137,7 @@ example of output:
 
 #### saving price history for a derivative
 
-Retrieve market price kline for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
+Retrieve market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 ``` 
 cointbot -p usdt
 ```
@@ -148,14 +148,14 @@ cointbot -p usdt
 example of output:
 
 ```
-ℹ️ Retriving k-lines for 10000NFTUSDT
-ℹ️ Retriving k-lines for 1000BTTUSDT
-ℹ️ Retriving k-lines for 1000LUNCUSDT
-ℹ️ Retriving k-lines for 1000XECUSDT
-ℹ️ Retriving k-lines for 1INCHUSDT
+ℹ️ Retrieving k-lines for 10000NFTUSDT
+ℹ️ Retrieving k-lines for 1000BTTUSDT
+ℹ️ Retrieving k-lines for 1000LUNCUSDT
+ℹ️ Retrieving k-lines for 1000XECUSDT
+ℹ️ Retrieving k-lines for 1INCHUSDT
 (...)
-ℹ️ Retriving k-lines for ZILUSDT
-ℹ️ Retriving k-lines for ZRXUSDT
+ℹ️ Retrieving k-lines for ZILUSDT
+ℹ️ Retrieving k-lines for ZRXUSDT
 ℹ️ Price history saved to results/price_history.json
 ```
 

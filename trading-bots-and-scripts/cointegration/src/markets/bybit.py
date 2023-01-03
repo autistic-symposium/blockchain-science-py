@@ -88,7 +88,7 @@ class BybitCex():
                     limit=self.kline_limit
                 )
 
-            utils.log_info(f'Retriving k-lines for {coin}')
+            utils.log_info(f'Retrieving k-lines for {coin}')
             
             time.sleep(0.1)
 
