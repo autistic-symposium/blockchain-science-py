@@ -1,41 +1,58 @@
-## Cointegration strategy
+## Cointegration bot
+
+<br>
+
+> A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.
+
 
 <br>
 
 ### tl; dr
 
-* search for all possible cryptos that we can long or short using some CEX api (e.g. [bybit testnet](https://testnet.bybit.com/), with their perpetual derivatives contracts. 
-* then find what pairs are cointegrated.
-* check latest zscore signal (long when zscore is negative).
-* if "hot": confirm long vs. short tokens and confirm initial capital.
-* in any case, average in limit postonly orders or place market orders.
-* monitor zscore for close signal.
+```
+1. search for possible crypto perpetual derivative contracts that can be longed/shorted
+2. calculate what pairs are cointegrated (by price history)
+3. check the latest z-score signal, longing when zscore < 0
+4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
+5. in any case, average in limit orders or place market orders
+6. continue monitoring the z-score for close signals in the future
+```
 
 
-> A perpetual contract is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.
 
 <br>
+
+---
+
+### code
+
+
+We are using [bybit testnet](https://testnet.bybit.com/) for this example.
+
+The code basically does the following:
+
+```
+1. get tradeable symbols
+2. get price history and save to JSON
+3. calculate and plot cointegration
+4. backtest on a testnet
+```
+
+<br>
+
+An example of a result:
 
 ![Figure_1](https://user-images.githubusercontent.com/1130416/200736166-a8672149-7e49-4522-8cfa-f72f891ca00f.png)
 
 
 
-<br>
-
----
-### Strategy steps
-
-1. Get tradeable symbols
-2. Get price history and save to `JSON`
-3. Calculate and plot cointegration
-4. Backtest on some testnet
 
 
 <br>
 
 
 ---
-### Installing
+### setting up
 
 ```
 virtualenv venv
@@ -46,12 +63,25 @@ make install
 
 <br>
 
+----
 
-
-#### CLI usage
+### usage
 
 ``` 
 cointbot -s buybit usdt
 ```
 
+
+<br>
+
+---
+
+
+### resources
+
+<br>
+
+
+* [pair trading](https://robotwealth.com/practical-pairs-trading/)
+* [interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
 
