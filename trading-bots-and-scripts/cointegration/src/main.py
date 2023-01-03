@@ -7,23 +7,29 @@
 import argparse
 
 import src.utils.os as utils
-from src.cexes.buybit import BuybitCex
+from src.markets.buybit import BuybitCex
 
 
 def run_menu() -> argparse.ArgumentParser:
     """Run the menu for this module."""
 
     parser = argparse.ArgumentParser(description='🏭 cointbot 🪙')
-    parser.add_argument('-c', dest='coin', nargs=1,
-                        help='Get data for a currency (coin). \
-                            Example: cointbot usdt')
+    parser.add_argument('-d', dest='derivatives', nargs=1,
+                        help='Get data for a derivative. \
+                            Example: cointbot -d usdt')
     parser.add_argument('-p', dest='price', nargs=1,
-                        help='Save price history for currency (coin). \
-                            Example: cointbot usdt')
-    parser.add_argument('-i', dest='pairs', nargs=3,
-                        help='Get cointegration for a pair of tokens \
-                            Example: cointbot <price history file.json> maticusdt stxusdt')
-    parser.add_argument('-b', dest='bot', help='Start bot')
+                        help='Save price history for a derivative. \
+                            Example: cointbot -p usdt')
+    parser.add_argument('-i', dest='pairs', nargs=2,
+                        help='Get cointegration for a pair of assets. \
+                            Example: cointbot -i ethusdt btcusdt')
+    parser.add_argument('-z', dest='zscore', nargs=2,
+                        help='Get latest z-core signal for a pair of assets. \
+                            Example: cointbot -z ethusdt btcusdt')
+    parser.add_argument('-t', dest='test', help='Run backtests. \
+                            Example: cointbot -t')
+    parser.add_argument('-b', dest='bot', help='Deploy and start bot. \
+                            Example: cointbot -b')
     return parser
 
 
@@ -40,8 +46,8 @@ def run() -> None:
     ############################
     #     Get coin info        #
     ############################
-    if args.coin:
-        coin = args.coin[0].upper()
+    if args.derivatives:
+        coin = args.derivatives[0].upper()
 
         if cex == 'BUYBIT':
             b = BuybitCex(env_vars)
@@ -87,7 +93,7 @@ def run() -> None:
             pass
 
         else:
-            utils.exit_with_error(f'CEX not supoorted: {cex}')
+            utils.exit_with_error(f'CEX not supported: {cex}')
 
 
     ############################

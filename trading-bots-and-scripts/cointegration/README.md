@@ -2,12 +2,12 @@
 
 <br>
 
-> A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.
+> *A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.*
 
 
 <br>
 
-### tl; dr
+### strategy tl; dr
 
 ```
 1. search for possible crypto perpetual derivative contracts that can be longed/shorted
@@ -15,7 +15,7 @@
 3. check the latest z-score signal, longing when zscore < 0
 4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
 5. in any case, average in limit orders or place market orders
-6. continue monitoring the z-score for close signals in the future
+6. also, continue monitoring the z-score for close signals in the future
 ```
 
 
@@ -54,6 +54,16 @@ An example of a result:
 ---
 ### setting up
 
+Add info to an `.env` file:
+
+```
+cp .env.example .env
+vim .env
+```
+
+
+Install with:
+
 ```
 virtualenv venv
 source venv/bin/activate
@@ -67,10 +77,133 @@ make install
 
 ### usage
 
+<br>
+##### getting data for a derivative 
+
 ``` 
-cointbot -s buybit usdt
+cointbot -d usdt
 ```
 
+
+<br>
+
+example of output:
+
+```
+
+[   {   'alias': '10000NFTUSDT',
+        'base_currency': '10000NFT',
+        'funding_interval': 480,
+        'leverage_filter': {   'leverage_step': '0.01',
+                               'max_leverage': 12,
+                               'min_leverage': 1},
+        'lot_size_filter': {   'max_trading_qty': 370000,
+                               'min_trading_qty': 10,
+                               'post_only_max_trading_qty': '3700000',
+                               'qty_step': 10},
+        'maker_fee': '0.0001',
+        'name': '10000NFTUSDT',
+        'price_filter': {   'max_price': '9.999990',
+                            'min_price': '0.000005',
+                            'tick_size': '0.000005'},
+        'price_scale': 6,
+        'quote_currency': 'USDT',
+        'status': 'Trading',
+        'taker_fee': '0.0006'},
+
+(...)
+```
+
+<br>
+
+----
+##### Save price history for a derivative
+
+``` 
+cointbot -p usdt
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+##### Get cointegration for a pair of assets
+
+``` 
+cointbot -i ethusdt btcusdt
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+##### Get latest z-core signal for a pair of assets.
+
+``` 
+cointbot -z ethusdt btcusdt
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+
+##### Run backtests
+
+``` 
+cointbot -t
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+
+##### Deploy and start bot
+
+``` 
+cointbot -b
+```
+
+
+<br>
+
+example of output:
+
+```
+```
 
 <br>
 
