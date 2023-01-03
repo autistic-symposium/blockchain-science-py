@@ -8,6 +8,7 @@ import sys
 import json
 import copy
 import logging
+import datetime
 import pandas as pd
 from pathlib import Path
 from dotenv import load_dotenv
@@ -39,7 +40,13 @@ def save_csv(df: pd.DataFrame, destination: str) -> None:
     """Save CSV data to a destination in disk."""
     
     df.to_csv(destination, index=False)
-            
+
+
+def open_csv(filepath: str) -> None:
+    """Load and parse a CSV file."""
+    
+    return pd.read_csv(filepath)
+
 
 def create_dir(result_dir: str) -> None:
     """Check whether a directory exists and create it if needed."""
@@ -56,6 +63,12 @@ def deep_copy(dict_to_clone: dict) -> dict:
     """Deep copy (not reference copy) to a dict."""
 
     return copy.deepcopy(dict_to_clone)
+
+
+def file_exists(dir_path: str, filename: str) -> bool:
+    """Check if a file exists in a directory."""
+
+    return os.path.isfile(format_path(dir_path, filename))
 
 
 def exit_with_error(message: str) -> None:
@@ -79,6 +92,12 @@ def pprint(data: dict, indent=None) -> None:
     pp = PrettyPrinter(indent=indent)
     pp.pprint(data)
     print()
+
+
+def get_datetime() -> str:
+    """Get the current datetime."""
+
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def log_error(string: str) -> None:
@@ -130,6 +149,7 @@ def load_config() -> dict:
     try:
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
         env_vars['COINTEGRATION_FILE'] = os.getenv("COINTEGRATION_FILE")
+        env_vars['ZSCORE_FILE'] = os.getenv("ZSCORE_FILE")
         env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
 
         env_vars['CEX'] = os.getenv("CEX")
@@ -141,7 +161,8 @@ def load_config() -> dict:
         env_vars['PLIMIT'] = os.getenv("PLIMIT")
         env_vars['TOKEN1'] = os.getenv("TOKEN1")
         env_vars['TOKEN2'] = os.getenv("TOKEN2")
-        env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")       
+        env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")   
+        env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")       
 
         set_logging(os.getenv("LOG_LEVEL"))
 
@@ -176,8 +197,33 @@ def save_cointegration(data: list, key: str, outdir: str, outfile: str) -> pd.Da
     df = pd.DataFrame(data)
     df = df.sort_values(key, ascending=False)
 
-    filepath = format_path(outdir, outfile)
-    save_csv(df, filepath)
-    log_info(f'Price history loaded from {filepath}')
+    destination = format_path(outdir, outfile)
+    save_csv(df, destination)
+    log_info(f'Cointegration saved to {destination}')
+
+    return df
+
+
+def open_zscore(indir: str, infile: str) -> dict:
+    """Handle opening the results for price history."""
+
+    filepath = format_path(indir, infile)
+    try:
+        zscore = open_csv(filepath)
+        log_info(f'Zscore loaded from {filepath}')
+        return zscore
+    except FileNotFoundError:
+        log_error(f'Zscore file not found at {filepath}')
+        return False
+
+
+def save_zscore(zscore: list, outdir: str, outfile: str) -> None:
+    """Handle saving the results for cointegration."""
+
+    df = pd.DataFrame(zscore)
+
+    destination = format_path(outdir, outfile)
+    save_csv(df, destination)
+    log_info(f'Zscore saved to {destination}')
 
     return df

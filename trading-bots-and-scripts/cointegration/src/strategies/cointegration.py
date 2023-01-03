@@ -16,8 +16,8 @@ class Cointegrator:
 
     def __init__(self, env_vars: dict):
         self._env_vars = env_vars
-        self._pvalue = float(self._env_vars['PLIMIT'])
-
+        self._pvalue_limit = float(self._env_vars['PLIMIT'])
+        self.zscore_list = []
 
     #########################
     #   private methods     #
@@ -53,7 +53,25 @@ class Cointegrator:
         model = sm.OLS(first_set, second_set)
         return model.fit().params[0]
 
-    def _calculate_cointegration(self, first_set: list, second_set: list) -> dict:
+    def _calculate_zscore(self, spread: list) -> float:
+        """
+            Calculate zscore.
+            e.g., (spread - np.mean(spread)) / np.std(spread)
+        """
+        df = pd.DataFrame(spread)
+
+        window = int(self._env_vars['ZSCORE_WINDOW'])
+        mean = df.rolling(center=False, window=window).mean()
+        std = df.rolling(center=False, window=window).std()
+        x = df.rolling(center=False, window=1).mean()
+        
+        df["zscore"] = (x - mean) / std
+        df["zscore"] = df["zscore"].fillna(0)
+        df["zscore"] = (spread - np.mean(spread)) / np.std(spread)
+
+        return df["zscore"].astype(float).values
+
+    def _get_cointegration_for_pair(self, first_set: list, second_set: list) -> dict:
         """Calculate co-integration for two tokens."""
 
         hot = False
@@ -71,8 +89,11 @@ class Cointegrator:
         spread = self._calculate_spread(first_set, second_set, hedge_ratio)
         zero_crossings = len(np.where(np.diff(np.sign(spread)))[0])
 
+        # calculate zscore
+        self.zscore_list.append(self._calculate_zscore(spread))
+
         # if pvalue is less than 0.05, we can reject the null hypothesis
-        if pvalue < self._pvalue and cointegration_value < critical_value:
+        if pvalue < self._pvalue_limit and cointegration_value < critical_value:
             hot = True
 
         return {
@@ -83,7 +104,6 @@ class Cointegrator:
                 "hedge_ratio": hedge_ratio,
                 "zero_crossings": zero_crossings
                 }
-
 
     ###########################
     #      public methods     #
@@ -109,7 +129,8 @@ class Cointegrator:
                     first_set = self._extract_close_prices(price_history[symbol1])
                     second_set = self._extract_close_prices(price_history[symbol2])
 
-                    cointegration_dict = self._calculate_cointegration(first_set, second_set)
+                    cointegration_dict = self._get_cointegration_for_pair(first_set, 
+                                                                        second_set)
 
                     if cointegration_dict['hot'] == True:
                         utils.log_info(f'   ✅ Found a hot pair: {symbol1} and {symbol2}')
@@ -118,11 +139,17 @@ class Cointegrator:
                         cointegration_dict['symbol2'] = symbol2
                         results.append(cointegration_dict)
         
+        utils.save_zscore(self.zscore_list, \
+                    self._env_vars['OUTPUTDIR'], self._env_vars['ZSCORE_FILE'])
         return utils.save_cointegration(results, 'zero_crossings', \
                     self._env_vars['OUTPUTDIR'], self._env_vars['COINTEGRATION_FILE'])
 
 
     def get_zscore(self) -> list:
-        """Get zscore for a given window."""
-        pass
+        """Get z-score for a given window."""
 
+        if utils.file_exists(self._env_vars['OUTPUTDIR'], self._env_vars['ZSCORE_FILE']):
+            return utils.open_zscore(self._env_vars['OUTPUTDIR'], self._env_vars['ZSCORE_FILE'])
+        else:   
+            self.get_cointegration()
+            return pd.DataFrame(self.zscore_list)

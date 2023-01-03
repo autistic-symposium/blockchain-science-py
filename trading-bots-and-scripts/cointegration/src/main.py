@@ -113,7 +113,7 @@ def run() -> None:
             s = Cointegrator(env_vars)
             zscore = s.get_zscore()
 
-            if zscore:
+            if not zscore.empty:
                 print(zscore)
             else:
                 util.exit_with_error(f'No z-score data found for {cex}.')
