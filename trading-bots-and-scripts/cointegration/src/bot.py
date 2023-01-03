@@ -238,6 +238,8 @@ def get_position_info(token, session) -> tuple:
 
 
 def place_market_close_order(session, token, side, size) -> None:
+    """Place market order to close position."""
+
     session.place_active_order(
         symbol=token,
         side=side,
@@ -265,12 +267,12 @@ def initialise_order_execution(ws, token, direction, capital) -> str:
 
 def run_bot() -> None:
     """Entry point for this bot."""
+
     ########################
     #  Load env variables  #
     ########################
 
     env_vars = load_config()
-    ws_private_url = env_vars['WS_PRIVATE_URL']
     ws_public_url = env_vars['WS_PUBLIC_URL']
     token1 = env_vars['TOKEN1']
     token2 = env_vars['TOKEN2']

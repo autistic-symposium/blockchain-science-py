@@ -6,25 +6,30 @@
 
 import argparse
 
-from src.bot import run_bot
-from src.utils import load_config, pprint
-from src.stats import plot_cointegrated_pairs, save_backtest, get_pair_trends, get_percentage_changes
-from src.cexes import start_buybit_session, get_tradeable_symbols, get_price_history, save_price_history
+import src.utils.os as utils
+from src.markets.buybit import BuybitCex
 
 
 def run_menu() -> argparse.ArgumentParser:
+    """Run the menu for this module."""
 
     parser = argparse.ArgumentParser(description='🏭 cointbot 🪙')
-    parser.add_argument('-s', dest='symbols', nargs=2,
-                        help='Get tradeable symbols for CEX and QUOTE CURRENCY. \
-                            Example: cointbot buybit usdt')
-    parser.add_argument('-p', dest='price', nargs=2,
-                        help='Get price history for CEX and QUOTE CURRENCY. \
-                            Example: cointbot buybit usdt')
-    parser.add_argument('-i', dest='pairs', nargs=3,
-                        help='Get cointegration for a pair of tokens \
-                            Example: cointbot <price history file.json> maticusdt stxusdt')
-    parser.add_argument('-b', dest='bot', help='Start bot')
+    parser.add_argument('-d', dest='derivatives', nargs=1,
+                        help='Get data for a derivative. \
+                            Example: cointbot -d usdt')
+    parser.add_argument('-p', dest='price', nargs=1,
+                        help='Save price history for a derivative. \
+                            Example: cointbot -p usdt')
+    parser.add_argument('-i', dest='pairs', nargs=2,
+                        help='Get cointegration for a pair of assets. \
+                            Example: cointbot -i ethusdt btcusdt')
+    parser.add_argument('-z', dest='zscore', nargs=2,
+                        help='Get latest z-core signal for a pair of assets. \
+                            Example: cointbot -z ethusdt btcusdt')
+    parser.add_argument('-t', dest='test', help='Run backtests. \
+                            Example: cointbot -t')
+    parser.add_argument('-b', dest='bot', help='Deploy and start bot. \
+                            Example: cointbot -b')
     return parser
 
 
@@ -33,80 +38,63 @@ def run() -> None:
 
     parser = run_menu()
     args = parser.parse_args()
-
-    env_vars = load_config()
-    url = env_vars['PYBIT_API_URL']
     
+    env_vars = utils.load_config()
+    cex = env_vars['CEX'].upper()
+
 
     ############################
-    #     Get symbol list      #
+    #     Get coin info        #
     ############################
-    if args.symbols:
-        cex = args.symbols[0].upper()
-        quote_currency = args.symbols[1].upper()
+    if args.derivatives:
+        coin = args.derivatives[0].upper()
 
         if cex == 'BUYBIT':
-            session = start_buybit_session(url)
-            pprint(get_tradeable_symbols(session, quote_currency))
-        else:
-            print(f'CEX not supoorted: {cex}')
+            b = BuybitCex(env_vars)
+            coin_info = b.get_coin_info(coin)
+            if coin_info:
+                utils.pprint(coin_info)
+            else:
+                utils.exit_with_error(f'No data found for {coin}.')
 
+        elif cex == 'BINANCE':
+            # TODO: implement binance
+            coin_info = {}
+        elif cex == 'BITMEX':
+            # TODO: implement bitmex
+            pass
+        else:
+            utils.exit_with_error(f'CEX not supoorted: {cex}')
 
     ############################
     #     Get price list      #
     ############################
     elif args.price:
-        cex = args.price[0].upper()
-        quote_currency = args.price[1].upper()
-
-        timeframe = env_vars['TIMEFRAME']
-        kline_limit = int(env_vars['KLINE_LIMIT'])
-        prices_outfile = env_vars['PRICE_HISTORY_FILE']
+        coin = args.price[0].upper()
 
         if cex == 'BUYBIT':
-            session = start_buybit_session(url)
-            symbols = get_tradeable_symbols(session, quote_currency)
-            specs = {
-                'timeframe': timeframe,
-                'kline_limit': kline_limit
-            }
-            price_history = get_price_history(session, symbols, specs)
+            b = BuybitCex(env_vars)
+            price_history = b.get_price_history(coin)
 
             if price_history:
-                save_price_history(price_history, outdir, prices_outfile)
-                pprint(price_history)
+                prices_outfile = env_vars['PRICE_HISTORY_FILE']
+                outdir = env_vars['OUTPUTDIR']
+
+                utils.save_price_history(price_history, outdir, prices_outfile)
+                utils.pprint(price_history)
+    
             else:
-                print(f'Could not retrieve any price history for {cex}')
-        else:
-            print(f'CEX not supoorted: {cex}')
-
-
-    ############################
-    #  Get a cointegrated pair #
-    ############################
-    elif args.pairs:
-        price_history_file = args.pairs[0]
-        token1 = args.pairs[1].upper()
-        token2 = args.pairs[2].upper()
-
-        outdir = env_vars['OUTPUTDIR']
-        backtest_outfile = env_vars['BACKTEST_FILE']
-        z_score_window = int(env_vars['ZSCORE_WINDOW'])
-
-        print(backtest_outfile)
-
-        data = get_pair_trends(price_history_file, token1, token2, z_score_window)
-        save_backtest(data, backtest_outfile, outdir)
+                utils.exit_with_error(f'Could not retrieve price history for {cex}')
         
-        data = get_percentage_changes(data)
-        plot_cointegrated_pairs(data)
+        elif cex == 'BINANCE':
+            pass
+    
+        elif cex == 'BITMEX':
+            pass
 
+        else:
+            utils.exit_with_error(f'CEX not supported: {cex}')
 
-    ############################
-    #        Start bot         #
-    ############################
-    elif args.bot:
-        run_bot()
 
     ############################
     #    Any invalid option    #

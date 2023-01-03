@@ -1,41 +1,68 @@
-## Cointegration strategy
+## Cointegration bot
 
 <br>
 
-### tl; dr
+> *A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.*
 
-* search for all possible cryptos that we can long or short using some CEX api (e.g. [bybit testnet](https://testnet.bybit.com/), with their perpetual derivatives contracts. 
-* then find what pairs are cointegrated.
-* check latest zscore signal (long when zscore is negative).
-* if "hot": confirm long vs. short tokens and confirm initial capital.
-* in any case, average in limit postonly orders or place market orders.
-* monitor zscore for close signal.
-
-
-> A perpetual contract is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.
 
 <br>
+
+### strategy tl; dr
+
+```
+1. search for possible crypto perpetual derivative contracts that can be longed/shorted
+2. calculate what pairs are cointegrated (by price history)
+3. check the latest z-score signal, longing when zscore < 0
+4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
+5. in any case, average in limit orders or place market orders
+6. also, continue monitoring the z-score for close signals in the future
+```
+
+
+
+<br>
+
+---
+
+### code
+
+
+We are using [bybit testnet](https://testnet.bybit.com/) for this example.
+
+The code basically does the following:
+
+```
+1. get tradeable symbols
+2. get price history and save to JSON
+3. calculate and plot cointegration
+4. backtest on a testnet
+```
+
+<br>
+
+An example of a result:
 
 ![Figure_1](https://user-images.githubusercontent.com/1130416/200736166-a8672149-7e49-4522-8cfa-f72f891ca00f.png)
 
 
 
-<br>
-
----
-### Strategy steps
-
-1. Get tradeable symbols
-2. Get price history and save to `JSON`
-3. Calculate and plot cointegration
-4. Backtest on some testnet
 
 
 <br>
 
 
 ---
-### Installing
+### setting up
+
+Add info to an `.env` file:
+
+```
+cp .env.example .env
+vim .env
+```
+
+
+Install with:
 
 ```
 virtualenv venv
@@ -46,12 +73,148 @@ make install
 
 <br>
 
+----
 
+### usage
 
-#### CLI usage
+<br>
+##### getting data for a derivative 
 
 ``` 
-cointbot
+cointbot -d usdt
 ```
 
+
+<br>
+
+example of output:
+
+```
+
+[   {   'alias': '10000NFTUSDT',
+        'base_currency': '10000NFT',
+        'funding_interval': 480,
+        'leverage_filter': {   'leverage_step': '0.01',
+                               'max_leverage': 12,
+                               'min_leverage': 1},
+        'lot_size_filter': {   'max_trading_qty': 370000,
+                               'min_trading_qty': 10,
+                               'post_only_max_trading_qty': '3700000',
+                               'qty_step': 10},
+        'maker_fee': '0.0001',
+        'name': '10000NFTUSDT',
+        'price_filter': {   'max_price': '9.999990',
+                            'min_price': '0.000005',
+                            'tick_size': '0.000005'},
+        'price_scale': 6,
+        'quote_currency': 'USDT',
+        'status': 'Trading',
+        'taker_fee': '0.0006'},
+
+(...)
+```
+
+<br>
+
+----
+##### Save price history for a derivative
+
+``` 
+cointbot -p usdt
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+##### Get cointegration for a pair of assets
+
+``` 
+cointbot -i ethusdt btcusdt
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+##### Get latest z-core signal for a pair of assets.
+
+``` 
+cointbot -z ethusdt btcusdt
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+
+##### Run backtests
+
+``` 
+cointbot -t
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+
+##### Deploy and start bot
+
+``` 
+cointbot -b
+```
+
+
+<br>
+
+example of output:
+
+```
+```
+
+<br>
+
+---
+
+
+### resources
+
+<br>
+
+
+* [pair trading](https://robotwealth.com/practical-pairs-trading/)
+* [interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
 
