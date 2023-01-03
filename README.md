@@ -1,4 +1,4 @@
-# 🧱⛓ go outside labs: on-chain science 
+# 🧱⛓ blockchain science: notebooks and bots
 
 
 <br>
@@ -11,10 +11,6 @@
 
 <br>
 
-### my research notebooks
-
-<br>
-    
 
 * [Extracting on-data from a list of Ethereum public addresses](on-chain-data-by-address):
     * Given a list of public addresses, extract the current token balance, and parse the transaction history for token transfers/swaps.
@@ -47,14 +43,9 @@
 
 <br>
 
+* [Statistical trading bots and scripts](trading-bots-and-scripts/):
+  * Deploying bots with several statistical algorithmic trading strategies.
 
-
-### my algorithmic trading stuff
-
-<br>
-
-* [Trading strategies](trading-bots-and-scripts/)
-    * A set of scripts for some statistical trading games.
 
 
 <br>
