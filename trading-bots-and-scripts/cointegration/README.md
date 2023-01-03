@@ -305,7 +305,7 @@ make clean
 
 ---
 
-#### deploying and starting a trading bot
+#### deploying and starting a bybit trading bot
 
 ``` 
 cointbot -b

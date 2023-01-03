@@ -7,16 +7,22 @@ import time
 import datetime
 import src.utils.os as utils
 from pybit import HTTP
+from pybit.inverse_perpetual import WebSocket
 
 
 class BybitCex():
     """Methods for Bybit."""
 
-    def __init__(self, env_vars: dict):
+    def __init__(self, env_vars: dict, ws=False):
         """Initialize Bybit class."""
 
-        self._url = env_vars['BYBIT_URL']
-
+        self._env_vars = env_vars
+        self._is_websocket = ws
+        self._is_public = bool(env_vars['IS_PUBLIC'])
+        self._url = self._set_url()
+        self._api_key = None
+        self._api_secret = None
+        
         self.timeframe = env_vars['TIMEFRAME']
         self.kline_limit = int(env_vars['KLINE_LIMIT'])
 
@@ -26,9 +32,37 @@ class BybitCex():
     #########################
     #   private methods     #
     #########################
+    def _set_url(self) -> None:
+        """Set the URL for the API."""
+        
+        if self._is_public:
+            if self._is_websocket:
+                return self._env_vars['BYBIT_WS_PUBLIC']
+            else:
+                return self._env_vars['BYBIT_HTTP_PUBLIC']
+        else:  
+            self._api_key = self._env_vars['BYBIT_API_KEY']
+            self._api_secret = self._env_vars['BYBIT_SECRET_KEY']
+
+            if self._is_websocket:
+                return self._env_vars['BYBIT_WS_PRIVATE'] 
+            else:
+                return self._env_vars['BYBIT_HTTP_PRIVATE']
+
     def _start_bybit_session(self) -> object:
         """Start a bybit session."""
-        return HTTP(self._url)
+        
+        if self._is_websocket:
+            if self._is_public:
+                return WebSocket(test=bool(self._env_vars['IS_TESTNET']))
+            else:
+                return WebSocket(test=bool(self._env_vars['IS_TESTNET']),
+                                api_key=self._api_key, 
+                                api_secret=self._api_secret)
+        else:
+            return HTTP(self._url, 
+                        self.api_key, 
+                        self.api_secret)
 
     def _parse_symbols(self, coin: str) -> list:
         """Parse coin data for cex data"""
@@ -129,4 +163,31 @@ class BybitCex():
                 utils.exit_with_error(f'Could not retrieve price history for {coin}: {e}')
 
         return price_history_dict  
-    
+
+
+    def _connect_public_ws(self, coin1: str, coin2: str ) -> None:
+        """Connect to public websocket."""
+
+        topics = [
+            f"orderBookL2_25.{coin1}",
+            f"orderBookL2_25.{coin2}"
+        ]
+        
+        '''
+        ws_public = self._session(
+                self._url,
+                subscriptions=topics
+            )
+        '''
+
+        #ws_public.fetch(topics[0])
+        #ws_public.fetch(topics[0])
+
+
+
+    def connect_ws(self, coin1: str, coin2: str) -> None:
+        """Connect to websocket."""
+
+        import asyncio
+
+        self._connect_public_ws(coin1, coin2)
