@@ -4,12 +4,13 @@
 # author: steinkirch
 # Entry point for cointbot.
 
+
+import asyncio
 import argparse
 
 import src.utils.os as util
 import src.bots.bybit as bbbot
 import src.utils.plots as plots
-import src.utils.network as network
 from src.markets.bybit import BybitCex
 from src.strategies.cointegration import Cointegrator
 
@@ -32,8 +33,9 @@ def run_menu() -> argparse.ArgumentParser:
                             Example: cointbot -z')
     parser.add_argument('-t', dest='test', nargs=2, help='Generate backtests. \
                             Example: cointbot -t ethusdt btcusdt')
-    parser.add_argument('-n', dest='network', nargs=2, help='Test network. \
-                            Example: cointbot -n ethusdt btcusdt')
+    parser.add_argument('-n', dest='network', nargs=3, help='Test websockets for orderbooks, \
+                            for either inverse or spot markets. \
+                            Example: cointbot -n ethusdt btcusdt spot')
     parser.add_argument('-b', dest='bot', action='store_true', help='Deploy trading bot. \
                             Example: cointbot -b')
 
@@ -150,16 +152,21 @@ def run() -> None:
     elif args.network:
         coin1 = args.network[0].upper()
         coin2 = args.network[1].upper()
+        market = args.network[2].upper()
 
 
         if cex == 'BYBIT':
-            b = BybitCex(env_vars, ws=True)
-            ping = b.connect_ws(coin1, coin2)
+            
+            if market == "SPOT":
+                b = BybitCex(env_vars, ws=True, inverse=False)
+                asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
 
-            if ping:
-                print(ping)
+            elif market == "INVERSE":
+                b = BybitCex(env_vars, ws=True, inverse=True)
+                asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
+            
             else:
-                util.exit_with_error(f'Could not connect to {cex}.')
+                util.exit_with_error(f'Market not supported: {market}')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')

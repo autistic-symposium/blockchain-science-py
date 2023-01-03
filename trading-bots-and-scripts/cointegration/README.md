@@ -305,6 +305,38 @@ make clean
 
 ---
 
+#### testing orderbook connection through websockets
+
+
+<br>
+
+
+To open a websocket on the cointegration pairs, either for spot or inverse markets, run:
+
+``` 
+cointbot -n <coin1> <coin2> <spot or inverse>
+```
+
+
+<br>
+
+example of output for ETHUSD and BTCUSD:
+
+<br>
+
+```
+WebSocket Inverse Perp attempting connection...
+websocket connected
+WebSocket Inverse Perp connected
+ℹ️ {'topic': 'orderBookL2_25.ETHUSD', 'type': 'snapshot', 'data': [{'price': '1219.40', 'symbol': 'ETHUSD', 'id': 12194000, 'side': 'Buy', 'size': 422}, {'price': '1220.00', 'symbol': 'ETHUSD', 'id': 12200000, 'side': 'Buy', 'size': 175}, {'price': '1221.35', 'symbol': 'ETHUSD', 'id': 12213500, 'side': 'Buy', 'size': 422}, {'price': '1223.25', 'symbol': 'ETHUSD', 'id': 12232500, 'side': 'Buy', 'size': 422}, {'price': '1224.20', 'symbol': 'ETHUSD', 'id': 12242000, 'side': 'Buy', 'size': 4770}, {'price': '1224.30', 'symbol': 'ETHUSD', 'id': 12243000, 'side': 'Buy', 'size': 2002}, {'price': '1224.40', 'symbol': 'ETHUSD', 'id': 12244000, 'side': 'Buy', 'size': 4313}, {'price': '1224.50', 'symbol': 'ETHUSD', 'id': 12245000, 'side': 'Buy', 'size': 2908}, {'price': '1224.60', 'symbol': 'ETHUSD', 'id': 12246000, 'side': 'Buy', 'size': 3194}, {'price': '1224.70', 'symbol': 'ETHUSD', 'id': 12247000, 'side': 'Buy', 'size': 3138}, {'price': '1224.80', 'symbol': 'ETHUSD', 'id': 12248000, 'side': 'Buy', 'size': 4692}, {'price': '1224.90', 'symbol': 'ETHUSD', 'id': 12249000, 'side': 'Buy', 'size': 4004}, {'price': '1225.00', 'symbol': 'ETHUSD', 'id': 12250000, 'side': 'Buy', 'size': 2424}, {'price': '1225.10', 'symbol': 'ETHUSD', 'id': 12251000, 'side': 'Buy', 'size': 4801}, {'price': '1225.20', 'symbol': 'ETHUSD', 'id': 12252000, 'side': 'Buy', 'size': 6462}, {'price': '1225.30', 'symbol': 'ETHUSD', 'id': 12253000, 'side': 'Buy', 'size': 8586}, {'price': '1225.40',
+```
+
+
+
+<br>
+
+---
+
 #### deploying and starting a bybit trading bot
 
 ``` 
