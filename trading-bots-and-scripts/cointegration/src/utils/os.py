@@ -122,8 +122,8 @@ def load_config() -> dict:
     load_dotenv(env_file)
 
     try:
-        env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
+        env_vars['COINTEGRATION_FILE'] = os.getenv("COINTEGRATION_FILE")
         env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
 
         env_vars['CEX'] = os.getenv("CEX")

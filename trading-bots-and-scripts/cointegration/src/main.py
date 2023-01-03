@@ -23,12 +23,12 @@ def run_menu() -> argparse.ArgumentParser:
     parser.add_argument('-p', dest='price', nargs=1,
                         help='Save price history for a derivative. \
                             Example: cointbot -p usdt')
-    parser.add_argument('-i', dest='pairs', nargs=2,
-                        help='Get cointegration for a pair of assets. \
-                            Example: cointbot -i ethusdt btcusdt')
-    parser.add_argument('-z', dest='zscore', nargs=2,
-                        help='Get latest z-core signal for a pair of assets. \
-                            Example: cointbot -z ethusdt btcusdt')
+    parser.add_argument('-i', dest='cointegration', action='store_true',
+                        help='Get cointegration history data. \
+                            Example: cointbot -i')
+    parser.add_argument('-z', dest='zscore', action='store_true',
+                        help='Get latest z-core signal. \
+                            Example: cointbot -z')
     parser.add_argument('-t', dest='test', action='store_true', help='Run backtests. \
                             Example: cointbot -t')
     parser.add_argument('-b', dest='bot', action='store_true', help='Deploy and start bot. \
@@ -89,19 +89,17 @@ def run() -> None:
     ############################
     #     Get cointegration    #
     ############################
-    elif args.pairs:
-        coin1 = args.pairs[0].upper()
-        coin2 = args.pairs[1].upper()
+    elif args.cointegration:
 
         if cex == 'BUYBIT':
-            s = Cointegrator(env_vars, coin1, coin2)
+            s = Cointegrator(env_vars)
             cointegration = s.get_cointegration()
 
-            if cointegration:
-                util.pprint(cointegration)
+            if not cointegration.empty:
+                print(cointegration)
                 print(f'Data and plot saved to {env_vars["OUTPUTDIR"]}/{env_vars["COINTEGRATION_FILE"]}')
             else:
-                util.exit_with_error(f'No data found for {coin1}, {coin2}.')
+                util.exit_with_error(f'No cointegration data found for {cex}.')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')
@@ -111,18 +109,16 @@ def run() -> None:
     #     Get zscore           #
     ############################
     elif args.zscore:
-        coin1 = args.zscore[0].upper()
-        coin2 = args.zscore[1].upper()
 
         if cex == 'BUYBIT':
-            s = Cointegrator(env_vars, coin1, coin2)
+            s = Cointegrator(env_vars)
             zscore = s.get_zscore()
 
             if zscore:
                 util.pprint(zscore)
     
             else:
-                util.exit_with_error(f'Could not retrieve zscore for {coin1}, {coin2}')
+                util.exit_with_error(f'No z-score data found for {cex}.')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')
@@ -140,7 +136,7 @@ def run() -> None:
                 util.pprint(backtests_results)
     
             else:
-                util.exit_with_error(f'Could not run backtests')
+                util.exit_with_error(f'Could not run backtests for {cex}.')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')
@@ -158,7 +154,7 @@ def run() -> None:
                 util.pprint(bot_results)
     
             else:
-                util.exit_with_error(f'Could not deploy bot')
+                util.exit_with_error(f'Could not deploy bot for {cex}.')
 
         else:
             util.exit_with_error(f'CEX not supported: {cex}')

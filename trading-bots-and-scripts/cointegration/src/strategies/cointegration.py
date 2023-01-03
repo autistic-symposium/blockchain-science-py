@@ -14,7 +14,7 @@ import src.utils.os as utils
 
 class Cointegrator:
 
-    def __init__(self, env_vars: dict, coin1: str, coin2: str):
+    def __init__(self, env_vars: dict):
         self._env_vars = env_vars
 
 
@@ -92,39 +92,46 @@ class Cointegrator:
         """Get and store price history for all available pairs."""
 
         results = []        
-        list_of_pairs = []
+        pairs_list = []
 
         price_history = self._get_price_history()
 
-        print(price_history)
-        import sys
-        sys.exit(0)
-
-        
+        count = 0
         for symbol1 in price_history.keys():
+            utils.log_info(f'Calculating cointegration for {symbol1}...')
+
             for symbol2 in price_history.keys():
                 if symbol1 != symbol2:
 
                     this_symbol = "".join(sorted([symbol1, symbol2]))
-                    if this_symbol in list_of_pairs:
+                    if this_symbol in pairs_list:
                         break
 
                     first_set = self._extract_close_prices(price_history[symbol1])
                     second_set = self._extract_close_prices(price_history[symbol2])
 
                     cointegration_dict = self._calculate_cointegration(first_set, second_set)
-                    cointegration_dict['symbol1'] = symbol1
-                    cointegration_dict['symbol2'] = symbol2
 
                     if cointegration_dict['hot'] == True:
-                        list_of_pairs.append(this_symbol)
+                        utils.log_info(f'Found a hot pair: {symbol1} and {symbol2}')
+                        pairs_list.append(this_symbol)
+                        cointegration_dict['symbol1'] = symbol1
+                        cointegration_dict['symbol2'] = symbol2
                         results.append(cointegration_dict)
 
-                    print(results)
-                    print(list_of_pairs)
+                    count += 1
+            if count > 100:
+                break
 
-                    import sys
-                    sys.exit(0)
+        
+        #self._output_results(results)
+        
+        df_coint = pd.DataFrame(results)
+        df_coint = df_coint.sort_values('zero_crossings', ascending=False)
+        df_coint.to_csv(self._env_vars["OUTPUTDIR"] + "/" + self._env_vars["COINTEGRATION_FILE"], index=False)
+        
+        return df_coint
+
 
 
 
