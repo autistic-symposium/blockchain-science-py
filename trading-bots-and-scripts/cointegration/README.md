@@ -55,9 +55,7 @@ make install
 <br>
 
 
-
-<img width="943" alt="Screen Shot 2023-01-03 at 3 50 49 PM" src="https://user-images.githubusercontent.com/1130416/210460271-e28f8c03-3e4a-431a-8da8-9b89b0ac7dea.png">
-
+<img width="1117" alt="Screen Shot 2023-01-03 at 5 59 35 PM" src="https://user-images.githubusercontent.com/1130416/210470901-024191a3-7a93-4e3e-9c1d-af60fa6bf25d.png">
 
 
 
