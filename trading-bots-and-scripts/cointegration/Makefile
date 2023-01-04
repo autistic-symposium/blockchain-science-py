@@ -1,4 +1,4 @@
-.PHONY: clean install install_deps deploy_bot
+.PHONY: clean install install_deps bot1
 
 clean:
 	@find . -iname '*.py[co]' -delete
@@ -17,5 +17,6 @@ install:
 install_deps:
 	pip3 install -r requirements.txt
 
-deploy_bot:
-	cointbot -b
+bot1:
+	@echo "Deploying bot 1 on a docker container"
+	@bash ./docker/run_bot1.sh

@@ -8,44 +8,45 @@
  </p>
 
 
+<br>
+
+## bots
+
+* **[Statistical trading bots and scripts](trading-bots-and-scripts/):**
+  * Deploying bots with several **statistical algorithmic trading strategies**, several **market types**, and on **docker**.
+
+
 
 <br>
 
+## notebooks
 
-* [Extracting on-data from a list of Ethereum public addresses](on-chain-data-by-address):
-    * Given a list of public addresses, extract the current token balance, and parse the transaction history for token transfers/swaps.
-
-<br>
-
-* [Leveraging Uniswap subgraph to extract token pair information](uniswap-data):
-    * Utilize The Graph Explorer to access the Uniswap subgraph and analyze the UNI and WETH token pair data. 
+* **[Extracting on-data from a list of Ethereum public addresses](on-chain-data-by-address):**
+    * Given a list of **public addresses**, extract the current **token balance**, and parse the **transaction history** for token transfers/swaps.
 
 <br>
-    
 
-* [Retrieving DAO tokens and pools data](dao-data):
-    * Utilize The Graph Explorer to access the Uniswap subgraph and analyze the data related to a list of DAO tokens.
-
-
-<br>
-    
-
-* [Leveraging Moralis API to extract on-chain transactions, tokens, events, defi](moralis-tokens-and-txs):
-    * Moralis API is a nice wrapper for several on-chain calls that would instead use several other native APIs and tools. We list the most useful features here.
-
+* **[Leveraging Uniswap subgraph to extract token pair information](uniswap-data):**
+    * Utilize the **Graph Explorer** to access **Uniswap subgraph** and analyze the **UNI and WETH token pair** data. 
 
 <br>
     
 
-* [Messari API for token market data](messari-assets-data):
-    * Utilize [Messari API](https://messari.io/api) to retrieve market data for a list of tokens.
+* **[Retrieving DAO tokens and pools data](dao-data):**
+    * Utilize the **Graph Explorer** to analyze the data related to a list of **DAO tokens**.
 
 
 <br>
+    
 
-* [Statistical trading bots and scripts](trading-bots-and-scripts/):
-  * Deploying bots with several statistical algorithmic trading strategies.
-
-
+* **[Messari API for token market data](messari-assets-data):**
+    * Utilize **[Messari API](https://messari.io/api)** to retrieve **market data** for a list of tokens.
 
 <br>
+
+* **[Leveraging Moralis API to extract on-chain transactions, tokens, events, defi](moralis-tokens-and-txs):**
+    * **Moralis API** is a nice wrapper for several **on-chain calls** that would instead use several other native APIs and tools.
+
+<br>
+
+
