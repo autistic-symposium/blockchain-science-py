@@ -24,6 +24,7 @@ def save_json(destination: str, data: dict) -> None:
 
     except (IOError, TypeError) as e:
         print(f'Could not save {destination}: {e}')
+        return False
 
 def open_json(filepath: str) -> dict:
     """Load and parse a JSON file."""
@@ -34,6 +35,7 @@ def open_json(filepath: str) -> dict:
 
     except (IOError, FileNotFoundError, TypeError) as e:
         print(f'Failed to parse: "{filepath}": {e}')
+        return False
 
 
 def save_csv(df: pd.DataFrame, destination: str) -> None:
@@ -57,6 +59,7 @@ def create_dir(result_dir: str) -> None:
 
     except OSError as e:
         print(f'Could not create {result_dir}: {e}')
+        return False
 
 
 def deep_copy(dict_to_clone: dict) -> dict:
@@ -157,8 +160,8 @@ def load_config() -> dict:
 
         # CEX variables
         if env_vars['CEX'].upper() == 'BYBIT':
-            env_vars['BYBIT_URL'] = os.getenv("BYBIT_HTTP_PUBLIC")
-            env_vars['BYBIT_PRIV_URL'] = os.getenv("BYBIT_HTTP_PRIVATE")
+            env_vars['BYBIT_HTTP_PUBLIC'] = os.getenv("BYBIT_HTTP_PUBLIC")
+            env_vars['BYBIT_HTTP_PRIVATE'] = os.getenv("BYBIT_HTTP_PRIVATE")
             env_vars['BYBIT_WS_PUBLIC'] = os.getenv("BYBIT_WS_PUBLIC")    
             env_vars['BYBIT_WS_PRIVATE'] = os.getenv("BYBIT_WS_PRIVATE")
             env_vars['BYBIT_API_KEY'] = os.getenv("BYBIT_API_KEY")
@@ -173,6 +176,9 @@ def load_config() -> dict:
         env_vars['TOKEN2'] = os.getenv("TOKEN2")
         env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")   
         env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")    
+
+        # Bot variables
+        env_vars['BOT_COINS'] = os.getenv("BOT_COINS")
 
         set_logging(os.getenv("LOG_LEVEL"))
 
@@ -196,10 +202,11 @@ def open_price_history(indir: str, infile: str) -> dict:
 
     filepath = format_path(indir, infile)
     price_history = open_json(filepath)
-    log_info(f'Price history loaded from {filepath}')
-
-    return price_history
-
+    if price_history is not None:
+        log_info(f'Price history file loaded from {filepath}')
+        return price_history
+    else:
+        return False
 
 def save_cointegration(data: list, key: str, outdir: str, outfile: str) -> pd.DataFrame:
     """Handle saving the results for cointegration."""
@@ -220,11 +227,13 @@ def open_cointegration(indir: str, infile: str) -> dict:
     filepath = format_path(indir, infile)
     try:
         cointegration = open_csv(filepath)
-        log_info(f'Cointegration loaded from {filepath}')
-        return cointegration
+        if cointegration is not None:
+            log_info(f'Cointegration loaded from {filepath}')
+            return cointegration
     except FileNotFoundError:
         log_error(f'Cointegration file not found at {filepath}')
-        return False
+    
+    return False
 
 
 def save_metrics(data: list, outdir: str, outfile: str) -> None:
@@ -250,4 +259,5 @@ def open_metrics(indir: str, infile: str) -> dict:
         return metrics
     except FileNotFoundError:
         log_error(f'Metrics file not found at {filepath}')
-        return False
+    
+    return False

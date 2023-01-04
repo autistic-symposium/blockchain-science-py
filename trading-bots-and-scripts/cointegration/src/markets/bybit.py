@@ -14,20 +14,18 @@ from pybit.spot import WebSocket as SpotWebSocket
 class BybitCex():
     """Methods for Bybit."""
 
-    def __init__(self, env_vars: dict, ws=False, inverse=False):
-        """Initialize Bybit class."""
+    def __init__(self, env_vars: dict, currency=None, ws=False, inverse=False):
 
         self._env_vars = env_vars
+        self._currency = currency or 'USDT'
         self._is_websocket = ws
         self._is_inverse = inverse
-        self._is_public = bool(env_vars['IS_PUBLIC'])
-        self._url = self._set_url()
         self._api_key = None
         self._api_secret = None
-        
+        self._is_public = bool(env_vars['IS_PUBLIC'])
+        self._url = self._set_url()
         self.timeframe = env_vars['TIMEFRAME']
         self.kline_limit = int(env_vars['KLINE_LIMIT'])
-
         self._symbols_dict = None
         self._session = self._start_bybit_session()
 
@@ -60,7 +58,7 @@ class BybitCex():
                         test=bool(self._env_vars['IS_TESTNET']))
             elif self._is_public and not self._is_inverse:
                 return SpotWebSocket(
-                            test=bool(self._env_vars['IS_TESTNET']))
+                        test=bool(self._env_vars['IS_TESTNET']))
             elif not self._is_public and self._is_inverse:
                 return InverseWebSocket(
                         test=bool(self._env_vars['IS_TESTNET']),
@@ -73,8 +71,8 @@ class BybitCex():
                         api_secret=self._api_secret)
         else:
             return HTTP(self._url, 
-                        self.api_key, 
-                        self.api_secret)
+                        self._api_key, 
+                        self._api_secret)
 
     def _parse_symbols(self, coin: str) -> list:
         """Parse coin data for cex data"""
@@ -146,27 +144,26 @@ class BybitCex():
 
     def _handle_orderbook_ws(self, msg: dict) -> None:
         """Handle orderbook data from websocket."""
-        utils.log_info(msg)
-        orderbook_data = msg['data']
+        utils.pprint(msg['data'])
 
 
     ###########################
     #      public methods     #
     ###########################
 
-    def get_coin_info(self, coin: str) -> list:
+    def get_derivative_currency_info(self) -> list:
         """Get tradeable data for a given currency."""
 
         if self._symbols_dict is None:
             self.symbols_dict = self._session.query_symbol()
     
-        return self._parse_symbols(coin)
+        return self._parse_symbols(self._currency)
 
-    def get_price_history(self, coin: str) -> dict:
+    def get_price_history(self) -> dict:
         """Get and store price history for all available pairs."""
 
         price_history_dict = {}
-        coin_info = self.get_coin_info(coin)
+        coin_info = self.get_derivative_currency_info()
 
         for this_coin in coin_info:
             try:
@@ -177,21 +174,27 @@ class BybitCex():
                     price_history_dict[ticker] = price_history
 
             except KeyError as e:
-                utils.exit_with_error(f'Could not retrieve price history for {coin}: {e}')
+                utils.exit_with_error(f'Could not retrieve price history: {e}')
 
         return price_history_dict  
 
-    async def orderbook_ws(self, coin1: str, coin2: str) -> None:
-        """Connect to websocket for spot or inverse orderbook."""
+    async def orderbook_ws(self, coin1: str, coin2: str, handling_function=None) -> None:
+        """
+            Connect to websocket for spot or inverse orderbook.
+            https://bybit-exchange.github.io/docs/futuresV2/inverse/#t-publictopics
+        """
+        
+        handling_function = handling_function or self._handle_orderbook_ws
 
         while True:
             if self._is_inverse:
+                # fetches orderbook with a depth of 25 orders per side
                 self._session.orderbook_25_stream(
-                    self._handle_orderbook_ws, 
+                    handling_function, 
                     [coin1, coin2])
             else:
-                self._session.depth_v2_stream(
-                    self._handle_orderbook_ws, 
+                self._session.depth_v1_stream(
+                    handling_function, 
                     [coin1, coin2])
 
             await asyncio.sleep(300)
