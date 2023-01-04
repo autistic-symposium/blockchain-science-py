@@ -465,9 +465,7 @@ WebSocket USDT Perp connected
 <br>
 
 
-> 💡 *In these results, `a` is the ask prices and quantities, and `b` is the bid prices and quantities (both in descending order). For more information about other endpoints and topics, check the [official documentation](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket).*
 
-<br>
 
 ---
 
