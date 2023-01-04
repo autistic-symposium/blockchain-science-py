@@ -167,7 +167,7 @@ def load_config() -> dict:
             env_vars['BYBIT_API_KEY'] = os.getenv("BYBIT_API_KEY")
             env_vars['BYBIT_API_SECRET'] = os.getenv("BYBIT_API_SECRET")
             env_vars['IS_TESTNET'] = os.getenv("IS_TESTNET")
-            env_vars['IS_PUBLIC'] = os.getenv("IS_PUBLIC_CONNECTION")
+            env_vars['IS_PUBLIC_CONNECTION'] = os.getenv("IS_PUBLIC_CONNECTION")
 
         # Statistical variables
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
@@ -179,6 +179,7 @@ def load_config() -> dict:
 
         # Bot variables
         env_vars['BOT_COINS'] = os.getenv("BOT_COINS")
+        env_vars['BOT_MARKET'] = os.getenv("BOT_MARKET")
 
         set_logging(os.getenv("LOG_LEVEL"))
 

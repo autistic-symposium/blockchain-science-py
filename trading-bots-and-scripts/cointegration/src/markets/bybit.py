@@ -8,26 +8,34 @@ import asyncio
 import datetime
 import src.utils.os as utils
 from pybit import HTTP
-from pybit.inverse_perpetual import WebSocket as InverseWebSocket
 from pybit.spot import WebSocket as SpotWebSocket
+from pybit.usdt_perpetual import WebSocket as LinearWebSocket
+from pybit.inverse_perpetual import WebSocket as InverseWebSocket
+
 
 class BybitCex():
     """Methods for Bybit."""
 
-    def __init__(self, env_vars: dict, currency=None, ws=False, inverse=False):
-
+    def __init__(self, env_vars: dict, currency=None, ws=False, market=None):
+    
         self._env_vars = env_vars
         self._currency = currency or 'USDT'
         self._is_websocket = ws
-        self._is_inverse = inverse
+        self._market_type = market
+
+        self._is_public = bool(env_vars['IS_PUBLIC_CONNECTION'])
+        self._is_test = bool(self._env_vars['IS_TESTNET'])
+        self._timeframe = env_vars['TIMEFRAME']
+        self._kline_limit = int(env_vars['KLINE_LIMIT'])
+    
+
         self._api_key = None
         self._api_secret = None
-        self._is_public = bool(env_vars['IS_PUBLIC'])
-        self._url = self._set_url()
-        self.timeframe = env_vars['TIMEFRAME']
-        self.kline_limit = int(env_vars['KLINE_LIMIT'])
         self._symbols_dict = None
+        
+        self._url = self._set_url()
         self._session = self._start_bybit_session()
+
 
     #########################
     #   private methods     #
@@ -53,26 +61,32 @@ class BybitCex():
         """Start a bybit session."""
         
         if self._is_websocket:
-            if self._is_public and self._is_inverse:
-                return InverseWebSocket(
-                        test=bool(self._env_vars['IS_TESTNET']))
-            elif self._is_public and not self._is_inverse:
-                return SpotWebSocket(
-                        test=bool(self._env_vars['IS_TESTNET']))
-            elif not self._is_public and self._is_inverse:
-                return InverseWebSocket(
-                        test=bool(self._env_vars['IS_TESTNET']),
-                        api_key=self._api_key, 
-                        api_secret=self._api_secret)
+            if self._is_public:
+                if self._market_type == 'INVERSE':
+                    return InverseWebSocket(test=self._is_test)
+                elif self._market_type == 'SPOT':
+                    return SpotWebSocket(test=self._is_test)
+                elif self._market_type == 'LINEAR':
+                    return LinearWebSocket(test=self._is_test)
+            
             else:
-                return SpotWebSocket(
-                        test=bool(self._env_vars['IS_TESTNET']),
-                        api_key=self._api_key, 
-                        api_secret=self._api_secret)
+                if self._market_type == 'INVERSE':
+                    return InverseWebSocket(api_key=self._api_key, 
+                                            api_secret=self._api_secret, 
+                                            test=self._is_test)
+                elif self._market_type == 'SPOT':
+                    return SpotWebSocket(api_key=self._api_key, 
+                                        api_secret=self._api_secret, 
+                                        test=self._is_test)
+                elif self._market_type == 'LINEAR':
+                    return LinearWebSocket(api_key=self._api_key, 
+                                            api_secret=self._api_secret, 
+                                            test=self._is_test)
         else:
             return HTTP(self._url, 
                         self._api_key, 
                         self._api_secret)
+
 
     def _parse_symbols(self, coin: str) -> list:
         """Parse coin data for cex data"""
@@ -106,13 +120,12 @@ class BybitCex():
 
         from_time = 0
 
-        if self.timeframe == 'D':
-            from_time = datetime.datetime.now() - datetime.timedelta(days=self.kline_limit)
-        elif self.timeframe == '60':
-            from_time = datetime.datetime.now() - datetime.timedelta(hours=self.kline_limit)
-        
+        if self._timeframe == 'D':
+            from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
+        elif self._timeframe == '60':
+            from_time = datetime.datetime.now() - datetime.timedelta(hours=self._kline_limit)
         else:
-            utils.exit_with_error(f'Time frame not implemented:{self.timeframe}')
+            utils.exit_with_error(f'Time frame not implemented:{self._timeframe}')
         
         return int(from_time.timestamp())
 
@@ -127,16 +140,16 @@ class BybitCex():
         try:
             prices = self._session.query_mark_price_kline(
                     symbol=coin,
-                    interval=self.timeframe,
+                    interval=self._timeframe,
                     from_time=from_time,
-                    limit=self.kline_limit
+                    limit=self._kline_limit
                 )
 
             utils.log_info(f'Retrieving k-lines for {coin}')
             
             time.sleep(0.1)
 
-            if len(prices['result']) == self.kline_limit:
+            if len(prices['result']) == self._kline_limit:
                 return prices['result']
 
         except Exception as e:
@@ -187,14 +200,21 @@ class BybitCex():
         handling_function = handling_function or self._handle_orderbook_ws
 
         while True:
-            if self._is_inverse:
+            if self._market_type == 'INVERSE':
                 # fetches orderbook with a depth of 25 orders per side
                 self._session.orderbook_25_stream(
                     handling_function, 
                     [coin1, coin2])
-            else:
-                self._session.depth_v1_stream(
+            elif self._market_type == 'SPOT':
+                self._session.trade_v1_stream(
                     handling_function, 
                     [coin1, coin2])
+            elif self._market_type == 'LINEAR':
+                self._session.trade_stream(
+                    handling_function, 
+                    [coin1, coin2])
+            else:
+                utils.exit_with_error(f"Can't connect to {self._market_type} orderbook ws.")
 
             await asyncio.sleep(300)
+

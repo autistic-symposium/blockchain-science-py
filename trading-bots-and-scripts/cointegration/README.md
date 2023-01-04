@@ -306,47 +306,57 @@ The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and back
 <br>
 
 
-To open a websocket subscribed to the cointegration pairs, either for spot or inverse markets, run:
+To open a websocket subscribed to the cointegration pairs (either for spot, linear, or inverse markets), run:
 
 ``` 
-cointbot -n <coin1> <coin2> <spot or inverse>
+cointbot -n <coin1> <coin2> <spot, linear, or inverse>
 ```
 
 
 <br>
 
-example of output for ETHUSD and BTCUSD:
+example of output for ETHUSD and BTCUSD (spot):
 
 <br>
 
 ```
-WebSocket Inverse Perp attempting connection...
+WebSocket Spot attempting connection...
 websocket connected
-WebSocket Inverse Perp connected
-    {   'id': 165280000,
-        'price': '16528.00',
-        'side': 'Buy',
-        'size': 5,
-        'symbol': 'BTCUSD'},
-    {   'id': 165390000,
-        'price': '16539.00',
-        'side': 'Buy',
-        'size': 3,
-        'symbol': 'BTCUSD'},
-    {   'id': 166630000,
-        'price': '16663.00',
-        'side': 'Sell',
-        'size': 92030,
-        'symbol': 'BTCUSD'},
-    {   'id': 166640000,
-        'price': '16664.00',
-        'side': 'Sell',
-        'size': 56877,
-        'symbol': 'BTCUSD'},
+WebSocket Spot connected
+    [{
+    "e": 301,
+    "s": "BTCUSDT",
+    "t": 1565600357643,
+    "v": "112801745_18",
+    "o": 0,
+    "b": [
+      ["11371.49", "0.0014"],
+      ["11371.12", "0.2"],
+      ["11369.97", "0.3523"],
+      ["11369.96", "0.5"],
+      ["11369.95", "0.0934"],
+      ["11369.94", "1.6809"],
+      ["11369.6", "0.0047"],
+      ["11369.17", "0.3"],
+      ["11369.16", "0.2"],
+      ["11369.04", "1.3203"]],
+    "a": [
+      ["11375.41", "0.0053"],
+      ["11375.42", "0.0043"],
+      ["11375.48", "0.0052"],
+      ["11375.58", "0.0541"],
+      ["11375.7", "0.0386"],
+      ["11375.71", "2"],
+      ["11377", "2.0691"],
+      ["11377.01", "0.0167"],
+      ["11377.12", "1.5"],
+      ["11377.61", "0.3"]],
 (...)
 ```
 
+<br>
 
+> 💡 In these results, `a` is the ask prices and quantities, and `b` is the bid prices and quantities (both in descending order).
 
 <br>
 
