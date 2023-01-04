@@ -15,7 +15,7 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
     series2 = data[f'{coin2}_perc'].astype(float).values
 
     fig, axis = plt.subplots(3, figsize=(16, 8))
-    fig.suptitle(f"{coin1} / {coin2}: Cointegration Analysis")
+    fig.suptitle(f"{coin1}/{coin2}: Cointegration ({env_vars['TIMEFRAME']})")
 
     axis[0].plot(series1)
     axis[0].plot(series2)

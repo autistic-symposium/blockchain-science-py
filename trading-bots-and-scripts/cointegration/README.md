@@ -65,11 +65,11 @@ make install
 
 <br>
 
-#### getting derivatives data for a currency 
+#### getting derivatives data for a derivative currency
 
 <br>
 
-> **Crypto derivatives** are financial contracts that derive their values from underlying assets.
+> ***Crypto derivatives** are financial contracts that derive their values from underlying assets.*
 
 <br>
 
@@ -114,7 +114,7 @@ example of output:
 
 ----
 
-#### saving price history for a derivative
+#### saving price history for a derivative currency
 
 Retrieve market price kline for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 ``` 
@@ -142,7 +142,7 @@ example of output:
 
 ---
 
-#### getting cointegration data
+#### getting cointegration history data for a derivative currency
 
 With the price history data (e.g., directly generated in the previous option, inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration data frame (in Pandas).
 
@@ -200,7 +200,7 @@ This table is saved in `OUTPUTDIR/COINTEGRATION_FILE`.
 
 ---
 
-#### getting z-score signal from cointegration
+#### getting z-score signal for a cointegrated pair and a derivative currency
 
 <br>
 
@@ -241,7 +241,7 @@ example of output:
 
 ---
 
-#### getting backtest metrics
+#### generate backtest metrics for a cointegrated pair and a derivative currency
 
 <br>
 
@@ -294,24 +294,21 @@ The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and back
 
 <br>
 
+<br>
 
-If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with:
-
-```
-make clean
-```
+> 💡If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with `make clean`.
 
 <br>
 
 ---
 
-#### testing orderbook connection through websockets
+#### testing orderbook connection through websockets for a cointegrated pair
 
 
 <br>
 
 
-To open a websocket on the cointegration pairs, either for spot or inverse markets, run:
+To open a websocket subscribed to the cointegration pairs, either for spot or inverse markets, run:
 
 ``` 
 cointbot -n <coin1> <coin2> <spot or inverse>
@@ -328,7 +325,27 @@ example of output for ETHUSD and BTCUSD:
 WebSocket Inverse Perp attempting connection...
 websocket connected
 WebSocket Inverse Perp connected
-ℹ️ {'topic': 'orderBookL2_25.ETHUSD', 'type': 'snapshot', 'data': [{'price': '1219.40', 'symbol': 'ETHUSD', 'id': 12194000, 'side': 'Buy', 'size': 422}, {'price': '1220.00', 'symbol': 'ETHUSD', 'id': 12200000, 'side': 'Buy', 'size': 175}, {'price': '1221.35', 'symbol': 'ETHUSD', 'id': 12213500, 'side': 'Buy', 'size': 422}, {'price': '1223.25', 'symbol': 'ETHUSD', 'id': 12232500, 'side': 'Buy', 'size': 422}, {'price': '1224.20', 'symbol': 'ETHUSD', 'id': 12242000, 'side': 'Buy', 'size': 4770}, {'price': '1224.30', 'symbol': 'ETHUSD', 'id': 12243000, 'side': 'Buy', 'size': 2002}, {'price': '1224.40', 'symbol': 'ETHUSD', 'id': 12244000, 'side': 'Buy', 'size': 4313}, {'price': '1224.50', 'symbol': 'ETHUSD', 'id': 12245000, 'side': 'Buy', 'size': 2908}, {'price': '1224.60', 'symbol': 'ETHUSD', 'id': 12246000, 'side': 'Buy', 'size': 3194}, {'price': '1224.70', 'symbol': 'ETHUSD', 'id': 12247000, 'side': 'Buy', 'size': 3138}, {'price': '1224.80', 'symbol': 'ETHUSD', 'id': 12248000, 'side': 'Buy', 'size': 4692}, {'price': '1224.90', 'symbol': 'ETHUSD', 'id': 12249000, 'side': 'Buy', 'size': 4004}, {'price': '1225.00', 'symbol': 'ETHUSD', 'id': 12250000, 'side': 'Buy', 'size': 2424}, {'price': '1225.10', 'symbol': 'ETHUSD', 'id': 12251000, 'side': 'Buy', 'size': 4801}, {'price': '1225.20', 'symbol': 'ETHUSD', 'id': 12252000, 'side': 'Buy', 'size': 6462}, {'price': '1225.30', 'symbol': 'ETHUSD', 'id': 12253000, 'side': 'Buy', 'size': 8586}, {'price': '1225.40',
+    {   'id': 165280000,
+        'price': '16528.00',
+        'side': 'Buy',
+        'size': 5,
+        'symbol': 'BTCUSD'},
+    {   'id': 165390000,
+        'price': '16539.00',
+        'side': 'Buy',
+        'size': 3,
+        'symbol': 'BTCUSD'},
+    {   'id': 166630000,
+        'price': '16663.00',
+        'side': 'Sell',
+        'size': 92030,
+        'symbol': 'BTCUSD'},
+    {   'id': 166640000,
+        'price': '16664.00',
+        'side': 'Sell',
+        'size': 56877,
+        'symbol': 'BTCUSD'},
+(...)
 ```
 
 
@@ -337,7 +354,7 @@ WebSocket Inverse Perp connected
 
 ---
 
-#### deploying and starting a bybit trading bot
+#### deploying a trading bot using the cointegrated strategy
 
 ``` 
 cointbot -b
