@@ -28,7 +28,6 @@ class BybitCex():
         self._timeframe = env_vars['TIMEFRAME']
         self._kline_limit = int(env_vars['KLINE_LIMIT'])
     
-
         self._api_key = None
         self._api_secret = None
         self._symbols_dict = None
@@ -87,6 +86,13 @@ class BybitCex():
                         self._api_key, 
                         self._api_secret)
 
+    def _change_to_private_session(self, ws=False) -> None:
+        """Change session to private session."""
+
+        self._is_websocket = ws
+        self._is_public = False
+        self._url = self._set_url()
+        self._session = self._start_bybit_session()
 
     def _parse_symbols(self, coin: str) -> list:
         """Parse coin data for cex data"""
@@ -95,9 +101,9 @@ class BybitCex():
         symbols = {}
 
         try:
-            if 'ret_msg' in self.symbols_dict.keys() and \
-                self.symbols_dict['ret_msg'] == 'OK':
-                    symbols = self.symbols_dict['result']
+            if 'ret_msg' in self._symbols_dict.keys() and \
+                self._symbols_dict['ret_msg'] == 'OK':
+                    symbols = self._symbols_dict['result']
             else:
                 utils.exit_with_error(f'No data found for {coin}.')
             
@@ -159,6 +165,14 @@ class BybitCex():
         """Handle orderbook data from websocket."""
         utils.pprint(msg['data'])
 
+    def _get_side(self, direction: str) -> str:
+        """Get side for order."""
+            
+        if direction.upper() == 'LONG':
+            return 'Buy'
+        elif direction.upper() == 'SHORT':
+            return 'Sell'
+
 
     ########################################
     #    public methods                    #    
@@ -168,8 +182,8 @@ class BybitCex():
     def get_derivative_currency_info(self) -> list:
         """Get tradeable data for a given currency."""
 
-        if self._symbols_dict is None:
-            self.symbols_dict = self._session.query_symbol()
+        self._symbols_dict = self._symbols_dict or \
+                                    self._session.query_symbol()
     
         return self._parse_symbols(self._currency)
 
@@ -192,36 +206,82 @@ class BybitCex():
 
         return price_history_dict  
 
-    async def orderbook_ws(self, coin1: str, coin2: str, handling_function=None) -> None:
+    async def orderbook_ws(self, coin1: str, coin2: str, handling_func=None) -> None:
         """Connect to websocket for spot or inverse orderbook."""
         
-        handling_function = handling_function or self._handle_orderbook_ws
+        handling_func = handling_func or self._handle_orderbook_ws
 
         while True:
-            
+
             if self._market_type == 'INVERSE':
-                # 
-                self._session.orderbook_25_stream(
-                    handling_function, 
-                    [coin1, coin2])
-            
+                self._session.orderbook_25_stream(handling_func, [coin1, coin2])
+                
             elif self._market_type == 'SPOT':
-                self._session.trade_v1_stream(
-                    handling_function, 
-                    [coin1, coin2])
-            
+                self._session.trade_v1_stream(handling_func, [coin1, coin2])
+                
             elif self._market_type == 'LINEAR':
-                self._session.orderbook_25_stream(
-                    handling_function, 
-                    [coin1, coin2])
+                self._session.orderbook_25_stream(handling_func,[coin1, coin2])
+            
             else:
                 utils.exit_with_error(f"Can't connect to {self._market_type} orderbook ws.")
 
-            await asyncio.sleep(300)
+            await asyncio.sleep(10)
 
+    def open_orderbook_ws(self, coin1: str, coin2: str) -> None:
+        """Open websocket for spot, linear, or inverse orderbook."""
+        
+        asyncio.get_event_loop().run_until_complete(self.orderbook_ws(coin1, coin2))
+            
 
     ########################################
     #    public methods                    #    
     #                        positions     #
     ########################################
 
+    def set_leverage(self, ticker: str, is_isolated: bool, 
+                           buy_leverage: int, sell_leverage: int) -> None:
+        """Set leverage for a given ticker."""
+        
+        try:
+            self._session_private.cross_isolated_margin_switch(
+                symbol=ticker,
+                is_isolated=is_isolated,
+                buy_leverage=buy_leverage,
+                sell_leverage=sell_leverage
+            )
+        except Exception as e:
+            utils.log_error(f'Could not set leverage for {ticker}: {e}')
+    
+    def place_order(self, ticker: str, price: float, quantity: int, direction: str) -> dict:
+        """Place an order for a given ticker."""
+
+        side = self._get_side(direction)
+        self._change_to_private_session()
+
+        try:
+            if self._env_vars['ORDER_TYPE'] == 'LIMIT':
+                self._session.place_active_order(
+                        symbol=ticker,
+                        side=side,
+                        order_type=self._env_vars['ORDER_TYPE'],
+                        qty=quantity,
+                        price=price,
+                        time_in_force="PostOnly",
+                        reduce_only=False,
+                        close_on_trigger=False,
+                        stop_loss=self._env_vars['STOP_LOSS'],
+                    )
+            elif self._env_vars['ORDER_TYPE'] == 'MARKET':
+                self._session.place_active_order(
+                        symbol=ticker,
+                        side=side,
+                        order_type=self._env_vars['ORDER_TYPE'],
+                        qty=quantity,
+                        time_in_force="PostOnly",
+                        reduce_only=False,
+                        close_on_trigger=False,
+                        stop_loss=self._env_vars['STOP_LOSS'],
+                    )
+            
+        except Exception as e:
+            utils.log_error(f'Could not place order for {ticker}: {e}')

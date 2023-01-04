@@ -33,7 +33,11 @@ class Cointegrator:
     def _get_price_history(self) -> dict:
         """Get price history for a given derivative."""
         
-        return utils.open_price_history(self._outdir, self._price_file)
+        price_history = utils.open_price_history(self._outdir, self._price_file)
+        if price_history is None:
+            utils.exit_with_error(f'You need to generate price history first.')
+        
+        return price_history
 
     def _extract_close_prices(self, prices_list: list) -> list:
         """Extract all close prices info into a list."""
@@ -45,7 +49,7 @@ class Cointegrator:
                 if not math.isnan(prices["close"]):
                     close_prices.append(prices["close"])
             except KeyError:
-                print(f'Could not find close price for {prices}')
+                utils.log_error(f'Could not find close price for {prices}')
 
         return close_prices
 
@@ -73,8 +77,8 @@ class Cointegrator:
         df["zscore"] = (x - mean) / std
 
         zscore = df["zscore"].astype(float).values
-        self.zscore_list.append(zscore)
-        return zscore
+        self.zscore_list.append(zscore.tolist())
+        return zscore.tolist()
 
     def _get_cointegration_for_pair(self, first_set: list, second_set: list) -> dict:
         """Calculate co-integration for two tokens."""
@@ -115,8 +119,6 @@ class Cointegrator:
         """Save backtest data to file."""
 
         price_history = self._get_price_history()
-        if not price_history:
-            utils.exit_with_error("You need to generate price history first. ")
 
         try:
             first_set = self._extract_close_prices(price_history[coin1])

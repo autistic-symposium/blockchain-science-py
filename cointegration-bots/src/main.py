@@ -5,7 +5,6 @@
 # Entry point for cointbot.
 
 
-import asyncio
 import argparse
 
 import src.utils.os as utils
@@ -106,7 +105,7 @@ def run() -> None:
             info = s.get_cointegration()
 
             if not info.empty:
-                print(info)
+                utils.log_info(info)
             else:
                 utils.exit_with_error(f'No data found for {currency}.')
 
@@ -125,7 +124,7 @@ def run() -> None:
             info = s.get_zscore()
 
             if not info.empty:
-                print(info)
+                utils.log_info(info)
             else:
                 utils.exit_with_error(f'No data found for {currency}.')
 
@@ -145,7 +144,7 @@ def run() -> None:
             info = s.get_backtests(coin1, coin2)
 
             if not info.empty:
-                print(info)
+                utils.log_info(info)
                 plots.plot_cointegrated_pair(info, coin1, coin2, env_vars)
             else:
                 utils.exit_with_error(f'Could not get backtests for {cex}.')
@@ -167,8 +166,8 @@ def run() -> None:
 
         if cex == 'BYBIT':
             b = BybitCex(env_vars, ws=True, market=market)
-            asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
-
+            b.open_orderbook_ws(coin1, coin2)
+            
         else:
             utils.exit_with_error(f'CEX not supported: {cex}')
 

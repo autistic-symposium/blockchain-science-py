@@ -23,8 +23,8 @@ def save_json(destination: str, data: dict) -> None:
             json.dump(data, outfile, indent=4)
 
     except (IOError, TypeError) as e:
-        print(f'Could not save {destination}: {e}')
-        return False
+        log_error(f'Could not save {destination}: {e}')
+
 
 def open_json(filepath: str) -> dict:
     """Load and parse a JSON file."""
@@ -34,8 +34,7 @@ def open_json(filepath: str) -> dict:
             return json.load(infile)
 
     except (IOError, FileNotFoundError, TypeError) as e:
-        print(f'Failed to parse: "{filepath}": {e}')
-        return False
+        log_error(f'Failed to parse: "{filepath}": {e}')
 
 
 def save_csv(df: pd.DataFrame, destination: str) -> None:
@@ -58,8 +57,7 @@ def create_dir(result_dir: str) -> None:
             os.mkdir(result_dir)
 
     except OSError as e:
-        print(f'Could not create {result_dir}: {e}')
-        return False
+        log_error(f'Could not create {result_dir}: {e}')
 
 
 def deep_copy(dict_to_clone: dict) -> dict:
@@ -134,7 +132,7 @@ def set_logging(log_level: str) -> None:
         logging.basicConfig(level=logging.DEBUG, format='%(message)s')
 
     else:
-        print(f'Logging level {log_level} is not available. Setting to ERROR')
+        log_info(f'Logging level {log_level} is not available. Setting to ERROR')
         logging.basicConfig(level=logging.ERROR, format='%(message)s')
 
 
@@ -143,7 +141,7 @@ def load_config() -> dict:
 
     env_file = Path('.') / '.env'
     if not os.path.isfile(env_file):
-        print('Please create an .env file')
+        log_error('Please create an .env file')
         sys.exit(1)
 
     env_vars = {}
@@ -172,21 +170,21 @@ def load_config() -> dict:
         # Statistical variables
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
         env_vars['PLIMIT'] = os.getenv("PLIMIT")
-        env_vars['TOKEN1'] = os.getenv("TOKEN1")
-        env_vars['TOKEN2'] = os.getenv("TOKEN2")
         env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")   
         env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")    
 
         # Bot variables
         env_vars['BOT_COINS'] = os.getenv("BOT_COINS")
         env_vars['BOT_MARKET'] = os.getenv("BOT_MARKET")
+        env_vars['ORDER_TYPE'] = os.getenv("ORDER_TYPE")
+        env_vars['STOP_LOSS'] = os.getenv("STOP_LOSS")
 
         set_logging(os.getenv("LOG_LEVEL"))
 
         return env_vars
 
     except KeyError as e:
-        print(f'Cannot extract env variables: {e}. Exiting.')
+        log_error(f'Cannot extract env variables: {e}. Exiting.')
 
 
 def save_price_history(price_history: dict, outdir: str, outfile: str) -> None:
@@ -206,8 +204,7 @@ def open_price_history(indir: str, infile: str) -> dict:
     if price_history is not None:
         log_info(f'Price history file loaded from {filepath}')
         return price_history
-    else:
-        return False
+
 
 def save_cointegration(data: list, key: str, outdir: str, outfile: str) -> pd.DataFrame:
     """Handle saving the results for cointegration."""
@@ -234,8 +231,6 @@ def open_cointegration(indir: str, infile: str) -> dict:
     except FileNotFoundError:
         log_error(f'Cointegration file not found at {filepath}')
     
-    return False
-
 
 def save_metrics(data: list, outdir: str, outfile: str) -> None:
     """Handle saving the results for metrics."""
@@ -261,4 +256,3 @@ def open_metrics(indir: str, infile: str) -> dict:
     except FileNotFoundError:
         log_error(f'Metrics file not found at {filepath}')
     
-    return False
