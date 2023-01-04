@@ -127,9 +127,6 @@ class BybitCex():
             from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
         elif self._timeframe == 'W':
             from_time = datetime.datetime.now() - datetime.timedelta(weeks=self._kline_limit)
-        elif self._timeframe == 'M':
-            self._kline_limit = 30 * self._kline_limit
-            from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
         else:
             utils.exit_with_error(f'TIMEFRAME {self._timeframe} not supported.')
         
@@ -161,6 +158,7 @@ class BybitCex():
 
         except Exception as e:
             utils.log_error(f'Could not get k-lines for {coin}: {e}')
+
 
     def _handle_orderbook_ws(self, msg: dict) -> None:
         """Handle orderbook data from websocket."""

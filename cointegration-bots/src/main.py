@@ -18,7 +18,7 @@ from src.strategies.cointegration import Cointegrator
 def run_menu() -> argparse.ArgumentParser:
     """Run the menu for this module."""
 
-    parser = argparse.ArgumentParser(description='🏭 cointbot 🪙')
+    parser = argparse.ArgumentParser(description='🤖📉 cointbot 📈🤖')
     parser.add_argument('-c', dest='coin', nargs=1,
                         help='Get data for a derivative currency. \
                             Example: cointbot -d usdt')
