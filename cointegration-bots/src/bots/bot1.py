@@ -12,12 +12,16 @@ class BbBotOne:
 
     def __init__(self, env_vars):
 
-        coins = self._env_vars["BOT_COINS"].split(',')
-        self._coin1 = coins[0]
-        self._coin2 = coins[1]
-        self._market = self.env_vars["BOT_MARKET"].upper()
-        self._session = None
+        self._env_vars = env_vars
+        self._market = env_vars["BOT_MARKET"].upper()
 
+        try:
+            self._coin1 = env_vars["BOT_COINS"].split(',')[0].strip()
+            self._coin2 = env_vars["BOT_COINS"].split(',')[1].strip()
+        except IndexError:
+            utils.exit_with_error(f'Define two coins string for bot1.')
+    
+        self._session = None
         self._setup()
 
     #########################
@@ -27,7 +31,7 @@ class BbBotOne:
     def _setup(self):
         """Setup the bot."""
 
-        self._session = BybitCex(self.env_vars, ws=True, market=self._market)
+        self._session = BybitCex(self._env_vars, ws=True, market=self._market)
         self._session.set_leverage(self._coin1, is_isolated=True, 
                                             buy_leverage=1, sell_leverage=1)
         self._session.set_leverage(self._coin2, is_isolated=True, 

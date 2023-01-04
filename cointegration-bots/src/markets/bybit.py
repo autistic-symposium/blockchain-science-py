@@ -49,7 +49,7 @@ class BybitCex():
                 return self._env_vars['BYBIT_HTTP_PUBLIC']
         else:  
             self._api_key = self._env_vars['BYBIT_API_KEY']
-            self._api_secret = self._env_vars['BYBIT_SECRET_KEY']
+            self._api_secret = self._env_vars['BYBIT_API_SECRET']
 
             if self._is_websocket:
                 return self._env_vars['BYBIT_WS_PRIVATE'] 
@@ -86,11 +86,11 @@ class BybitCex():
                         self._api_key, 
                         self._api_secret)
 
-    def _change_to_private_session(self, ws=False) -> None:
-        """Change session to private session."""
+    def _change_session(self, is_public: bool, ws=False) -> None:
+        """Change session to private or public session."""
 
         self._is_websocket = ws
-        self._is_public = False
+        self._is_public = is_public
         self._url = self._set_url()
         self._session = self._start_bybit_session()
 
@@ -242,8 +242,10 @@ class BybitCex():
                            buy_leverage: int, sell_leverage: int) -> None:
         """Set leverage for a given ticker."""
         
+        self._change_session(is_public=False)
+
         try:
-            self._session_private.cross_isolated_margin_switch(
+            self._session.cross_isolated_margin_switch(
                 symbol=ticker,
                 is_isolated=is_isolated,
                 buy_leverage=buy_leverage,
@@ -256,7 +258,7 @@ class BybitCex():
         """Place an order for a given ticker."""
 
         side = self._get_side(direction)
-        self._change_to_private_session()
+        self._change_session(is_public=False)
 
         try:
             if self._env_vars['ORDER_TYPE'] == 'LIMIT':
