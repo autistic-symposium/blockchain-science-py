@@ -6,15 +6,13 @@
 
 <br>
 
+----
 
-
----
-
-#### in this repo:
+In this repo, you will find:
 
 <br>
 
-* [Cointegration CLI and  Trading Bots](cointegration/): 
+* **[Cointegration CLI and  Trading Bots](cointegration/):**
   * *"when two or more non-stationary series can be combined to make a stationary series, the component series are said to be cointegrated.*
 
 <br>

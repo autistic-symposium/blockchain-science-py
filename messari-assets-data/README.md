@@ -20,3 +20,5 @@ pip3 install -r requirements.txt
 ```
 
 Then, please fill `.env` (copied from .`.env_example`.
+
+◼️
