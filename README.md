@@ -12,8 +12,8 @@
 
 ## bots
 
-* **[Statistical trading bots and scripts](trading-bots-and-scripts/):**
-  * Deploying bots with several **statistical algorithmic trading strategies**, several **market types**, and on **docker**.
+* **[Cointegration trading bots and CLI](cointegration-bots):**
+  * Run **highly customized** trading bots with **statistical algorithmic strategies** such as **cointegration**. Include option for **docker deployment**.
 
 
 

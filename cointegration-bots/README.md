@@ -1,5 +1,10 @@
 ## Cointegration Trading Bots
 
+<br>
+
+#### 🚨 disclaimer: my projects are boilerplate to get you started; you might or might not profit from it: in the mev world, nobody is going to handle you the alpha. i am not responsible for anything you do with my free code.
+
+
 
 <br>
 
