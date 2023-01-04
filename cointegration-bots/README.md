@@ -1,8 +1,5 @@
 ## Cointegration Trading Bots
 
-<br>
-
-#### 🚨 disclaimer: my projects are boilerplate to get you started; you might or might not profit from it: in the mev world, nobody is going to handle you the alpha. i am not responsible for anything you do with my free code.
 
 
 
@@ -26,6 +23,9 @@
         6. continue monitoring the z-score for close signals in the future
 ```
 
+<br>
+
+#### 🚨 disclaimer: my projects are boilerplates to get you started; you might or might not profit from it: in the mev world, nobody is going to handle you the alpha. i am not responsible for anything you do with my free code.
 
 
 
