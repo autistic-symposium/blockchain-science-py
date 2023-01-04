@@ -129,7 +129,7 @@ Usage:
 <br>
 
 
-Run API calls to bybit to query the market data for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. 
+Run API calls to bybit to query the market data for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. Example:
 
 ``` 
 cointbot -c usdt
@@ -177,7 +177,7 @@ Example of output:
 
 <br>
 
-Run API calls to bybit to query the market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. Save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
+Run API calls to bybit to query the market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. Save them to `OUTPUTDIR/PRICE_HISTORY_FILE`. Example:
 ``` 
 cointbot -p usdt
 ```
@@ -216,7 +216,7 @@ Example of output:
 
 With the price history data (which was generated in the previous step inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration `DataFrame`.
 
-For the desired `PLIMIT` (p-value limit that defines a "hot" pair), run:
+For the desired `PLIMIT` (p-value limit that defines a "hot" pair), this is an example:
 
 ``` 
 cointbot -i usdt
@@ -285,10 +285,10 @@ This `DataFrame` is saved at `OUTPUTDIR/COINTEGRATION_FILE`, sorted by `zero_cro
 
 <br>
 
-Run:
+Example:
 
 ``` 
-cointbot -z 
+cointbot -z  usdt
 ```
 
 
@@ -328,6 +328,7 @@ Once the cointegration pairs for a given derivative currency's history data is c
 
 <br>
 
+Example:
 
 ``` 
 cointbot -o usdt 10
@@ -370,10 +371,10 @@ Example of output:
 
 Select your favorite asset pairs to generate the data and the plot on their cointegration:
 
-Run:
+Example:
 
 ``` 
-cointbot -t <coin1> <coin2>
+cointbot -t uniusdt c98usdt usdt  
 ```
 
 
