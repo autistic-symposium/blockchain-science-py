@@ -148,24 +148,25 @@ def load_config() -> dict:
     load_dotenv(env_file)
 
     try:
-        # General
+        # Syste variables
+        set_logging(os.getenv("LOG_LEVEL"))
         env_vars['PRICE_HISTORY_FILE'] = os.getenv("PRICE_HISTORY_FILE")
         env_vars['COINTEGRATION_FILE'] = os.getenv("COINTEGRATION_FILE")
         env_vars['ZSCORE_FILE'] = os.getenv("ZSCORE_FILE")
         env_vars['BACKTEST_FILE'] = os.getenv("BACKTEST_FILE")
         env_vars['OUTPUTDIR'] = os.getenv("OUTPUTDIR")
-        env_vars['CEX'] = os.getenv("CEX")
 
         # CEX variables
+        env_vars['CEX'] = os.getenv("CEX")
+
         if env_vars['CEX'].upper() == 'BYBIT':
-            env_vars['BYBIT_HTTP_PUBLIC'] = os.getenv("BYBIT_HTTP_PUBLIC")
-            env_vars['BYBIT_HTTP_PRIVATE'] = os.getenv("BYBIT_HTTP_PRIVATE")
+            env_vars['BYBIT_HTTP'] = os.getenv("BYBIT_HTTP")
             env_vars['BYBIT_WS_PUBLIC'] = os.getenv("BYBIT_WS_PUBLIC")    
             env_vars['BYBIT_WS_PRIVATE'] = os.getenv("BYBIT_WS_PRIVATE")
             env_vars['BYBIT_API_KEY'] = os.getenv("BYBIT_API_KEY")
             env_vars['BYBIT_API_SECRET'] = os.getenv("BYBIT_API_SECRET")
             env_vars['IS_TESTNET'] = os.getenv("IS_TESTNET")
-            env_vars['IS_PUBLIC_CONNECTION'] = os.getenv("IS_PUBLIC_CONNECTION")
+            env_vars['IS_PUBLIC'] = os.getenv("IS_PUBLIC")
 
         # Statistical variables
         env_vars['TIMEFRAME'] = os.getenv("TIMEFRAME")
@@ -173,13 +174,12 @@ def load_config() -> dict:
         env_vars['KLINE_LIMIT'] = os.getenv("KLINE_LIMIT")   
         env_vars['ZSCORE_WINDOW'] = os.getenv("ZSCORE_WINDOW")    
 
-        # Bot variables
-        env_vars['BOT_COINS'] = os.getenv("BOT_COINS")
-        env_vars['BOT_MARKET'] = os.getenv("BOT_MARKET")
-        env_vars['ORDER_TYPE'] = os.getenv("ORDER_TYPE")
-        env_vars['STOP_LOSS'] = os.getenv("STOP_LOSS")
-
-        set_logging(os.getenv("LOG_LEVEL"))
+        # Bot1 variables
+        env_vars['BOT1_COINS'] = os.getenv("BOT1_COINS")
+        env_vars['BOT1_MARKET_TYPE'] = os.getenv("BOT1_MARKET_TYPE")
+        env_vars['BOT1_ORDER_TYPE'] = os.getenv("BOT1_ORDER_TYPE")
+        env_vars['BOT1_STOP_LOSS'] = os.getenv("BOT1_STOP_LOSS")
+        env_vars['BOT1_TRADEABLE_CAPITAL'] = os.getenv("BOT1_TRADEABLE_CAPITAL")
 
         return env_vars
 
@@ -206,36 +206,13 @@ def open_price_history(indir: str, infile: str) -> dict:
         return price_history
 
 
-def save_cointegration(data: list, key: str, outdir: str, outfile: str) -> pd.DataFrame:
-    """Handle saving the results for cointegration."""
-
-    df = pd.DataFrame(data)
-    df = df.sort_values(key, ascending=False)
-
-    destination = format_path(outdir, outfile)
-    save_csv(df, destination)
-    log_info(f'Cointegration saved to {destination}')
-
-    return df
-
-
-def open_cointegration(indir: str, infile: str) -> dict:
-    """Handle opening the results for cointegration."""
-
-    filepath = format_path(indir, infile)
-    try:
-        cointegration = open_csv(filepath)
-        if cointegration is not None:
-            log_info(f'Cointegration loaded from {filepath}')
-            return cointegration
-    except FileNotFoundError:
-        log_error(f'Cointegration file not found at {filepath}')
-    
-
-def save_metrics(data: list, outdir: str, outfile: str) -> None:
+def save_metrics(data: list, outdir: str, outfile: str, key=None) -> pd.DataFrame:
     """Handle saving the results for metrics."""
 
     df = pd.DataFrame(data)
+
+    if key is not None:
+        df = df.sort_values(key, ascending=False)
 
     if not df.empty:
         destination = format_path(outdir, outfile)
@@ -245,14 +222,15 @@ def save_metrics(data: list, outdir: str, outfile: str) -> None:
     return df
 
 
-def open_metrics(indir: str, infile: str) -> dict:
+def open_metrics(indir: str, infile: str) -> pd.DataFrame:
     """Handle opening the results for metrics."""
 
     filepath = format_path(indir, infile)
     try:
         metrics = open_csv(filepath)
-        log_info(f'Metrics loaded from {filepath}')
-        return metrics
+        if metrics is not None:
+            log_info(f'Metrics loaded from {filepath}')
+            return metrics
     except FileNotFoundError:
         log_error(f'Metrics file not found at {filepath}')
     

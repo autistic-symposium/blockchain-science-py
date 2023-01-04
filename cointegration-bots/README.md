@@ -2,7 +2,7 @@
 
 <br>
 
-### tl; dr statistical arbitrage
+### TL; DR statistical arbitrage
 
 <br>
 
@@ -16,15 +16,33 @@
 
 <br>
 
-### tl; dr this package
+### TL; DR this package
 
 <br>
 
-* this package series of libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment.
+* This package series of libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment. Here is its directory's structure:
 
-<br>
+```
+📂 cointegration-bots
+    ┣ 📂 src
+        ┣ main.py
+        ┣ 📂 markets
+            ┣ bybit.py
+            ┣ (...)
+        ┣ 📂 bots
+            ┣ bot1.py
+            ┣ (...)
+        ┣ 📂 strategies
+            ┣ cointegration.py
+            ┣ (...)
+        ┣ 📂 utils
+            ┣ os.py
+            ┣ (...)
+    ┣ 📂 results
+    ┣ 📂 docker
+```
 
-* for instance, `bot1` has the following strategy:
+* For example, `bot1` has the following strategy:
 ```
         1. search for possible crypto perpetual derivative contracts that can be longed/shorted
         2. calculate pairs that are cointegrated (by price history)
@@ -36,7 +54,7 @@
 
 <br>
 
-#### 🚨 disclaimer: my projects are boilerplates to get you started; you might or might not profit from it: in the mev world, nobody is going to handle you the alpha. i am not responsible for anything you do with my free code.
+#### 🚨 Disclaimer: my projects are boilerplates to get you started; you might or might not profit from it: in the mev world, nobody is going to handle you the alpha. i am not responsible for anything you do with my free code.
 
 
 
@@ -45,11 +63,11 @@
 
 
 ---
-### setting up
+### Setting up
 
 <br>
 
-Add info to a `.env` file:
+Add system and trading config to a `.env` file:
 
 <br>
 
@@ -91,7 +109,7 @@ Usage:
 
 ----
 
-### running on bybit cex
+### Running on bybit cex
 
 <br>
 
@@ -100,18 +118,18 @@ Usage:
 <br>
 
 
-#### getting derivatives data for a derivative currency
+#### Getting data for a derivative currency
 
 <br>
 
-> ***Crypto derivatives** are financial contracts that derive their values from underlying assets. A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.*
+> 💡 ***Crypto derivatives** are financial contracts that derive their values from underlying assets. A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.*
 
 
 
 <br>
 
 
-Run API calls to bybit to query the market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. 
+Run API calls to bybit to query the market data for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. 
 
 ``` 
 cointbot -c usdt
@@ -151,16 +169,15 @@ Example of output:
 
 ----
 
-#### saving price history for a derivative currency
+#### Saving price history for a derivative currency
 
 <br>
 
-> 💡 *Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the Spot price, resulting in a mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. Mark price refers to a global spot price index plus a decaying funding basis rate, and it's used as a trigger for liquidation and to measure unrealized profit and loss. The last traded price is the current market price, anchored to the spot price using the funding mechanism.*
-
+> 💡 *In the context of trading, a **k-line** represents the **fluctuation** of an asset prices in a give time frame. It shows **close price**, **open price**, **high price**, and **low price**. If the **close price > open price**, the k-line has a **positive line**. Otherwise, it is a **negative line**.*
 
 <br>
 
-Retrieve market price kline for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
+Run API calls to bybit to query the market price k-line for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`. Save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 ``` 
 cointbot -p usdt
 ```
@@ -171,28 +188,35 @@ cointbot -p usdt
 Example of output:
 
 ```
-ℹ️ Retriving k-lines for 10000NFTUSDT
-ℹ️ Retriving k-lines for 1000BTTUSDT
-ℹ️ Retriving k-lines for 1000LUNCUSDT
-ℹ️ Retriving k-lines for 1000XECUSDT
-ℹ️ Retriving k-lines for 1INCHUSDT
 (...)
-ℹ️ Retriving k-lines for ZILUSDT
-ℹ️ Retriving k-lines for ZRXUSDT
+ℹ️ Retrieving k-lines for ZRXUSDT: [{'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1655596800, 'open': 0.2478, 'high': 0.2691, 'low': 0.2314, 'close': 0.2644}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1655683200, 'open': 0.2644, 'high': 0.2857, 'low': 0.2507, 'close': 0.2755}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1655769600, 'open': 0.2755, 'high': 0.2987, 'low': 0.273, 'close': 0.2798}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1655856000, 'open': 0.2798, 'high': 0.3043, 'low': 0.2664, 'close': 0.2703}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1655942400, 'open': 0.2703, 'high': 0.2942, 'low': 0.2691, 'close': 0.2902}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656028800, 'open': 0.2902, 'high': 0.3067, 'low': 0.2878, 'close': 0.302}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656115200, 'open': 0.302, 'high': 0.3132, 'low': 0.2895, 'close': 0.311}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656201600, 'open': 0.311, 'high': 0.3463, 'low': 0.3039, 'close': 0.3154}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656288000, 'open': 0.3154, 'high': 0.3523, 'low': 0.3093, 'close': 0.3235}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656374400, 'open': 0.3235, 'high': 0.3427, 'low': 0.3147, 'close': 0.3175}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656460800, 'open': 0.3175, 'high': 0.3678, 'low': 0.3119, 'close': 0.3509}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656547200, 'open': 0.3509, 'high': 0.352, 'low': 0.3133, 'close': 0.3288}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656633600, 'open': 0.3288, 'high': 0.3351, 'low': 0.2977, 'close': 0.3054}, {'symbol': 'ZRXUSDT', 'period': 'D', 'start_at': 1656720000, 'open': 0.3054, 'high': 0.309, 'low': 0.2942, 'close': 0.3003}, 
+(...)
+ℹ️ 200 k-lines retrieved for ZRXUSDT.
 ℹ️ Price history saved to results/USDT_price_history.json
 ```
 
 <br>
 
----
+> 💡 *Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the spot price, causing mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. "Mark price" refers to a **global spot price index plus a decaying funding basis rate**, and it's used as a trigger for liquidation and to measure **unrealized profit and loss**. "Last traded price" is the **current market price**, anchored to the **spot price** using the funding mechanism.*
 
-#### getting cointegration history data for a derivative currency
+
 
 <br>
 
-With the price history data (e.g., directly generated in the previous option, inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration data frame (in Pandas).
 
-For that, set the desired `PLIMIT` (p-value limit that defines a "hot" pair) and run:
+---
+
+#### Getting cointegration for a derivative currency's history data 
+
+<br>
+
+> 💡 *In statistics, **p-value** is the probability of obtaining results at least as extreme as the results of a **hypothesis test**, assuming that the **null hypothesis is correct**. A p-value of **0.05 or lower** is generally considered statistically **significant**.*
+
+<br>
+
+With the price history data (which was generated in the previous step inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration `DataFrame`.
+
+For the desired `PLIMIT` (p-value limit that defines a "hot" pair), run:
 
 ``` 
 cointbot -i usdt
@@ -240,17 +264,24 @@ Example of output:
 
 <br>
 
-This table is saved in `OUTPUTDIR/COINTEGRATION_FILE`.
+This `DataFrame` is saved at `OUTPUTDIR/COINTEGRATION_FILE`, sorted by `zero_crossing`.
 
 <br>
+
+> 💡 *In statistics, **zero crossing** is a point where the sign of function changes. In the context of trading, it determines an **entry point** (using the price in relation to the moving average as a **direction confirmation**).*
+
+
+<br>
+
+
 
 ---
 
-#### getting z-score signal for a cointegrated pair and a derivative currency
+#### Getting the z-score signal for a cointegrated pair in a derivative currency's history data
 
 <br>
 
-> *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trade to generate **buy and sell signals**.*
+> 💡 *In the context of trading, **z-score** is the number of **standard deviations** separating the **current price** from the **mean price**, so that traders can look at the **momentum of the average z-score** and takes a **contrarian approach** to trade to generate **buy and sell signals**. Graphically, **positive z-scores lie to the right** of the mean, and **negative Z-scores lie to the left** of the mean.*
 
 <br>
 
@@ -285,16 +316,44 @@ Example of output:
 
 <br>
 
+
+
 ---
 
-#### generate backtest metrics for a cointegrated pair and a derivative currency
+#### Getting top cointegrated pairs for a derivative currency's history data 
 
 <br>
 
-> *In the context of crypto trading, **backtesting** is accomplished by **reconstructing**, with **historical data**, trades that would have occurred in the past using rules defined by a given strategy, gauging the **effectiveness of the strategy**.*
+Once the cointegration pairs for a given derivative currency's history data is calculated, we can look at the top best cointegrated pairs for the given `TIMEFRAME` (and perhaps backtest them in the next step):
 
 <br>
 
+
+``` 
+cointbot -o usdt 10
+```
+
+<br>
+
+Example of output:
+
+```
+
+```
+
+<br>
+
+---
+
+#### Generate backtest metrics for a cointegrated pair in a derivative currency's history data
+
+<br>
+
+> 💡 *In the context of crypto trading, **backtesting** is accomplished by **reconstructing**, with **historical data**, trades that would have occurred in the past using rules defined by a given strategy, gauging the **effectiveness of the strategy**.*
+
+<br>
+
+Select your favorite asset pairs to generate the data and the plot on their cointegration:
 
 Run:
 
@@ -305,7 +364,7 @@ cointbot -t <coin1> <coin2>
 
 <br>
 
-Example of output for ETHUSDT vs. BTCUSDT:
+Example of output for `ETHUSDT` vs. `BTCUSDT`:
 
 ```
 ℹ️ Cointegration loaded from results/USDT_cointegration_results.csv
@@ -330,7 +389,7 @@ Example of output for ETHUSDT vs. BTCUSDT:
 
 <br>
 
-The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and backtest file is saved at `OUTPUTDIR/{coin1}_{coin2}_BACKTEST_FILE`.
+Their plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png`. Their backtest file is saved at `OUTPUTDIR/{coin1}_{coin2}_BACKTEST_FILE`.
 
 <br>
 
@@ -341,19 +400,19 @@ The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and back
 
 <br>
 
-> 💡 *If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with `make clean`.*
+> 💡 *If you are **starting a new run**, **clean up** the current setup with* `make clean_data`.
 
 <br>
 
 ---
 
-#### testing orderbook connection through websockets for a cointegrated pair
+#### Testing connection to orderbooks through websockets
 
 
 <br>
 
 
-To open a websocket subscribed to a cointegration pairs (either for spot, linear, or inverse markets), run:
+To open a websocket subscribed to a cointegration pair (either for spot, linear, or inverse markets), run:
 
 ``` 
 cointbot -n <coin1> <coin2> <spot, linear, or inverse>
@@ -362,13 +421,13 @@ cointbot -n <coin1> <coin2> <spot, linear, or inverse>
 
 <br>
 
-###### [topics for spot market](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
+###### [Topics for spot market](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
 
 Spot market topics are implemented with `trade_v1_stream()`, which pushes raw data for each trade.
 
 After a successful subscription message, the first data message (`f: true`), consists of the last 60 trades. After (`f: false`), only new trades are pushed (at a frequency of 300ms, where the message received has a maximum delay of 400ms).
 
-Example of output for ETHUSDT and BTCUSDT for spot market:
+Example of output for `ETHUSDT` and `BTCUSDT` for spot market:
 
 <br>
 
@@ -410,13 +469,13 @@ WebSocket Spot connected
 <br>
 
 
-###### [topics for inverse perpetual/futures market](https://bybit-exchange.github.io/docs/futuresV2/inverse/#t-websocketresponse)
+###### [Topics for inverse perpetual/futures market](https://bybit-exchange.github.io/docs/futuresV2/inverse/#t-websocketresponse)
 
-Inverse market topics are implemented with `orderbook_25_stream()`, which fetches orderbook with a depth of 25 orders per side.
+Inverse market topics are implemented with `orderbook_25_stream()`, which fetches the orderbook with a depth of 25 orders per side.
 
-After the subscription response, the first response will be the snapshot response, showing the entire orderbook. The data is ordered by price (starting with lowest buys). Push frequency is 20 ms.
+After the subscription response, the first response will be the snapshot response, showing the entire orderbook. The data is ordered by price (starting with the lowest buys). Push frequency is 20 ms.
 
-Example of output for ETHUSD and BTCUSD for inverse market:
+Example of output for `ETHUSD` and `BTCUSD for inverse market:
 
 <br>
 
@@ -451,16 +510,16 @@ WebSocket Inverse Perp connected
 <br>
 
 
-###### [topics for USDT linear perpetual](https://bybit-exchange.github.io/docs/futuresV2/linear/#t-websocketresponse)
+###### [Topics for USDT linear perpetual](https://bybit-exchange.github.io/docs/futuresV2/linear/#t-websocketresponse)
 
 
 
-Inverse market topics are implemented with `orderbook_25_stream()`, which fetches orderbook with a depth of 25 orders per side.
+`USDT` Linear market topics are implemented with `orderbook_25_stream()`, which fetches the orderbook with a depth of 25 orders per side.
 
 The first response is the snapshot response, showing the entire orderbook. The data is ordered by price, starting with the lowest buys and ending with the highest sells. Push frequency is 20ms.
 
 
-Example of output for ETHUSDT and BTCUSDT for linear market:
+Example of output for `ETHUSDT` and `BTCUSDT` for linear market:
 
 <br>
 
@@ -499,60 +558,50 @@ WebSocket USDT Perp connected
 
 ---
 
-#### deploying a trading bot using the cointegrated strategy
+#### Deploying trading bots using the several cointegrated strategies and setups
 
 <br>
 
-Several bots with different strategies are found inside  `src.bots`.
+Several bots with different strategies are found inside  `src/bots/`.
 
-Each bot has a different number, and its configuration is set in the `.env` file (*e.g.*, `BOT_COINS`, `BOT_MARKET`, `TRADEABLE_CAPITAL`, and others).
-
-
-<br>
-
-
-##### 🤖 bot1
+Each bot has a different number, and configuration settings in the `.env` file (*e.g.*, `BOT_COINS`, `BOT_MARKET_TYPE`, `BOT_ORDER_TYPE`, `BOT_STOP_LOSS`, `BOT_TRADEABLE_CAPITAL`, and others).
 
 
 <br>
 
-`bot1`'s setup:
+
+##### 🤖 `BbBotOne`
+
+
+<br>
+
+`Bot1`'s setup:
 
 ```
 1. check constants inside .env
-
 2. connect to REST API and Websockets
-
 3. set leverage
-
 4. start a loop with "while True"
 ```
 
 <br>
 
-`bot1`'s execution (inside a `while True` loop)
+`Bot1`'s execution (inside a `while True` loop)
 
 ```
 5. check positions
-
 6. check active orders
-
 7. manage new trades
-
   a. check latest z-score signal:
-
     - if hot:
         i. get ticker liquidity
         ii. confirm short vs. long tickers
         iii. confirm initial capital
-
     - in any case:
         i. average in Limit PostOnly orders
         ii. or place Market orders
         iii. monitor z-score for close signal
-
 8. close existing trades
-
 9. repeat
 ```
 
@@ -577,38 +626,30 @@ make bot1
 
 <br>
 
-##### 🤖 bot2
+##### 🤖 `BbBotTwo`
 
 
 <br>
 
-`bot2`'s setup:
+`Bot2`'s setup:
 
 ```
 1. check constants inside .env
-
 2. connect to REST API and Websockets
-
 3. set leverage
-
 4. start a loop with "while True"
 ```
 
 <br>
 
-`bot1`'s execution (inside a `while True` loop)
+`Bot2`'s execution (inside a `while True` loop)
 
 ```
 5. get z-score
-
 6. check open positions and net P&L
-
-7. close all positions if z-score is not relevant or poor P&L performance
-
+7. close all positions if z-score is not relevant or if poor P&L performance
 8. check how much capital is invested
-
 9. open new positions
-
 10. repeat each time period
 ```
 
@@ -637,12 +678,12 @@ make bot2
 ---
 
 
-### resources
+### Resources
 
 <br>
 
 
-* [pair trading](https://robotwealth.com/practical-pairs-trading/)
-* [pybit documentation](https://openbase.com/python/pybit/documentation)
-* [bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
-* [interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
+* [Notes on pair trading](https://robotwealth.com/practical-pairs-trading/)
+* [Pybit documentation](https://openbase.com/python/pybit/documentation)
+* [Bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
+* [Interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)

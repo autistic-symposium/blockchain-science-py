@@ -1,4 +1,4 @@
-.PHONY: clean install install_deps bot1
+.PHONY: clean clean_data install install_deps bot1 bot2
 
 clean:
 	@find . -iname '*.py[co]' -delete
@@ -9,6 +9,8 @@ clean:
 	@rm -rf *.egg-info
 	@rm -rf .tox
 	@rm -rf venv/lib/python*/site-packages/*.egg
+
+clean_data:
 	@rm -rf results/*csv results/*png results/*json
 
 install:

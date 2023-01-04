@@ -11,6 +11,7 @@ import src.utils.os as utils
 import src.utils.plots as plots
 from src.markets.bybit import BybitCex
 from src.bots.bot1 import BbBotOne
+from src.bots.bot2 import BbBotTwo
 from src.strategies.cointegration import Cointegrator
 
 
@@ -19,20 +20,23 @@ def run_menu() -> argparse.ArgumentParser:
 
     parser = argparse.ArgumentParser(description='🏭 cointbot 🪙')
     parser.add_argument('-c', dest='coin', nargs=1,
-                        help='Get derivatives data for a derivative currency. \
+                        help='Get data for a derivative currency. \
                             Example: cointbot -d usdt')
     parser.add_argument('-p', dest='price', nargs=1,
-                        help='Save price history for a derivative currency. \
+                        help='Generates JSON price history for a derivative currency. \
                             Example: cointbot -p usdt')
     parser.add_argument('-i', dest='cointegration', nargs=1,
-                        help='Get cointegration history data for a derivative \
+                        help='Generates CSV cointegration history data for a derivative \
                             currency. Example: cointbot -i usdt')
+    parser.add_argument('-o', dest='top', nargs=2,
+                        help='Get top <value> scoring cointegration pairs for a \
+                            derivative currency. Example: cointbot -o usdt 10')
     parser.add_argument('-z', dest='zscore',nargs=1,
-                        help='Get z-core signal for a cointegrated pair and a \
-                            derivative currency. Example: cointbot -z usdt')
-    parser.add_argument('-t', dest='test', nargs=2, 
-                        help='Generate backtests for a cointegrated pair and a \
-                            derivative currency. Example: cointbot -t ethusdt btcusdt')
+                        help='Generates CSV z-core signal for a cointegrated pair and \
+                            aderivative currency. Example: cointbot -z usdt')
+    parser.add_argument('-t', dest='test', nargs=3, 
+                        help='Generates CSV and PNG backtests for a cointegrated pair \
+                            and a currency. Example: cointbot -t ethusdt btcusdt usdt')
     parser.add_argument('-n', dest='network', nargs=3, 
                         help='Test websockets for orderbooks, for either inverse, \
                             linear, or spot market, for a cointegrated pair. \
@@ -63,10 +67,10 @@ def run() -> None:
 
         if cex == 'BYBIT':
             b = BybitCex(env_vars, currency)
-            info = b.get_derivative_currency_info()
+            data = b.get_derivative_currency_info()
 
-            if info:
-                utils.pprint(info)
+            if data:
+                utils.pprint(data)
             else:
                 utils.exit_with_error(f'No data found for {currency}.')
         else:
@@ -81,12 +85,12 @@ def run() -> None:
 
         if cex == 'BYBIT':
             b = BybitCex(env_vars, currency)
-            info = b.get_price_history()
+            data = b.get_price_history()
 
-            if info:
+            if data:
                 outfile = env_vars['PRICE_HISTORY_FILE'].format(currency)
                 outdir = env_vars['OUTPUTDIR']
-                utils.save_price_history(info, outdir, outfile)
+                utils.save_price_history(data, outdir, outfile)
             else:
                 utils.exit_with_error(f'Could not retrieve price history for {currency}')
 
@@ -102,16 +106,38 @@ def run() -> None:
 
         if cex == 'BYBIT':
             s = Cointegrator(env_vars, currency)
-            info = s.get_cointegration()
+            data = s.get_cointegration()
 
-            if not info.empty:
-                utils.log_info(info)
+            if not data.empty:
+                utils.log_info(data)
+                
             else:
                 utils.exit_with_error(f'No data found for {currency}.')
 
         else:
             utils.exit_with_error(f'CEX not supported: {cex}')
 
+
+    ################################
+    #  Get top cointegrated pairs  #
+    ################################
+    elif args.top:
+        currency = args.top[0].upper()
+        top = int(args.top[1].upper())
+
+        if cex == 'BYBIT':
+            s = Cointegrator(env_vars, currency)
+            data = s.get_best_cointegrated_pairs(top)
+
+            if data is not None:
+                utils.pprint(f'Top {top} cointegrated pairs for {currency}:')
+                utils.pprint(data)
+                
+            else:
+                utils.exit_with_error(f'No data found for {currency}.')
+
+        else:
+            utils.exit_with_error(f'CEX not supported: {cex}')
 
     ############################
     #     Get zscore           #
@@ -121,10 +147,10 @@ def run() -> None:
 
         if cex == 'BYBIT':
             s = Cointegrator(env_vars, currency)
-            info = s.get_zscore()
+            data = s.get_zscore()
 
-            if not info.empty:
-                utils.log_info(info)
+            if not data.empty:
+                utils.log_info(data)
             else:
                 utils.exit_with_error(f'No data found for {currency}.')
 
@@ -138,14 +164,18 @@ def run() -> None:
     elif args.test:
         coin1 = args.test[0].upper()
         coin2 = args.test[1].upper()
+        currency = args.test[2].upper()
+
+        if not coin1.endswith(currency) or not coin2.endswith(currency):
+            utils.exit_with_error(f'{coin1}/{coin2} had wrong currency: {currency}')
 
         if cex == 'BYBIT':
-            s = Cointegrator(env_vars)
-            info = s.get_backtests(coin1, coin2)
+            s = Cointegrator(env_vars, currency)
+            data = s.get_backtests(coin1, coin2)
 
-            if not info.empty:
-                utils.log_info(info)
-                plots.plot_cointegrated_pair(info, coin1, coin2, env_vars)
+            if not data.empty:
+                utils.log_info(data)
+                plots.plot_cointegrated_pair(data, coin1, coin2, env_vars)
             else:
                 utils.exit_with_error(f'Could not get backtests for {cex}.')
 
@@ -186,6 +216,11 @@ def run() -> None:
                 if not success:
                     utils.exit_with_error(f'Could not deploy bot for {cex}.')
             
+            elif bot_number == '2':
+                b = BbBotTwo(env_vars)
+                success = b.run()
+                if not success:
+                    utils.exit_with_error(f'Could not deploy bot for {cex}.')
             else:
                 utils.exit_with_error(f'Bot number not yet supported: {bot_number}')
 
