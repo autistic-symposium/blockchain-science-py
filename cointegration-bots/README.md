@@ -102,7 +102,8 @@ Usage:
 
 <br>
 
-<img width="1185" alt="Screen Shot 2023-01-03 at 9 46 06 PM" src="https://user-images.githubusercontent.com/1130416/210492046-d923b7c2-c697-46e7-97b8-8602036da81a.png">
+<img width="1182" alt="Screen Shot 2023-01-04 at 2 54 38 PM" src="https://user-images.githubusercontent.com/1130416/210665313-b9b51fb5-e3f1-4030-ac20-ae8814477384.png">
+
 
 
 <br>
@@ -405,11 +406,12 @@ Example of output for `ETHUSDT` vs. `BTCUSDT`:
 
 <br>
 
-Their plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png`. Their backtest file is saved at `OUTPUTDIR/{coin1}_{coin2}_BACKTEST_FILE`.
+Their plot will be saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png`. Their backtest file will be saved at `OUTPUTDIR/{coin1}_{coin2}_BACKTEST_FILE`.
 
 <br>
 
-![ETHUSDT_BTCUSDT_cointegration](https://user-images.githubusercontent.com/1130416/210492059-ecba5ebf-1ecc-4af2-afba-d5644948d599.png)
+![UNIUSDT_C98USDT_D_cointegration](https://user-images.githubusercontent.com/1130416/210665359-df672433-ccd3-422b-bb0c-842a86b4473f.png)
+
 
 
 <br>
