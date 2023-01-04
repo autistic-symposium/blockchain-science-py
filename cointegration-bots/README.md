@@ -64,7 +64,7 @@ make install
 
 <br>
 
-> 💡 You can test these strategies on [bybit's testnet](https://testnet.bybit.com/).
+> 💡 *You can test these strategies on [bybit's testnet](https://testnet.bybit.com/).*
 
 <br>
 
@@ -314,7 +314,7 @@ The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and back
 
 <br>
 
-> 💡If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with `make clean`.
+> 💡 *If you are starting a new run (i.e., an entirely new timeframe and setup), clean up the result directory with `make clean`.*
 
 <br>
 
@@ -468,7 +468,7 @@ WebSocket USDT Perp connected
 <br>
 
 
-> 💡 In these results, `a` is the ask prices and quantities, and `b` is the bid prices and quantities (both in descending order). For more information about other endpoints and topics, check the [official documentation](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket).
+> 💡 *In these results, `a` is the ask prices and quantities, and `b` is the bid prices and quantities (both in descending order). For more information about other endpoints and topics, check the [official documentation](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket).*
 
 <br>
 
@@ -504,7 +504,7 @@ make bot1
 <br>
 
 
-> 💡 Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the Spot price, resulting in a mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. Mark price refers to a global spot price index plus a decaying funding basis rate, and it's used as a trigger for liquidation and to measure unrealized profit and loss. The last traded price is the current market price, anchored to the spot price using the funding mechanism.
+> 💡 *Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the Spot price, resulting in a mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. Mark price refers to a global spot price index plus a decaying funding basis rate, and it's used as a trigger for liquidation and to measure unrealized profit and loss. The last traded price is the current market price, anchored to the spot price using the funding mechanism.*
 
 
 <br>
