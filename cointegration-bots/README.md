@@ -338,7 +338,22 @@ cointbot -o usdt 10
 Example of output:
 
 ```
+ℹ️ Metrics loaded from results/USDT_cointegration.csv
 
+'Top 10 cointegrated pairs for USDT:'
+
+
+     pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings    symbol1      symbol2
+388   0.046            -3.368619       -3.367006     0.061731              15  MATICUSDT      AXSUSDT
+499   0.046            -3.372177       -3.367006   104.198594              11    AXSUSDT      RENUSDT
+340   0.046            -3.371256       -3.367006    74.784234              17   LINKUSDT     COTIUSDT
+402   0.046            -3.371678       -3.367006    29.610067              15   AAVEUSDT      SNXUSDT
+626   0.046            -3.372086       -3.367006    30.392953               7    TRBUSDT    1INCHUSDT
+409   0.046            -3.371230       -3.367006     1.042626              15    BELUSDT    1INCHUSDT
+454   0.046            -3.368308       -3.367006    16.127011              13    UNIUSDT      C98USDT
+616   0.046            -3.370103       -3.367006   576.820067               7    BITUSDT  1000BTTUSDT
+465   0.046            -3.370326       -3.367006   162.653323              13   AAVEUSDT      ENJUSDT
+521   0.046            -3.369336       -3.367006     3.250135              11    UNIUSDT    ALICEUSDT
 ```
 
 <br>
