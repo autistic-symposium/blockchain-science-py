@@ -42,24 +42,29 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
         fontweight ='bold',
         fontsize=12,
     )
+    axis[0].set_ylabel(
+        'Percentage change', 
+        fontweight ='bold',
+        fontsize=12,
+    )
 
 
     # plot spread
     axis[1].plot(data['spread'], color='green', linewidth=3)
     axis[1].grid(color="grey", axis="y", linestyle="dotted", linewidth=0.5)
     axis[1].set_title(
-        'Spread (first set - second set * hedge ratio)', 
+        'Spread', 
         fontweight='bold',
         fontsize=18,
         pad=5,
         loc="left",
     )
-    axis[1].set_xlabel(
-        'k-line data', 
+    axis[1].set_ylabel(
+        'first set - second set * hedge ratio', 
         fontweight ='bold',
         fontsize=12,
     )
-    axis[1].set_ylabel(
+    axis[1].set_xlabel(
         'k-line data', 
         fontweight ='bold',
         fontsize=12,
