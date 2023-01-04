@@ -410,7 +410,8 @@ Their plot will be saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png`. Their
 
 <br>
 
-![UNIUSDT_C98USDT_D_cointegration](https://user-images.githubusercontent.com/1130416/210665359-df672433-ccd3-422b-bb0c-842a86b4473f.png)
+![BCHUSDT_LINKUSDT_W_cointegration](https://user-images.githubusercontent.com/1130416/210667745-98395c53-f4ce-4330-8bbf-93abc0b778c1.png)
+
 
 
 
