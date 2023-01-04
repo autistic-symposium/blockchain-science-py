@@ -15,6 +15,7 @@ import src.utils.os as utils
 class Cointegrator:
 
     def __init__(self, env_vars: dict, currency=None):
+
         self._env_vars = env_vars
         self.currency = currency or 'USDT'
         self._pvalue_limit = float(self._env_vars['PLIMIT'])
@@ -23,7 +24,6 @@ class Cointegrator:
         self._cointegration_file = self._env_vars['COINTEGRATION_FILE'].format(self.currency)
         self._zscore_file = self._env_vars['ZSCORE_FILE'].format(self.currency)
         self._backtest_file = self._env_vars['BACKTEST_FILE']
-
         self.zscore_list = []
         self.backtest_df = None
 

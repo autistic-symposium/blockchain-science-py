@@ -193,10 +193,7 @@ class BybitCex():
         return price_history_dict  
 
     async def orderbook_ws(self, coin1: str, coin2: str, handling_function=None) -> None:
-        """
-            Connect to websocket for spot or inverse orderbook.
-            https://bybit-exchange.github.io/docs/futuresV2/inverse/#t-publictopics
-        """
+        """Connect to websocket for spot or inverse orderbook."""
         
         handling_function = handling_function or self._handle_orderbook_ws
 

@@ -151,7 +151,7 @@ Example of output:
 (...)
 ℹ️ Retriving k-lines for ZILUSDT
 ℹ️ Retriving k-lines for ZRXUSDT
-ℹ️ Price history saved to results/price_history.json
+ℹ️ Price history saved to results/USDT_price_history.json
 ```
 
 <br>
@@ -167,7 +167,7 @@ With the price history data (e.g., directly generated in the previous option, in
 For that, set the desired `PLIMIT` (p-value limit that defines a "hot" pair) and run:
 
 ``` 
-cointbot -i 
+cointbot -i usdt
 ```
 
 
@@ -191,8 +191,8 @@ Example of output:
 ℹ️    ✅ Found a hot pair: 1000XECUSDT and BATUSDT
 ℹ️    ✅ Found a hot pair: 1000XECUSDT and BICOUSDT
 (...)
-ℹ️ Cointegration saved to results/cointegration_results.csv
-ℹ️ Zscore saved to results/zscore_results.csv
+ℹ️ Cointegration saved to results/USDT_cointegration_results.csv
+ℹ️ Zscore saved to results/USDT_zscore_results.csv
 
       hot  pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings    symbol1       symbol2
 299  True   0.039            -3.427942       -3.367006   186.709153              47    DARUSDT   1000BTTUSDT
@@ -238,7 +238,7 @@ cointbot -z
 Example of output:
 
 ```
-ℹ️ Zscore loaded from results/zscore_results.csv
+ℹ️ Zscore loaded from results/USDT_zscore_results.csv
              0         1         2         3         4         5         6         7         8         9        10  ...       189       190       191       192       193       194       195       196       197       198       199
 0    -0.841478 -0.954716 -0.503403 -0.840932 -0.540967 -0.880135 -0.766897 -1.067955 -1.105519 -1.293338 -1.029298  ... -1.549728 -1.098961 -0.949252 -0.874124 -0.873577 -1.212199 -1.512711 -0.759246 -0.947066 -0.608991 -0.834374
 1     1.280295  1.330660  1.202023  0.794668  0.934925  0.897796  0.767361  0.843417  0.862282  0.876535  0.745500  ... -0.266424 -0.275466 -0.448659 -0.566457 -0.708930 -0.785585 -0.966386 -1.170064 -1.224442 -1.188329 -1.361104
@@ -280,8 +280,8 @@ cointbot -t <coin1> <coin2>
 Example of output for ETHUSDT vs. BTCUSDT:
 
 ```
-ℹ️ Cointegration loaded from results/cointegration_results.csv
-ℹ️ Price history loaded from results/price_history.json
+ℹ️ Cointegration loaded from results/USDT_cointegration_results.csv
+ℹ️ Price history loaded from results/USDT_price_history.json
 ℹ️ Metrics loaded from results/ETHUSDT_BTCUSDT_backtest.csv
      ETHUSDT   BTCUSDT  ETHUSDT_perc  BTCUSDT_perc    spread    zscore
 0    1218.23  16832.82      1.000000      1.000000  2.214971       NaN
