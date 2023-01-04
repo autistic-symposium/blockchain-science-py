@@ -20,3 +20,7 @@ install_deps:
 bot1:
 	@echo "Deploying bot 1 on a docker container"
 	@bash ./docker/run_bot1.sh
+
+bot2:
+	@echo "Deploying bot 2 on a docker container"
+	@bash ./docker/run_bot2.sh

@@ -1,15 +1,26 @@
-## Cointegration Trading Bots
-
-
-
+## 🤖✨ Cointegration Trading Bots
 
 <br>
 
-### tl; dr
+### tl; dr statistical arbitrage
 
 <br>
 
-* this package contains a series of libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment.
+| 😎 **PROS** 😎                           | 😭 **CONS** 😭                                             |
+| -----------                              | -----------                                            |
+| profit in up, down, or sideways markets  | behaviors are not guaranteed to continue               |
+| use rebates on two assets                | high entry barrier 🧠                                   |
+| clear signals for entry and exit         | involves shorting                                      |
+| mathematical edge                        | market-based orders, costs double                      |
+| scale for larger capital                 | entry and exit in parallel with limit-orders is tricky |
+
+<br>
+
+### tl; dr this package
+
+<br>
+
+* this package series of libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment.
 
 <br>
 
@@ -17,8 +28,8 @@
 ```
         1. search for possible crypto perpetual derivative contracts that can be longed/shorted
         2. calculate pairs that are cointegrated (by price history)
-        3. check the latest z-score signal, backtest it, and then long when z-score < 0
-        4. if the asset is "hot", confirm the tokens that are longing vs. shorting with the initial capital
+        3. check the spread and latest z-score signal, backtest, and then long when z-score < 0
+        4. if asset is "hot", confirm tokens that are longing vs. shorting with the initial capital
         5. average in limit orders or place market orders
         6. continue monitoring the z-score for close signals in the future
 ```
@@ -40,11 +51,14 @@
 
 Add info to a `.env` file:
 
+<br>
+
 ```
 cp .env.example .env
 vim .env
 ```
 
+<br>
 
 Install with:
 
@@ -55,16 +69,18 @@ make install_deps
 make install
 ```
 
+<br>
+
+Run with:
+
+```
+cointbot
+```
 
 <br>
 
-----
+Usage:
 
-### usage
-
-<br>
-
-> 💡 *You can test these strategies on [bybit's testnet](https://testnet.bybit.com/).*
 
 <br>
 
@@ -73,7 +89,16 @@ make install
 
 <br>
 
+----
+
+### running on bybit cex
+
 <br>
+
+> 💡 *You can test these strategies on [bybit's testnet](https://testnet.bybit.com/).*
+
+<br>
+
 
 #### getting derivatives data for a derivative currency
 
@@ -127,6 +152,11 @@ Example of output:
 ----
 
 #### saving price history for a derivative currency
+
+<br>
+
+> 💡 *Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the Spot price, resulting in a mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. Mark price refers to a global spot price index plus a decaying funding basis rate, and it's used as a trigger for liquidation and to measure unrealized profit and loss. The last traded price is the current market price, anchored to the spot price using the funding mechanism.*
+
 
 <br>
 
@@ -473,16 +503,64 @@ WebSocket USDT Perp connected
 
 <br>
 
-Inside `src.bots`, there are several classes for different bots for different markets and cointegrated pair strategies.
+Several bots with different strategies are found inside  `src.bots`.
 
 Each bot has a different number, and its configuration is set in the `.env` file (*e.g.*, `BOT_COINS`, `BOT_MARKET`, `TRADEABLE_CAPITAL`, and others).
 
 
 <br>
 
-###### running
 
-Run your favorite bot number with:
+##### 🤖 bot1
+
+
+<br>
+
+`bot1`'s setup:
+
+```
+1. check constants inside .env
+
+2. connect to REST API and Websockets
+
+3. set leverage
+
+4. start a loop with "while True"
+```
+
+<br>
+
+`bot1`'s execution (inside a `while True` loop)
+
+```
+5. check positions
+
+6. check active orders
+
+7. manage new trades
+
+  a. check latest z-score signal:
+
+    - if hot:
+        i. get ticker liquidity
+        ii. confirm short vs. long tickers
+        iii. confirm initial capital
+
+    - in any case:
+        i. average in Limit PostOnly orders
+        ii. or place Market orders
+        iii. monitor z-score for close signal
+
+8. close existing trades
+
+9. repeat
+```
+
+
+<br>
+
+
+Run with:
 
 ``` 
 cointbot -b 1
@@ -490,16 +568,68 @@ cointbot -b 1
 
 <br>
 
-To have this bot inside docker, run:
+To have this bot running inside a docker container, run:
 
 ```
 make bot1
 ```
 
+
+<br>
+
+##### 🤖 bot2
+
+
+<br>
+
+`bot2`'s setup:
+
+```
+1. check constants inside .env
+
+2. connect to REST API and Websockets
+
+3. set leverage
+
+4. start a loop with "while True"
+```
+
+<br>
+
+`bot1`'s execution (inside a `while True` loop)
+
+```
+5. get z-score
+
+6. check open positions and net P&L
+
+7. close all positions if z-score is not relevant or poor P&L performance
+
+8. check how much capital is invested
+
+9. open new positions
+
+10. repeat each time period
+```
+
+
 <br>
 
 
-> 💡 *Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the Spot price, resulting in a mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. Mark price refers to a global spot price index plus a decaying funding basis rate, and it's used as a trigger for liquidation and to measure unrealized profit and loss. The last traded price is the current market price, anchored to the spot price using the funding mechanism.*
+Run with:
+
+``` 
+cointbot -b 2
+```
+
+<br>
+
+To have this bot running inside a docker container, run:
+
+```
+make bot2
+```
+
 
 
 <br>
