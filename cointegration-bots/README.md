@@ -68,9 +68,7 @@ make install
 
 <br>
 
-
-<img width="1117" alt="Screen Shot 2023-01-03 at 5 59 35 PM" src="https://user-images.githubusercontent.com/1130416/210470901-024191a3-7a93-4e3e-9c1d-af60fa6bf25d.png">
-
+<img width="1185" alt="Screen Shot 2023-01-03 at 9 46 06 PM" src="https://user-images.githubusercontent.com/1130416/210492046-d923b7c2-c697-46e7-97b8-8602036da81a.png">
 
 
 <br>
@@ -306,8 +304,7 @@ The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and back
 
 <br>
 
-
-<img width="1391" alt="Screen Shot 2023-01-02 at 11 44 09 PM" src="https://user-images.githubusercontent.com/1130416/210318333-4542e096-74fd-4381-8aae-886893a875c6.png">
+![ETHUSDT_BTCUSDT_cointegration](https://user-images.githubusercontent.com/1130416/210492059-ecba5ebf-1ecc-4af2-afba-d5644948d599.png)
 
 
 <br>
