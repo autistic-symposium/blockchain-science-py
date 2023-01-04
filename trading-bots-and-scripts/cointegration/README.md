@@ -1,25 +1,27 @@
-## Cointegration bot
-
-<br>
-
-> *A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.*
+## Cointegration Trading Bots
 
 
 <br>
 
 ### tl; dr
 
-* we are using [bybit testnet](https://testnet.bybit.com/) for backtesting.
-* this bot does the following:
+<br>
 
+* this package contains a series of libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment.
+
+<br>
+
+* for instance, `bot1` has the following strategy:
 ```
         1. search for possible crypto perpetual derivative contracts that can be longed/shorted
-        2. calculate what pairs are cointegrated (by price history)
-        3. check the latest z-score signal, backtest, and long when z-score < 0
-        4. if the asset is "hot", confirm the tokens that are longing vs. shorting, and initial capital
+        2. calculate pairs that are cointegrated (by price history)
+        3. check the latest z-score signal, backtest it, and then long when z-score < 0
+        4. if the asset is "hot", confirm the tokens that are longing vs. shorting with the initial capital
         5. average in limit orders or place market orders
         6. continue monitoring the z-score for close signals in the future
 ```
+
+
 
 
 
@@ -28,6 +30,8 @@
 
 ---
 ### setting up
+
+<br>
 
 Add info to a `.env` file:
 
@@ -46,11 +50,16 @@ make install_deps
 make install
 ```
 
+
 <br>
 
 ----
 
 ### usage
+
+<br>
+
+> 💡 You can test these strategies on [bybit's testnet](https://testnet.bybit.com/).
 
 <br>
 
@@ -67,7 +76,9 @@ make install
 
 <br>
 
-> ***Crypto derivatives** are financial contracts that derive their values from underlying assets.*
+> ***Crypto derivatives** are financial contracts that derive their values from underlying assets. A **perpetual contract** is a contract that can be held in perpetuity, *i.e.,* indefinitely until the trader closes their position.*
+
+
 
 <br>
 
@@ -81,7 +92,7 @@ cointbot -c usdt
 
 <br>
 
-example of output:
+Example of output:
 
 ```
 
@@ -114,6 +125,8 @@ example of output:
 
 #### saving price history for a derivative currency
 
+<br>
+
 Retrieve market price kline for all assets, in a given `TIMEFRAME` and `KLINE-LIMIT`, and save them to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 ``` 
 cointbot -p usdt
@@ -122,7 +135,7 @@ cointbot -p usdt
 
 <br>
 
-example of output:
+Example of output:
 
 ```
 ℹ️ Retriving k-lines for 10000NFTUSDT
@@ -142,6 +155,8 @@ example of output:
 
 #### getting cointegration history data for a derivative currency
 
+<br>
+
 With the price history data (e.g., directly generated in the previous option, inside `OUTPUTDIR/PRICE_HISTORY_FILE`), we can generate a cointegration data frame (in Pandas).
 
 For that, set the desired `PLIMIT` (p-value limit that defines a "hot" pair) and run:
@@ -153,7 +168,7 @@ cointbot -i
 
 <br>
 
-example of output:
+Example of output:
 
 ```
 ℹ️ Price history loaded from results/price_history.json
@@ -215,7 +230,7 @@ cointbot -z
 
 <br>
 
-example of output:
+Example of output:
 
 ```
 ℹ️ Zscore loaded from results/zscore_results.csv
@@ -257,7 +272,7 @@ cointbot -t <coin1> <coin2>
 
 <br>
 
-example of output for ETHUSDT vs. BTCUSDT:
+Example of output for ETHUSDT vs. BTCUSDT:
 
 ```
 ℹ️ Cointegration loaded from results/cointegration_results.csv
@@ -306,7 +321,7 @@ The pair plot is saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png` and back
 <br>
 
 
-To open a websocket subscribed to the cointegration pairs (either for spot, linear, or inverse markets), run:
+To open a websocket subscribed to a cointegration pairs (either for spot, linear, or inverse markets), run:
 
 ``` 
 cointbot -n <coin1> <coin2> <spot, linear, or inverse>
@@ -315,7 +330,13 @@ cointbot -n <coin1> <coin2> <spot, linear, or inverse>
 
 <br>
 
-example of output for ETHUSD and BTCUSD (spot):
+###### [topics for spot market](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket)
+
+Spot market topics are implemented with `trade_v1_stream()`, which pushes raw data for each trade.
+
+After a successful subscription message, the first data message (`f: true`), consists of the last 60 trades. After (`f: false`), only new trades are pushed (at a frequency of 300ms, where the message received has a maximum delay of 400ms).
+
+Example of output for ETHUSDT and BTCUSDT for spot market:
 
 <br>
 
@@ -356,7 +377,93 @@ WebSocket Spot connected
 
 <br>
 
-> 💡 In these results, `a` is the ask prices and quantities, and `b` is the bid prices and quantities (both in descending order).
+
+###### [topics for inverse perpetual/futures market](https://bybit-exchange.github.io/docs/futuresV2/inverse/#t-websocketresponse)
+
+Inverse market topics are implemented with `orderbook_25_stream()`, which fetches orderbook with a depth of 25 orders per side.
+
+After the subscription response, the first response will be the snapshot response, showing the entire orderbook. The data is ordered by price (starting with lowest buys). Push frequency is 20 ms.
+
+Example of output for ETHUSD and BTCUSD for inverse market:
+
+<br>
+
+```
+WebSocket Inverse Perp attempting connection...
+websocket connected
+WebSocket Inverse Perp connected
+[   {   'id': 12638500,
+        'price': '1263.85',
+        'side': 'Buy',
+        'size': 4310,
+        'symbol': 'ETHUSD'},
+    {   'id': 12637500,
+        'price': '1263.75',
+        'side': 'Buy',
+        'size': 1310,
+        'symbol': 'ETHUSD'}]
+
+[   {   'id': 166250000,
+        'price': '16625.00',
+        'side': 'Buy',
+        'size': 600,
+        'symbol': 'BTCUSD'},
+    {   'id': 166410000,
+        'price': '16641.00',
+        'side': 'Buy',
+        'size': 18,
+        'symbol': 'BTCUSD'},
+(...)
+```
+
+<br>
+
+
+###### [topics for USDT linear perpetual](https://bybit-exchange.github.io/docs/futuresV2/linear/#t-websocketresponse)
+
+
+
+Inverse market topics are implemented with `orderbook_25_stream()`, which fetches orderbook with a depth of 25 orders per side.
+
+The first response is the snapshot response, showing the entire orderbook. The data is ordered by price, starting with the lowest buys and ending with the highest sells. Push frequency is 20ms.
+
+
+Example of output for ETHUSDT and BTCUSDT for linear market:
+
+<br>
+
+```
+WebSocket USDT Perp attempting connection...
+websocket connected
+WebSocket USDT Perp connected
+
+[   {   'is_block_trade': 'false',
+        'price': '1249.90',
+        'side': 'Sell',
+        'size': 0.03,
+        'symbol': 'ETHUSDT',
+        'tick_direction': 'MinusTick',
+        'timestamp': '2023-01-04T04:11:30.000Z',
+        'trade_id': '4c104034-c298-59b9-82de-5cb82d104f86',
+        'trade_time_ms': '1672805490378'}]
+
+[   {   'is_block_trade': 'false',
+        'price': '1249.95',
+        'side': 'Buy',
+        'size': 0.03,
+        'symbol': 'ETHUSDT',
+        'tick_direction': 'PlusTick',
+        'timestamp': '2023-01-04T04:11:32.000Z',
+        'trade_id': 'af3c770a-bc0d-540a-bc3f-4de17ce80194',
+        'trade_time_ms': '1672805492380'}]
+
+(...)
+```
+
+<br>
+
+
+> 💡 In these results, `a` is the ask prices and quantities, and `b` is the bid prices and quantities (both in descending order). For more information about other endpoints and topics, check the [official documentation](https://bybit-exchange.github.io/docs/spot/v1/#t-websocket).
 
 <br>
 
@@ -364,17 +471,36 @@ WebSocket Spot connected
 
 #### deploying a trading bot using the cointegrated strategy
 
-``` 
-cointbot -b
-```
+<br>
+
+Inside `src.bots`, there are several classes for different bots for different markets and cointegrated pair strategies.
+
+Each bot has a different number, and its configuration is set in the `.env` file (*e.g.*, `BOT_COINS`, `BOT_MARKET`, `TRADEABLE_CAPITAL`, and others).
 
 
 <br>
 
-example of output:
+###### running
+
+Run your favorite bot number with:
+
+``` 
+cointbot -b 1
+```
+
+<br>
+
+To have this bot inside docker, run:
 
 ```
+make bot1
 ```
+
+<br>
+
+
+> 💡 Bybit employs a **[dual-price mechanism](https://www.bybit.com/en-US/help-center/bybitHC_Article?id=360039261074&language=en_US) to prevent market manipulations** (when the market price on a futures exchange deviates from the Spot price, resulting in a mass liquidation of traders' positions). The dual-price mechanism consists of **mark price** and **last traded price**. Mark price refers to a global spot price index plus a decaying funding basis rate, and it's used as a trigger for liquidation and to measure unrealized profit and loss. The last traded price is the current market price, anchored to the spot price using the funding mechanism.
+
 
 <br>
 

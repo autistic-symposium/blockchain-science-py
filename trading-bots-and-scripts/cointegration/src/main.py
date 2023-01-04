@@ -10,8 +10,8 @@ import argparse
 
 import src.utils.os as utils
 import src.utils.plots as plots
-import src.bots.bybit_bot as bbbot
 from src.markets.bybit import BybitCex
+from src.bots.bot1 import BbBotOne
 from src.strategies.cointegration import Cointegrator
 
 
@@ -38,9 +38,10 @@ def run_menu() -> argparse.ArgumentParser:
                         help='Test websockets for orderbooks, for either inverse, \
                             linear, or spot market, for a cointegrated pair. \
                             Example: cointbot -n ethusd btcusd inverse')
-    parser.add_argument('-b', dest='bot', action='store_true', 
-                        help='Deploy a trading bot using the cointegrated strategy. \
-                              Example: cointbot -b')
+    parser.add_argument('-b', dest='bot', nargs=1, 
+                        help='Deploy a trading bot using the cointegrated strategy, \
+                            from a options of possible market and pairs strategy. \
+                            Example: cointbot -b 1')
 
     return parser
 
@@ -176,14 +177,18 @@ def run() -> None:
     #     Deploy bot           #
     ############################
     elif args.bot:
+        bot_number = args.bot[0].upper()
     
         if cex == 'BYBIT':
-            info = bbbot.run_bot(env_vars)
 
-            if info:
-                print(info)
+            if bot_number == '1':
+                b = BbBotOne(env_vars)
+                success = b.run()
+                if not success:
+                    utils.exit_with_error(f'Could not deploy bot for {cex}.')
+            
             else:
-                utils.exit_with_error(f'Could not deploy bot for {cex}.')
+                utils.exit_with_error(f'Bot number not yet supported: {bot_number}')
 
         else:
             utils.exit_with_error(f'CEX not supported: {cex}')

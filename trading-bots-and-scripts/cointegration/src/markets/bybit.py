@@ -160,9 +160,10 @@ class BybitCex():
         utils.pprint(msg['data'])
 
 
-    ###########################
-    #      public methods     #
-    ###########################
+    ########################################
+    #    public methods                    #    
+    #                public and stats      #
+    ########################################
 
     def get_derivative_currency_info(self) -> list:
         """Get tradeable data for a given currency."""
@@ -200,21 +201,30 @@ class BybitCex():
         handling_function = handling_function or self._handle_orderbook_ws
 
         while True:
+            
             if self._market_type == 'INVERSE':
-                # fetches orderbook with a depth of 25 orders per side
+                # 
                 self._session.orderbook_25_stream(
                     handling_function, 
                     [coin1, coin2])
+            
             elif self._market_type == 'SPOT':
                 self._session.trade_v1_stream(
                     handling_function, 
                     [coin1, coin2])
+            
             elif self._market_type == 'LINEAR':
-                self._session.trade_stream(
+                self._session.orderbook_25_stream(
                     handling_function, 
                     [coin1, coin2])
             else:
                 utils.exit_with_error(f"Can't connect to {self._market_type} orderbook ws.")
 
             await asyncio.sleep(300)
+
+
+    ########################################
+    #    public methods                    #    
+    #                        positions     #
+    ########################################
 
