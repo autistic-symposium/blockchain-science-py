@@ -35,8 +35,8 @@ def run_menu() -> argparse.ArgumentParser:
                         help='Generate backtests for a cointegrated pair and a \
                             derivative currency. Example: cointbot -t ethusdt btcusdt')
     parser.add_argument('-n', dest='network', nargs=3, 
-                        help='Test websockets for orderbooks, for either inverse or \
-                            spot market, for a cointegrated pair. \
+                        help='Test websockets for orderbooks, for either inverse, \
+                            linear, or spot market, for a cointegrated pair. \
                             Example: cointbot -n ethusd btcusd inverse')
     parser.add_argument('-b', dest='bot', action='store_true', 
                         help='Deploy a trading bot using the cointegrated strategy. \
@@ -72,6 +72,7 @@ def run() -> None:
         else:
             utils.exit_with_error(f'CEX not supported: {cex}')
 
+
     ############################
     #     Get price history    #
     ############################
@@ -91,6 +92,7 @@ def run() -> None:
 
         else:
             utils.exit_with_error(f'CEX not supported: {cex}')
+
 
     ############################
     #     Get cointegration    #
@@ -159,15 +161,12 @@ def run() -> None:
         coin2 = args.network[1].upper()
         market = args.network[2].upper()
 
-        if cex == 'BYBIT':
-            
-            if market == "SPOT":
-                b = BybitCex(env_vars, ws=True, inverse=False)
-                asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
+        if market not in ['INVERSE', 'LINEAR', 'SPOT']:
+            utils.exit_with_error(f'Market not supported: {market}')
 
-            elif market == "INVERSE":
-                b = BybitCex(env_vars, ws=True, inverse=True)
-                asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
+        if cex == 'BYBIT':
+            b = BybitCex(env_vars, ws=True, market=market)
+            asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coin1, coin2))
 
         else:
             utils.exit_with_error(f'CEX not supported: {cex}')

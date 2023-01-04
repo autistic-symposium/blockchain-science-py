@@ -363,7 +363,7 @@ def run_bot(env_vars):
     from src.markets.bybit import BybitCex
     
     coins = env_vars["BOT_COINS"].split(',')
-
+    market = env_vars["BOT_MARKET"]
 
     b = BybitCex(env_vars, ws=True, inverse=False)
     asyncio.get_event_loop().run_until_complete(b.orderbook_ws(coins[0], coins[1]))
