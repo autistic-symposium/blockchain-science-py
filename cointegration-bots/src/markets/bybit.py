@@ -1,20 +1,19 @@
 # -*- encoding: utf-8 -*-
 # src/markets/bybit.py
 # author: steinkirch
-# bybit API methods.
+# Bybit API class.
 
 import time
 import asyncio 
 import datetime
-import src.utils.os as utils
 from pybit import HTTP
 from pybit.spot import WebSocket as SpotWebSocket
 from pybit.usdt_perpetual import WebSocket as LinearWebSocket
 from pybit.inverse_perpetual import WebSocket as InverseWebSocket
 
+import src.utils.os as utils
 
 class BybitCex():
-    """Methods for Bybit."""
 
     def __init__(self, env_vars: dict, currency=None, ws=False, market=None):
     
@@ -23,7 +22,7 @@ class BybitCex():
         self._is_websocket = ws
         self._market_type = market
 
-        self._is_public = bool(env_vars['IS_PUBLIC_CONNECTION'])
+        self._is_public = bool(env_vars['IS_PUBLIC'])
         self._is_test = bool(self._env_vars['IS_TESTNET'])
         self._timeframe = env_vars['TIMEFRAME']
         self._kline_limit = int(env_vars['KLINE_LIMIT'])
@@ -45,16 +44,12 @@ class BybitCex():
         if self._is_public:
             if self._is_websocket:
                 return self._env_vars['BYBIT_WS_PUBLIC']
-            else:
-                return self._env_vars['BYBIT_HTTP_PUBLIC']
         else:  
             self._api_key = self._env_vars['BYBIT_API_KEY']
             self._api_secret = self._env_vars['BYBIT_API_SECRET']
 
-            if self._is_websocket:
-                return self._env_vars['BYBIT_WS_PRIVATE'] 
-            else:
-                return self._env_vars['BYBIT_HTTP_PRIVATE']
+        return self._env_vars['BYBIT_WS_PRIVATE'] \
+                if self._is_websocket else self._env_vars['BYBIT_HTTP']
 
     def _start_bybit_session(self) -> object:
         """Start a bybit session."""
@@ -126,20 +121,22 @@ class BybitCex():
 
         from_time = 0
 
-        if self._timeframe == 'D':
-            from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
-        elif self._timeframe == '60':
+        if self._timeframe == '60':
             from_time = datetime.datetime.now() - datetime.timedelta(hours=self._kline_limit)
+        elif self._timeframe == 'D':
+            from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
+        elif self._timeframe == 'W':
+            from_time = datetime.datetime.now() - datetime.timedelta(weeks=self._kline_limit)
+        elif self._timeframe == 'M':
+            self._kline_limit = 30 * self._kline_limit
+            from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
         else:
-            utils.exit_with_error(f'Time frame not implemented:{self._timeframe}')
+            utils.exit_with_error(f'TIMEFRAME {self._timeframe} not supported.')
         
         return int(from_time.timestamp())
 
     def _get_price_klines(self, coin: str) -> dict:
-        """
-           Get price history for a given symbol.
-           https://bybit-exchange.github.io/docs/futuresV2/linear/#t-markpricekline
-        """
+        """Get price history for a given symbol."""
 
         from_time = self._get_timeframe()
 
@@ -151,12 +148,16 @@ class BybitCex():
                     limit=self._kline_limit
                 )
 
-            utils.log_info(f'Retrieving k-lines for {coin}')
-            
+            utils.log_info(f'Retrieving k-lines for {coin}: {prices["result"]}')
             time.sleep(0.1)
 
+            # make sure both series are the same length
             if len(prices['result']) == self._kline_limit:
                 return prices['result']
+
+            else:
+                utils.log_error(f'Could not get k-lines for {coin}: {prices}')
+
 
         except Exception as e:
             utils.log_error(f'Could not get k-lines for {coin}: {e}')
@@ -190,21 +191,21 @@ class BybitCex():
     def get_price_history(self) -> dict:
         """Get and store price history for all available pairs."""
 
-        price_history_dict = {}
+        price_history = {}
         coin_info = self.get_derivative_currency_info()
 
         for this_coin in coin_info:
             try:
                 ticker = this_coin['name']
-                price_history = self._get_price_klines(ticker)
+                this_price_history = self._get_price_klines(ticker)
 
-                if price_history is not None:
-                    price_history_dict[ticker] = price_history
+                if this_price_history is not None:
+                    price_history[ticker] = this_price_history
 
             except KeyError as e:
                 utils.exit_with_error(f'Could not retrieve price history: {e}')
 
-        return price_history_dict  
+        return price_history  
 
     async def orderbook_ws(self, coin1: str, coin2: str, handling_func=None) -> None:
         """Connect to websocket for spot or inverse orderbook."""

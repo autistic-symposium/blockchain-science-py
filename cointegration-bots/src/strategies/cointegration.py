@@ -3,7 +3,6 @@
 # author: steinkirch
 # Cointegration class.
 
-
 import math
 import pandas as pd
 import numpy as np
@@ -26,6 +25,7 @@ class Cointegrator:
         self._backtest_file = self._env_vars['BACKTEST_FILE']
         self.zscore_list = []
         self.backtest_df = None
+        self.cointegration_results = [] 
 
     #########################
     #   private methods     #
@@ -77,8 +77,8 @@ class Cointegrator:
         df["zscore"] = (x - mean) / std
 
         zscore = df["zscore"].astype(float).values
-        self.zscore_list.append(zscore.tolist())
-        return zscore.tolist()
+        self.zscore_list.append(zscore)
+        return zscore
 
     def _get_cointegration_for_pair(self, first_set: list, second_set: list) -> dict:
         """Calculate co-integration for two tokens."""
@@ -124,7 +124,7 @@ class Cointegrator:
             first_set = self._extract_close_prices(price_history[coin1])
             second_set = self._extract_close_prices(price_history[coin2])
         except KeyError:
-            utils.exit_with_error(f"Please re-generated price history for {coin1}, {coin2}.")
+            utils.exit_with_error(f"Price history does not have {coin1} or {coin2}.")
 
         df = pd.DataFrame()
         df[coin1] = first_set
@@ -136,23 +136,45 @@ class Cointegrator:
         df['zscore'] = self._calculate_zscore(df['spread'])
         self.backtest_df = df
 
-        utils.save_metrics(self.backtest_df, \
-                    self._outdir, self._backtest_file)
+        self._backtest_file.format(coin1, coin2)
+        utils.save_metrics(self.backtest_df, self._outdir, self._backtest_file)
+
+    def _get_file_data(self, filepath) -> bool:
+        """Check if a result file exists else calculates cointegration data."""
+
+        if utils.file_exists(self._outdir, filepath):
+            return utils.open_metrics(self._outdir, filepath)
+        
+        else:
+            utils.log_info(f'Calculating cointegration first...')  
+            self.get_cointegration()
+            return None
 
 
     ###########################
     #      public methods     #
     ###########################
 
-    def get_cointegration(self) -> dict:
+    def get_best_cointegrated_pairs(self, top: int) -> pd.DataFrame:
+        """Get best cointegration pairs."""
+
+        df = self._get_file_data(self._cointegration_file)
+        if df is None:
+            df = pd.DataFrame(self.cointegration_results)
+
+        df.drop(columns=['hot'], inplace=True)
+        df.sort_values(by=['pvalue'], inplace=True, ascending=False)
+        return df.head(top)
+
+
+    def get_cointegration(self) -> pd.DataFrame:
         """Get and store price history for all available pairs."""
 
         if utils.file_exists(self._outdir, self._cointegration_file) and \
                     utils.file_exists(self._outdir, self._zscore_file):
-            return utils.open_cointegration(self._outdir, self._cointegration_file)
-
-        results = []        
-        pairs_list = []
+            return utils.open_metrics(self._outdir, self._cointegration_file)
+ 
+        hot_pairs = []
         price_history = self._get_price_history()
 
         for symbol1 in price_history.keys():
@@ -162,7 +184,7 @@ class Cointegrator:
                 if symbol1 != symbol2:
 
                     this_symbol = "".join(sorted([symbol1, symbol2]))
-                    if this_symbol in pairs_list:
+                    if this_symbol in hot_pairs:
                         break
 
                     first_set = self._extract_close_prices(price_history[symbol1])
@@ -173,37 +195,35 @@ class Cointegrator:
 
                     if cointegration_dict['hot'] == True:
                         utils.log_info(f'   ✅ Found a hot pair: {symbol1} and {symbol2}')
-                        pairs_list.append(this_symbol)
+                        hot_pairs.append(this_symbol)
                         cointegration_dict['symbol1'] = symbol1
                         cointegration_dict['symbol2'] = symbol2
-                        results.append(cointegration_dict)
+                        self.cointegration_results.append(cointegration_dict)
         
-        utils.save_metrics(self.zscore_list, \
-                    self._outdir, self._zscore_file)
-        return utils.save_cointegration(results, 'zero_crossings', \
-                    self._outdir, self._cointegration_file)
+        utils.save_metrics(self.zscore_list, self._outdir, self._zscore_file)
+        return utils.save_metrics(self.cointegration_results, self._outdir, \
+                                self._cointegration_file, 'zero_crossings',)
 
 
-    def get_zscore(self) -> list:
+    def get_zscore(self) -> pd.DataFrame:
         """Get z-score for a given window."""
 
-        if utils.file_exists(self._outdir, self._zscore_file):
-            return utils.open_metrics(self._outdir, self._zscore_file)
-        
-        else:   
-            self.get_cointegration()
-            return pd.DataFrame(self.zscore_list)
+        df = self._get_file_data(self._zscore_file)
+
+        if df is None:
+            df = pd.DataFrame(self.zscore_list)
+
+        return df
 
 
     def get_backtests(self, coin1: str, coin2: str) -> pd.DataFrame:
         """Run backtests for all pairs, based on spread and zscore."""
 
         self._backtest_file = self._backtest_file.format(coin1, coin2)
-
-        if utils.file_exists(self._outdir, self._backtest_file):
-            return utils.open_metrics(self._outdir, self._backtest_file)
+        df = self._get_file_data(self._backtest_file)
         
-        else:   
-            self.get_cointegration()
+        if df is None:
             self._save_backtest_data(coin1, coin2)
-            return self.backtest_df
+            df = self.backtest_df
+        
+        return df
