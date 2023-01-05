@@ -27,7 +27,7 @@
 <br>
 
 
-* 📚 For more details, check **[my Mirror post about this tool]()**.
+* 📚 For more details, check **[my Mirror post, bot #2: cointbot, a cointegration trader]()**.
 
 <br>
 
