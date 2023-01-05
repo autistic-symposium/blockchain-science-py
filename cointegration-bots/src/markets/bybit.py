@@ -151,9 +151,9 @@ class BybitCex():
             # make sure both series are the same length
             if len(prices['result']) == self._kline_limit:
                 return prices['result']
-
             else:
-                utils.log_error(f'Could not get k-lines for {coin}: {prices}')
+                utils.log_error('len(result) ({0}) != KLIMIT ({1}) for {2}. Try another TIMEFRAME' \
+                                        .format(len(prices["result"]), self._kline_limit), coin)
 
 
         except Exception as e:
@@ -175,7 +175,7 @@ class BybitCex():
 
     ########################################
     #    public methods                    #    
-    #                public and stats      #
+    #        retrieving data and stats     #
     ########################################
 
     def get_derivative_currency_info(self) -> list:
@@ -234,7 +234,7 @@ class BybitCex():
 
     ########################################
     #    public methods                    #    
-    #                        positions     #
+    #           manipulating positions     #
     ########################################
 
     def set_leverage(self, ticker: str, is_isolated: bool, 

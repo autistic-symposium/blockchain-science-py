@@ -247,7 +247,7 @@ Example of output:
 ℹ️ Cointegration saved to results/USDT_cointegration_results.csv
 ℹ️ Zscore saved to results/USDT_zscore_results.csv
 
-      hot  pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings    symbol1       symbol2
+      hot  pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings      coin1           coin2
 299  True   0.039            -3.427942       -3.367006   186.709153              47    DARUSDT   1000BTTUSDT
 569  True   0.008            -3.952940       -3.367006   814.468122              46   QTUMUSDT      REEFUSDT
 99   True   0.002            -4.403082       -3.367006     0.374482              46   ASTRUSDT      CTSIUSDT
@@ -321,46 +321,7 @@ Example of output:
 
 ---
 
-#### Getting top cointegrated pairs for a derivative currency's history data 
 
-<br>
-
-Once the cointegration pairs for a given derivative currency's history data is calculated, we can look at the top best cointegrated pairs for the given `TIMEFRAME` (and perhaps backtest them in the next step):
-
-<br>
-
-Example:
-
-``` 
-cointbot -o usdt 10
-```
-
-<br>
-
-Example of output:
-
-```
-ℹ️ Metrics loaded from results/USDT_cointegration.csv
-
-'Top 10 cointegrated pairs for USDT:'
-
-
-     pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings    symbol1      symbol2
-388   0.046            -3.368619       -3.367006     0.061731              15  MATICUSDT      AXSUSDT
-499   0.046            -3.372177       -3.367006   104.198594              11    AXSUSDT      RENUSDT
-340   0.046            -3.371256       -3.367006    74.784234              17   LINKUSDT     COTIUSDT
-402   0.046            -3.371678       -3.367006    29.610067              15   AAVEUSDT      SNXUSDT
-626   0.046            -3.372086       -3.367006    30.392953               7    TRBUSDT    1INCHUSDT
-409   0.046            -3.371230       -3.367006     1.042626              15    BELUSDT    1INCHUSDT
-454   0.046            -3.368308       -3.367006    16.127011              13    UNIUSDT      C98USDT
-616   0.046            -3.370103       -3.367006   576.820067               7    BITUSDT  1000BTTUSDT
-465   0.046            -3.370326       -3.367006   162.653323              13   AAVEUSDT      ENJUSDT
-521   0.046            -3.369336       -3.367006     3.250135              11    UNIUSDT    ALICEUSDT
-```
-
-<br>
-
----
 
 #### Generate backtest metrics for a cointegrated pair in a derivative currency's history data
 
@@ -370,7 +331,7 @@ Example of output:
 
 <br>
 
-Select your favorite asset pairs to generate the data and the plot on their cointegration:
+Select your favorite asset pair to generate the data and the plot on their cointegration:
 
 Example:
 
@@ -420,6 +381,51 @@ Their plot will be saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png`. Their
 <br>
 
 > 💡 *If you are **starting a new run**, **clean up** the current setup with* `make clean_data`.
+
+<br>
+
+---
+
+#### Getting top cointegrated pairs for a derivative currency's history data 
+
+<br>
+
+Once the cointegration pairs for a given derivative currency's history data is calculated, we can look at the top best cointegrated pairs for the given `TIMEFRAME`.
+
+<br>
+
+Example:
+
+``` 
+cointbot -o usdt 10
+```
+
+<br>
+
+Example of output:
+
+```
+ℹ️ Metrics loaded from results/USDT_cointegration.csv
+
+'Top 10 cointegrated pairs for USDT:'
+
+
+     pvalue  cointegration_value  critical_value  hedge_ratio  zero_crossings      coin1        coin2
+388   0.046            -3.368619       -3.367006     0.061731              15  MATICUSDT      AXSUSDT
+499   0.046            -3.372177       -3.367006   104.198594              11    AXSUSDT      RENUSDT
+340   0.046            -3.371256       -3.367006    74.784234              17   LINKUSDT     COTIUSDT
+402   0.046            -3.371678       -3.367006    29.610067              15   AAVEUSDT      SNXUSDT
+626   0.046            -3.372086       -3.367006    30.392953               7    TRBUSDT    1INCHUSDT
+409   0.046            -3.371230       -3.367006     1.042626              15    BELUSDT    1INCHUSDT
+454   0.046            -3.368308       -3.367006    16.127011              13    UNIUSDT      C98USDT
+616   0.046            -3.370103       -3.367006   576.820067               7    BITUSDT  1000BTTUSDT
+465   0.046            -3.370326       -3.367006   162.653323              13   AAVEUSDT      ENJUSDT
+521   0.046            -3.369336       -3.367006     3.250135              11    UNIUSDT    ALICEUSDT
+```
+
+<br>
+
+Note that this command automatically generates the backtesting data and plots (similar to the previous option).
 
 <br>
 
@@ -577,13 +583,13 @@ WebSocket USDT Perp connected
 
 ---
 
-#### Deploying trading bots using the several cointegrated strategies and setups
+#### Deploying trading bots using several cointegrated strategies and setups
 
 <br>
 
 Several bots with different strategies are found inside  `src/bots/`.
 
-Each bot has a different number, and configuration settings in the `.env` file (*e.g.*, `BOT_COINS`, `BOT_MARKET_TYPE`, `BOT_ORDER_TYPE`, `BOT_STOP_LOSS`, `BOT_TRADEABLE_CAPITAL`, and others).
+Each bot has a different number and configuration settings in the `.env` file (*e.g.*, `BOT_COINS`, `BOT_MARKET_TYPE`, `BOT_ORDER_TYPE`, `BOT_STOP_LOSS`, `BOT_TRADEABLE_CAPITAL`, and others).
 
 
 <br>

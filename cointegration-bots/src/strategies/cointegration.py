@@ -10,6 +10,7 @@ import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 
 import src.utils.os as utils
+import src.utils.plots as plots
 
 class Cointegrator:
 
@@ -58,8 +59,8 @@ class Cointegrator:
 
         return pd.Series(first_set) - (pd.Series(second_set) * hedge_ratio)
 
-    def _calculate_hedge_ration(self, first_set: list, second_set: list) -> float:
-        """Calculate hedge ratio."""
+    def _calculate_hedge_ratio(self, first_set: list, second_set: list) -> float:
+        """Calculate hedge ratio by fiting Ordinary Least Squares (OLS) model."""
 
         model = sm.OLS(first_set, second_set)
         return model.fit().params[0]
@@ -80,10 +81,8 @@ class Cointegrator:
         self.zscore_list.append(zscore)
         return zscore
 
-    def _get_cointegration_for_pair(self, first_set: list, second_set: list) -> dict:
+    def _get_pair_cointegration(self, first_set: list, second_set: list) -> dict:
         """Calculate co-integration for two tokens."""
-
-        hot = False
         
         # calculate cointegration
         cointegration = coint(first_set, second_set)
@@ -92,15 +91,19 @@ class Cointegrator:
         critical_value = cointegration[2][1]
         
         # calculate hedge ratio
-        hedge_ratio = self._calculate_hedge_ration(first_set, second_set)
+        hedge_ratio = self._calculate_hedge_ratio(first_set, second_set)
         
         # calculate spread
         spread = self._calculate_spread(first_set, second_set, hedge_ratio)
+
+        # calculate zero crossings
         zero_crossings = len(np.where(np.diff(np.sign(spread)))[0])
 
         # calculate zscore
         self._calculate_zscore(spread)
 
+        # calculate hot
+        hot = False
         # if pvalue is less than 0.05, we can reject the null hypothesis
         if pvalue < self._pvalue_limit and cointegration_value < critical_value:
             hot = True
@@ -114,30 +117,43 @@ class Cointegrator:
                 "zero_crossings": zero_crossings
                 }
 
-
-    def _save_backtest_data(self, coin1: str, coin2: str) -> None:
+    def _get_backtest_data(self, coin1: str, coin2: str) -> None:
         """Save backtest data to file."""
 
+        # get price history
         price_history = self._get_price_history()
 
+        # extract close prices
         try:
             first_set = self._extract_close_prices(price_history[coin1])
             second_set = self._extract_close_prices(price_history[coin2])
         except KeyError:
             utils.exit_with_error(f"Price history does not have {coin1} or {coin2}.")
 
+        # create dataframe
         df = pd.DataFrame()
         df[coin1] = first_set
         df[coin2] = second_set
-        df[f'{coin1}_perc'] = df[coin1] / first_set[0]
-        df[f'{coin2}_perc'] = df[coin2] / second_set[0]
-        df['spread'] = self._calculate_spread(first_set, second_set, \
-                                    self._calculate_hedge_ration(first_set, second_set))
-        df['zscore'] = self._calculate_zscore(df['spread'])
-        self.backtest_df = df
 
-        self._backtest_file.format(coin1, coin2)
-        utils.save_metrics(self.backtest_df, self._outdir, self._backtest_file)
+        # calculate percentage change
+        df[f'{coin1}_perc'] = (df[coin1] / first_set[0]).astype(float).values
+        df[f'{coin2}_perc'] = (df[coin2] / second_set[0]).astype(float).values
+
+        # calculate hedge ratio
+        hedge_ratio = self._calculate_hedge_ratio(first_set, second_set)
+
+        # calculate spread
+        spread = self._calculate_spread(first_set, second_set, hedge_ratio)
+        df['spread'] = spread
+
+        # calculate zscore
+        df['zscore'] = self._calculate_zscore(spread)
+
+        # save results
+        self.backtest_df = df
+        outuput_file = self._backtest_file.format(coin1, coin2)
+        utils.save_metrics(self.backtest_df, self._outdir, outuput_file)
+        plots.plot_cointegrated_pair(df, coin1, coin2, self._env_vars)
 
     def _get_file_data(self, filepath) -> bool:
         """Check if a result file exists else calculates cointegration data."""
@@ -164,7 +180,17 @@ class Cointegrator:
 
         df.drop(columns=['hot'], inplace=True)
         df.sort_values(by=['pvalue'], inplace=True, ascending=False)
-        return df.head(top)
+        top_pairs = df.head(top)
+
+        # get backtest data and plot for every top cointegrated pairs
+        coin1_list = top_pairs['coin1'].tolist()
+        coin2_list = top_pairs['coin2'].tolist()
+
+        # plot backtest data for each top pair
+        for coin1, coin2 in zip(coin1_list, coin2_list):
+            self._get_backtest_data(coin1, coin2)
+
+        return top_pairs
 
 
     def get_cointegration(self) -> pd.DataFrame:
@@ -177,27 +203,26 @@ class Cointegrator:
         hot_pairs = []
         price_history = self._get_price_history()
 
-        for symbol1 in price_history.keys():
-            utils.log_info(f'Calculating cointegration for {symbol1}...')
+        for coin1 in price_history.keys():
+            utils.log_info(f'Calculating cointegration for {coin1}...')
 
-            for symbol2 in price_history.keys():
-                if symbol1 != symbol2:
+            for coin2 in price_history.keys():
+                if coin1 != coin2:
 
-                    this_symbol = "".join(sorted([symbol1, symbol2]))
+                    this_symbol = "".join(sorted([coin1, coin2]))
                     if this_symbol in hot_pairs:
                         break
 
-                    first_set = self._extract_close_prices(price_history[symbol1])
-                    second_set = self._extract_close_prices(price_history[symbol2])
+                    first_set = self._extract_close_prices(price_history[coin1])
+                    second_set = self._extract_close_prices(price_history[coin2])
 
-                    cointegration_dict = self._get_cointegration_for_pair(first_set, 
-                                                                        second_set)
+                    cointegration_dict = self._get_pair_cointegration(first_set, second_set)
 
                     if cointegration_dict['hot'] == True:
-                        utils.log_info(f'   ✅ Found a hot pair: {symbol1} and {symbol2}')
+                        utils.log_info(f'   ✅ Found a hot pair: {coin1} and {coin1}')
                         hot_pairs.append(this_symbol)
-                        cointegration_dict['symbol1'] = symbol1
-                        cointegration_dict['symbol2'] = symbol2
+                        cointegration_dict['coin1'] = coin1
+                        cointegration_dict['coin2'] = coin2
                         self.cointegration_results.append(cointegration_dict)
         
         utils.save_metrics(self.zscore_list, self._outdir, self._zscore_file)
@@ -223,7 +248,7 @@ class Cointegrator:
         df = self._get_file_data(self._backtest_file)
         
         if df is None:
-            self._save_backtest_data(coin1, coin2)
+            self._get_backtest_data(coin1, coin2)
             df = self.backtest_df
         
         return df
