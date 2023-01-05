@@ -130,6 +130,10 @@ class Cointegrator:
         except KeyError:
             utils.exit_with_error(f"Price history does not have {coin1} or {coin2}.")
 
+        # fix if the two sets are not the same length
+        if len(first_set) != len(second_set):
+            first_set, second_set = self._create_equal_length_sets(first_set, second_set)
+
         # create dataframe
         df = pd.DataFrame()
         df[coin1] = first_set
@@ -166,6 +170,18 @@ class Cointegrator:
             self.get_cointegration()
             return None
 
+    def _create_equal_length_sets(self, first_set: list, second_set: list) -> tuple:
+        """Create equal length for two lists."""
+
+        utils.log_info(f'Set lenghts are not equal: fixing it.')
+
+        if len(first_set) > len(second_set):
+            first_set = first_set[-len(second_set):]
+        else:
+            second_set = second_set[-len(first_set):]
+
+        return first_set, second_set
+
 
     ###########################
     #      public methods     #
@@ -192,7 +208,6 @@ class Cointegrator:
 
         return top_pairs
 
-
     def get_cointegration(self) -> pd.DataFrame:
         """Get and store price history for all available pairs."""
 
@@ -212,12 +227,19 @@ class Cointegrator:
                     this_symbol = "".join(sorted([coin1, coin2]))
                     if this_symbol in hot_pairs:
                         break
-
+                    
+                    # extract close prices f
                     first_set = self._extract_close_prices(price_history[coin1])
                     second_set = self._extract_close_prices(price_history[coin2])
 
+                    # fix if the two sets are not the same length
+                    if len(first_set) != len(second_set):
+                        first_set, second_set = self._create_equal_length_sets(first_set, second_set)
+
+                    # calculate co-integration
                     cointegration_dict = self._get_pair_cointegration(first_set, second_set)
 
+                    # if the pair is cointegrated, add to hot pairs
                     if cointegration_dict['hot'] == True:
                         utils.log_info(f'   ✅ Found a hot pair: {coin1} and {coin1}')
                         hot_pairs.append(this_symbol)
@@ -225,6 +247,7 @@ class Cointegrator:
                         cointegration_dict['coin2'] = coin2
                         self.cointegration_results.append(cointegration_dict)
         
+        # save results
         utils.save_metrics(self.zscore_list, self._outdir, self._zscore_file)
         return utils.save_metrics(self.cointegration_results, self._outdir, \
                                 self._cointegration_file, 'zero_crossings',)
@@ -234,7 +257,6 @@ class Cointegrator:
         """Get z-score for a given window."""
 
         df = self._get_file_data(self._zscore_file)
-
         if df is None:
             df = pd.DataFrame(self.zscore_list)
 

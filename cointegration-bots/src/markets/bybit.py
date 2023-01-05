@@ -125,10 +125,13 @@ class BybitCex():
 
         if self._timeframe == '60':
             from_time = datetime.datetime.now() - datetime.timedelta(hours=self._kline_limit)
-        elif self._timeframe == 'D':
+       
+        elif self._timeframe.upper() == 'D':
             from_time = datetime.datetime.now() - datetime.timedelta(days=self._kline_limit)
-        elif self._timeframe == 'W':
+        
+        elif self._timeframe.upper() == 'W':
             from_time = datetime.datetime.now() - datetime.timedelta(weeks=self._kline_limit)
+        
         else:
             utils.exit_with_error(f'TIMEFRAME {self._timeframe} not supported.')
         
@@ -137,33 +140,21 @@ class BybitCex():
     def _get_price_klines(self, coin: str) -> dict:
         """Get price history for a given symbol."""
 
-        from_time = self._get_timeframe()
-
-        try:
-            prices = self._session.query_mark_price_kline(
+        prices = self._session.query_mark_price_kline(
                     symbol=coin,
                     interval=self._timeframe,
-                    from_time=from_time,
+                    from_time= self._get_timeframe(),
                     limit=self._kline_limit
                 )
 
-            utils.log_info(f'Retrieving k-lines for {coin}: {prices["result"]}')
-            time.sleep(0.1)
+        utils.log_info(f'Retrieving k-lines for {coin}: {prices["result"]}')
+        time.sleep(0.1)
 
-            # make sure both series are the same length
-            if len(prices['result']) == self._kline_limit:
-                return prices['result']
-            else:
-                utils.log_error('len(result) ({0}) != KLIMIT ({1}) for {2}. Try another TIMEFRAME' \
-                                        .format(len(prices["result"]), self._kline_limit), coin)
-
-
-        except Exception as e:
-            utils.log_error(f'Could not get k-lines for {coin}: {e}')
-
+        return prices['result']
 
     def _handle_orderbook_ws(self, msg: dict) -> None:
         """Handle orderbook data from websocket."""
+
         utils.pprint(msg['data'])
 
     def _get_side(self, direction: str) -> str:
@@ -203,7 +194,7 @@ class BybitCex():
                     price_history[ticker] = this_price_history
 
             except KeyError as e:
-                utils.exit_with_error(f'Could not retrieve price history: {e}')
+                utils.log_error(f'Error retriving price history for {ticker}: {e}')
 
         return price_history  
 
@@ -239,8 +230,7 @@ class BybitCex():
     #           manipulating positions     #
     ########################################
 
-    def set_leverage(self, ticker: str, is_isolated: bool, 
-                           buy_leverage: int, sell_leverage: int) -> None:
+    def set_leverage(self, ticker: str, is_isolated: bool, buy: int, sell: int) -> None:
         """Set leverage for a given ticker."""
         
         self._change_session(is_public=False)
@@ -249,12 +239,13 @@ class BybitCex():
             self._session.cross_isolated_margin_switch(
                 symbol=ticker,
                 is_isolated=is_isolated,
-                buy_leverage=buy_leverage,
-                sell_leverage=sell_leverage
+                buy_leverage=buy,
+                sell_leverage=sell
             )
         except Exception as e:
             utils.exit_with_error(f'Could not set leverage for {ticker}: {e}')
     
+
     def place_order(self, ticker: str, price: float, quantity: int, direction: str) -> dict:
         """Place an order for a given ticker."""
 
@@ -262,6 +253,7 @@ class BybitCex():
         self._change_session(is_public=False)
 
         try:
+
             if self._env_vars['ORDER_TYPE'] == 'LIMIT':
                 self._session.place_active_order(
                         symbol=ticker,
@@ -274,6 +266,7 @@ class BybitCex():
                         close_on_trigger=False,
                         stop_loss=self._env_vars['STOP_LOSS'],
                     )
+
             elif self._env_vars['ORDER_TYPE'] == 'MARKET':
                 self._session.place_active_order(
                         symbol=ticker,
