@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # src/utils/os.py
 # author: steinkirch
-# Utils methods.
+# Os utils methods.
 
 import os
 import sys

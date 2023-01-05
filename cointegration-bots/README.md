@@ -729,4 +729,5 @@ make bot2
 * [Notes on pair trading](https://robotwealth.com/practical-pairs-trading/)
 * [Pybit documentation](https://openbase.com/python/pybit/documentation)
 * [Bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
+* [Bybit postman setup](https://github.com/bybit-exchange/QuickStartWithPostman)
 * [Interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)

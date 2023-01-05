@@ -12,6 +12,7 @@ from pybit.usdt_perpetual import WebSocket as LinearWebSocket
 from pybit.inverse_perpetual import WebSocket as InverseWebSocket
 
 import src.utils.os as utils
+import src.utils.network as net
 
 class BybitCex():
 
@@ -152,11 +153,6 @@ class BybitCex():
 
         return prices['result']
 
-    def _handle_orderbook_ws(self, msg: dict) -> None:
-        """Handle orderbook data from websocket."""
-
-        utils.pprint(msg['data'])
-
     def _get_side(self, direction: str) -> str:
         """Get side for order."""
             
@@ -203,7 +199,7 @@ class BybitCex():
     async def orderbook_ws(self, coin1: str, coin2: str, handling_func=None) -> None:
         """Connect to websocket for spot or inverse orderbook."""
         
-        handling_func = handling_func or self._handle_orderbook_ws
+        handling_func = handling_func or net.on_ws_message
 
         while True:
 
