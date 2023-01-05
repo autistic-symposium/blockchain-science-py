@@ -695,7 +695,6 @@ make bot1
 9. open new positions
 10. repeat each time period
 ```
-i
 
 <br>
 
