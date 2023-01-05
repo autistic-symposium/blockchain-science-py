@@ -40,17 +40,15 @@ class BbBotOne:
         except IndexError:
             utils.exit_with_error(f'Error obtaining coins for bot1: {coins}')
     
-        self._session = None
-        self._setup()
+        self._session = BybitCex(self._env_vars, ws=True, market=self._market)
 
     #########################
     #   private methods     #
     #########################
 
-    def _setup(self):
-        """Setup the bot."""
+    def _set_leverage(self):
+        """Set leverage for Bot1."""
 
-        self._session = BybitCex(self._env_vars, ws=True, market=self._market)
         self._session.set_leverage(self._coin1, is_isolated=True, 
                                             buy_leverage=1, sell_leverage=1)
         self._session.set_leverage(self._coin2, is_isolated=True, 
@@ -64,6 +62,12 @@ class BbBotOne:
     def run(self):
         """Start bot1 loop execution."""
 
+        utils.log_info(f"Starting Bot1...")
+
+        utils.log_info(f"Setting leverage for {self._coin1} and {self._coin2}...")
+        self._set_leverage()
+
+        utils.log_info(f"Start seeking for trades...")
         try:
             asyncio.get_event_loop().run_until_complete(
                         self._session.orderbook_ws(

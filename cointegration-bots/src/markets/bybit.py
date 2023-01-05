@@ -19,8 +19,8 @@ class BybitCex():
     
         self._env_vars = env_vars
         self._currency = currency or 'USDT'
-        self._is_websocket = ws
-        self._market_type = market
+        self._is_websocket = bool(ws)
+        self._market_type = market or 'LINEAR'
 
         self._is_public = bool(env_vars['IS_PUBLIC'])
         self._is_test = bool(self._env_vars['IS_TESTNET'])
@@ -47,6 +47,8 @@ class BybitCex():
         else:  
             self._api_key = self._env_vars['BYBIT_API_KEY']
             self._api_secret = self._env_vars['BYBIT_API_SECRET']
+            if not self._api_key or not self._api_secret:
+                utils.exit_with_error('Add API key or secret to .env.')
 
         return self._env_vars['BYBIT_WS_PRIVATE'] \
                 if self._is_websocket else self._env_vars['BYBIT_HTTP']
