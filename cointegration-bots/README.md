@@ -37,7 +37,7 @@
 
 <br>
 
-* This package series of libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment. Here is its directory's structure:
+* This package consists of a libraries for different market types, statistical algorithmic decisions, and bots (end-to-end) deployment. Here is its directory's structure:
 
 ```
 📂 cointegration-bots
