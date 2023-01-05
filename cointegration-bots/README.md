@@ -2,6 +2,17 @@
 
 <br>
 
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/1130416/210710893-9fe299e3-96cf-4f99-9bf1-1bf3bea1c944.png" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+ </p>
+
+
+<br>
+
+
+<br>
+
 ### TL; DR statistical arbitrage
 
 <br>
@@ -372,6 +383,9 @@ Their plot will be saved at `OUTPUTDIR/{coin1}_{coin2}_cointegration.png`. Their
 <br>
 
 ![BCHUSDT_LINKUSDT_W_cointegration](https://user-images.githubusercontent.com/1130416/210667745-98395c53-f4ce-4330-8bbf-93abc0b778c1.png)
+
+
+
 
 
 
