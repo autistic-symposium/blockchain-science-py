@@ -49,10 +49,8 @@ class BbBotOne:
     def _set_leverage(self):
         """Set leverage for Bot1."""
 
-        self._session.set_leverage(self._coin1, is_isolated=True, 
-                                            buy_leverage=1, sell_leverage=1)
-        self._session.set_leverage(self._coin2, is_isolated=True, 
-                                            buy_leverage=1, sell_leverage=1)
+        self._session.set_leverage(self._coin1, is_isolated=True, buy=1, sell=1)
+        self._session.set_leverage(self._coin2, is_isolated=True, buy=1, sell=1)
 
 
     #########################

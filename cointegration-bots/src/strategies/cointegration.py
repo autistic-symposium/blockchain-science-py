@@ -235,7 +235,7 @@ class Cointegrator:
                     # fix if the two sets are not the same length
                     if len(first_set) != len(second_set):
                         first_set, second_set = self._create_equal_length_sets(first_set, second_set)
-
+                    
                     # calculate co-integration
                     cointegration_dict = self._get_pair_cointegration(first_set, second_set)
 
