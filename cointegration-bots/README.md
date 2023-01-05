@@ -1,22 +1,18 @@
 ## 🤖✨ Cointegration Trading Bots
 
-
 <br>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/1130416/210710893-9fe299e3-96cf-4f99-9bf1-1bf3bea1c944.png" width="60%" align="center" style="padding:1px;border:1px solid black;"/>
+<img src="https://user-images.githubusercontent.com/1130416/210710893-9fe299e3-96cf-4f99-9bf1-1bf3bea1c944.png" width="30%" align="center" style="padding:1px;border:1px solid black;"/>
  </p>
 
 <br>
 
-
-##### *When two or more **non-stationary series** can be **combined** to make a **stationary series**, they are said to be cointegrated. The coefficients that define this stationary combination are called **hedge ratio**, describing the **amount of B to buy or sell for every of A**.*
-
+### TL; DR statistical arbitrage
 
 <br>
 
----
-### TL; DR statistical arbitrage
+* When 2 or more **non-stationary series** can be **combined** to make a **stationary series**, they are said to be cointegrated. The coefficients that define this stationary combination are called **hedge ratio**, describing the **amount of B to buy or sell for every of A**.
 
 <br>
 
@@ -29,6 +25,13 @@
 | scale for larger capital                 | entry and exit in parallel with limit-orders is tricky |
 
 <br>
+
+
+* 📚 For more details, check [my Mirror post about this tool]().
+
+<br>
+
+
 
 ### TL; DR this package
 
@@ -65,6 +68,7 @@
         5. average in limit orders or place market orders
         6. continue monitoring the z-score for close signals in the future
 ```
+
 
 <br>
 
@@ -729,4 +733,4 @@ make bot2
 * [Pybit documentation](https://openbase.com/python/pybit/documentation)
 * [Bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
 * [Bybit postman setup](https://github.com/bybit-exchange/QuickStartWithPostman)
-* [Interpreting cointegration results](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
+* [Interpreting cointegration](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
