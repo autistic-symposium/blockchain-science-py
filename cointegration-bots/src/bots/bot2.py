@@ -9,9 +9,11 @@ import src.utils.os as utils
 from src.markets.bybit import BybitCex
 
 class BbBotTwo:
-    """Deploy trading bot two."""
 
     def __init__(self, env_vars):
-
         self._env_vars = env_vars
+
+    def run(self):
+        pass
+    
        
