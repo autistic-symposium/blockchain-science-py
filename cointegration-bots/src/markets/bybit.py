@@ -253,7 +253,7 @@ class BybitCex():
                 sell_leverage=sell_leverage
             )
         except Exception as e:
-            utils.log_error(f'Could not set leverage for {ticker}: {e}')
+            utils.exit_with_error(f'Could not set leverage for {ticker}: {e}')
     
     def place_order(self, ticker: str, price: float, quantity: int, direction: str) -> dict:
         """Place an order for a given ticker."""

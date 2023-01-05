@@ -68,6 +68,7 @@ class BbBotOne:
         self._set_leverage()
 
         utils.log_info(f"Start seeking for trades...")
+        self._session._change_session(is_public=True, ws=True)
         try:
             asyncio.get_event_loop().run_until_complete(
                         self._session.orderbook_ws(
