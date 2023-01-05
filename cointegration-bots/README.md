@@ -81,7 +81,7 @@
 
 
 ---
-### Setting up
+### Setting up cointbot
 
 <br>
 
