@@ -1,18 +1,21 @@
 ## 🤖✨ Cointegration Trading Bots
 
-<br>
 
+<br>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/1130416/210710893-9fe299e3-96cf-4f99-9bf1-1bf3bea1c944.png" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+<img src="https://user-images.githubusercontent.com/1130416/210710893-9fe299e3-96cf-4f99-9bf1-1bf3bea1c944.png" width="60%" align="center" style="padding:1px;border:1px solid black;"/>
  </p>
 
-
 <br>
 
 
+##### *When two or more **non-stationary series** can be **combined** to make a **stationary series**, they are said to be cointegrated. The coefficients that define this stationary combination are called **hedge ratio**, describing the **amount of B to buy or sell for every of A**.*
+
+
 <br>
 
+---
 ### TL; DR statistical arbitrage
 
 <br>

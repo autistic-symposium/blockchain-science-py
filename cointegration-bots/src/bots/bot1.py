@@ -47,7 +47,7 @@ class BbBotOne:
     #########################
 
     def _set_leverage(self):
-        """Set leverage for Bot1."""
+        """Set leverage for Bot1 to 1, for both buy and sell."""
 
         self._session.set_leverage(self._coin1, is_isolated=True, buy=1, sell=1)
         self._session.set_leverage(self._coin2, is_isolated=True, buy=1, sell=1)
@@ -63,10 +63,12 @@ class BbBotOne:
         utils.log_info(f"Starting Bot1...")
 
         utils.log_info(f"Setting leverage for {self._coin1} and {self._coin2}...")
+        self._session._change_session(is_public=False)
         self._set_leverage()
 
         utils.log_info(f"Start seeking for trades...")
         self._session._change_session(is_public=True, ws=True)
+
         try:
             asyncio.get_event_loop().run_until_complete(
                         self._session.orderbook_ws(

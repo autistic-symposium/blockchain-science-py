@@ -179,6 +179,7 @@ class BybitCex():
     
         return self._parse_symbols(self._currency)
 
+
     def get_price_history(self) -> dict:
         """Get and store price history for all available pairs."""
 
@@ -197,6 +198,7 @@ class BybitCex():
                 utils.log_error(f'Error retriving price history for {ticker}: {e}')
 
         return price_history  
+
 
     async def orderbook_ws(self, coin1: str, coin2: str, handling_func=None) -> None:
         """Connect to websocket for spot or inverse orderbook."""
@@ -219,6 +221,7 @@ class BybitCex():
 
             await asyncio.sleep(10)
 
+
     def open_orderbook_ws(self, coin1: str, coin2: str) -> None:
         """Open websocket for spot, linear, or inverse orderbook."""
         
@@ -232,11 +235,9 @@ class BybitCex():
 
     def set_leverage(self, ticker: str, is_isolated: bool, buy: int, sell: int) -> None:
         """Set leverage for a given ticker."""
-        
-        self._change_session(is_public=False)
 
         try:
-            self._session.cross_isolated_margin_switch(
+            self._session.set_leverage(
                 symbol=ticker,
                 is_isolated=is_isolated,
                 buy_leverage=buy,
@@ -250,8 +251,6 @@ class BybitCex():
         """Place an order for a given ticker."""
 
         side = self._get_side(direction)
-        self._change_session(is_public=False)
-
         try:
 
             if self._env_vars['ORDER_TYPE'] == 'LIMIT':
@@ -281,3 +280,36 @@ class BybitCex():
             
         except Exception as e:
             utils.log_error(f'Could not place order for {ticker}: {e}')
+
+
+    def cancel_all_orders(self, ticker: str) -> None:
+        """Cancel all orders for a given ticker."""
+
+        try:
+            self._session.cancel_all_active_orders(symbol=ticker)
+       
+        except Exception as e:
+            utils.log_error(f'Could not cancel orders for {ticker}: {e}')
+
+
+    ########################################
+    #    public methods                    #    
+    #                    wallet data       #
+    ########################################
+
+    def get_wallet_balance(self) -> dict:
+        """Get wallet balance."""
+
+        return utils.pprint(self._session.get_wallet_balance())
+
+
+    def get_witdrawal_history(self) -> dict:
+        """Get withdrawal history."""
+
+        return utils.pprint(self._session.withdraw_records())
+
+
+    def get_asset_exchange_records(self) -> dict:
+        """Get asset exchange records."""
+
+        return utils.pprint(self._session.asset_exchange_records())
