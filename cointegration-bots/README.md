@@ -15,7 +15,7 @@
 
 <br>
 
-* coinbot is a **CLI tool and a set of trading bots** that i’ve written to detect **profitable cryptocurrency pairs to be shorted or longed** on trading exchanges.
+* `coitnbot` is a **CLI tool and a set of trading bots** that i’ve written to detect **profitable cryptocurrency pairs to be shorted or longed** on trading exchanges.
 * these statistical algorithmic strategies are named **cointegration**, which has been around for a long time, for either traditional or decentralized finances.
 * 📚 For more details, check **[my mirror post, bot #2: cointbot, a cointegration trader](https://mirror.xyz/steinkirch.eth/KQ0basHaclOCDDtOhz3NgKQhHdHqaqOtU89Sr4QO5L4)**.
 * 🚨 disclaimer: i open-source my projects because i am a believer of the oss ethos. you might or might not profit from it, but this is not my problem. in the mev world, nobody is going to (explicitly) handle you alphas. i am not responsible for anything you do with my free code.
@@ -257,7 +257,7 @@ cointbot -c usdt
 * the second menu option queries the market price k-lines for all symbols above in a given `TIMEFRAME` and `KLINE-LIMIT`, not only printing them to `STDOUT` but also saving them as `JSON` to `OUTPUTDIR/PRICE_HISTORY_FILE`:
 
 ```
-coinbot -p usdt
+cointbot -p usdt
 ```
 
 > 💡 *in the context of trading, a **k-line** represents the **fluctuation of asset prices** in a given time frame. It shows **close price, open price, high price, and low price**. if the close price > open price, the k-line has a positive line. otherwise, it is a negative line.*
@@ -321,7 +321,7 @@ cointbot -i usdt
 * select your favorite asset pair from the previous step, and let’s backtest their cointegration by testing the success of the hypothesis (and making some cool plots for their series’ spreads and z-score).
 
 ```
-coinbot -t usdt bnbusdt algousdt usdt
+cointbot -t usdt bnbusdt algousdt usdt
 ```
 
 * example of output for `BNBUSDT` vs. `ALGOUSDT`:
@@ -353,7 +353,7 @@ coinbot -t usdt bnbusdt algousdt usdt
 * once we have all data from the previous step, we can look at the top cointegrated securities for the given `TIMEFRAME` and `NUMBER`:
 
 ```
-coinbot -o usdt 10
+cointbot -o usdt 10
 ```
 
 * example of output:
@@ -482,7 +482,7 @@ cointbot -n bnbusdt algousdt linear
 * you should check the code (the main class is called `BbBotOne`), and then spin it up:
 
 ```
-coinbot -b 1
+cointbot -b 1
 ```
 
 * by the way, you can also have Bot1 running inside a docker container with:
