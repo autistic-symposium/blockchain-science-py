@@ -72,7 +72,7 @@
 
 <br>
 
-* the **coefficients that define stationary combinations of two series are called hedge ratio**. in practical terms, the hedge ratio describes the suggested **amount of B to buy or sell for every of A**.
+* the **coefficients that define stationary combinations of two series are called hedge ratios**. in practical terms, the hedge ratio describes the suggested **amount of B to buy or sell for every of A**.
 * because both securities drift towards and apart from each other, sometimes the distance is high, and sometimes the distance is low.
 * the magick comes from **maintaining a hedged position across A and B**. if both go down or up, you neither make nor lose money. **profit comes from the spread of them reverting to the mean**:
 
