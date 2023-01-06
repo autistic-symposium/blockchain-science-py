@@ -304,7 +304,8 @@ cointbot -i usdt
 
 <br>
 
-<img width="569" alt="Screen Shot 2023-01-05 at 8 02 43 PM" src="https://user-images.githubusercontent.com/1130416/210927702-5eea8515-2b4c-4891-895f-eb4c2b24c1f3.png">
+<img width="470" alt="Screen Shot 2023-01-05 at 8 53 05 PM" src="https://user-images.githubusercontent.com/1130416/210932628-d5c53368-a18f-4dbf-8209-83d926591e81.png">
+
 
 
 <br>
