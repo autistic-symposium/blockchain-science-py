@@ -44,7 +44,7 @@
 
 <br>
 
-* **[leveraging Moralis API to extract on-chain transactions, tokens, events, defi](moralis-tokens-and-txs):**
+* **[leveraging moralis API to extract on-chain transactions, tokens, events, defi](moralis-tokens-and-txs):**
     * **moralis API** is a nice wrapper for several **on-chain calls** that would instead use several other native APIs and tools.
 
 <br>
