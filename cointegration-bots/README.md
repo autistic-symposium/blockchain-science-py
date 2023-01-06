@@ -509,8 +509,8 @@ make bot1
 <br>
 
 
-* [Notes on pair trading](https://robotwealth.com/practical-pairs-trading/)
-* [Pybit documentation](https://openbase.com/python/pybit/documentation)
-* [Bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
-* [Bybit postman setup](https://github.com/bybit-exchange/QuickStartWithPostman)
-* [Interpreting cointegration](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
+* [notes on pair trading](https://robotwealth.com/practical-pairs-trading/)
+* [pybit documentation](https://openbase.com/python/pybit/documentation)
+* [nybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
+* [bybit postman setup](https://github.com/bybit-exchange/QuickStartWithPostman)
+* [interpreting cointegration](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
