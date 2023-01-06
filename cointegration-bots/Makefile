@@ -11,7 +11,7 @@ clean:
 	@rm -rf venv/lib/python*/site-packages/*.egg
 
 clean_data:
-	@rm -rf results/*csv results/*json
+	@rm -rf results/*csv results/*json results/*png
 
 install:
 	python3 setup.py install

@@ -194,7 +194,7 @@ class Cointegrator:
         if df is None:
             df = pd.DataFrame(self.cointegration_results)
 
-        df.drop(columns=['hot'], inplace=True)
+        df.drop(columns=['hot', 'critical_value'], inplace=True)
         df.sort_values(by=['pvalue'], inplace=True, ascending=False)
         top_pairs = df.head(top)
 
@@ -235,7 +235,7 @@ class Cointegrator:
                     # fix if the two sets are not the same length
                     if len(first_set) != len(second_set):
                         first_set, second_set = self._create_equal_length_sets(first_set, second_set)
-                    
+
                     # calculate co-integration
                     cointegration_dict = self._get_pair_cointegration(first_set, second_set)
 

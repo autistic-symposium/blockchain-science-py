@@ -30,9 +30,6 @@ def run_menu() -> argparse.ArgumentParser:
     parser.add_argument('-o', dest='top', nargs=2,
                         help='Get top <value> scoring cointegration pairs for a \
                             derivative currency. Example: cointbot -o usdt 10')
-    parser.add_argument('-z', dest='zscore',nargs=1,
-                        help='Generates CSV z-core signal for a cointegrated pair and \
-                            aderivative currency. Example: cointbot -z usdt')
     parser.add_argument('-t', dest='test', nargs=3, 
                         help='Generates CSV and PNG backtests for a cointegrated pair \
                             and a currency. Example: cointbot -t ethusdt btcusdt usdt')
@@ -42,7 +39,7 @@ def run_menu() -> argparse.ArgumentParser:
                             Example: cointbot -n ethusd btcusd inverse')
     parser.add_argument('-b', dest='bot', nargs=1, 
                         help='Deploy a trading bot using the cointegrated strategy, \
-                            from a options of possible market and pairs strategy. \
+                            from a set of possible market and pairs strategies. \
                             Example: cointbot -b 1')
 
     return parser
@@ -132,24 +129,6 @@ def run() -> None:
                 utils.pprint(f'Top {top} cointegrated pairs for {currency}:')
                 utils.pprint(data)
                 
-            else:
-                utils.exit_with_error(f'No data found for {currency}.')
-
-        else:
-            utils.exit_with_error(f'CEX not supported: {cex}')
-
-    ############################
-    #     Get zscore           #
-    ############################
-    elif args.zscore:
-        currency = args.zscore[0].upper()
-
-        if cex == 'BYBIT':
-            s = Cointegrator(env_vars, currency)
-            data = s.get_zscore()
-
-            if not data.empty:
-                utils.log_info(data)
             else:
                 utils.exit_with_error(f'No data found for {currency}.')
 
