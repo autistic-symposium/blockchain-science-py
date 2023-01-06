@@ -100,7 +100,7 @@ spread = first series - (hedge ratio * second series)
 * this gives us that linear combination coefficient, the hedge ratio (this is known as the **[engle-granger method](https://www.statisticshowto.com/engle-granger-test/)**).
 * however, the spread does not give you an immediate signal for trading. the signal still needs to be normalized so it can be treated as a **z-score**, which is the number of **[standard deviations](https://www.investopedia.com/terms/s/standarddeviation.asp)** separating the **current price from the mean price**.
 * traders can look at the **momentum of the average z-score** and takes a contrarian approach to trade, to generate **buy and sell signals**. graphically, **positive z-scores lie to the right** of the mean, and **negative z-scores lie to the left** of the mean.
-* here is an example of strategy:
+* here is an example of a strategy:
 
 ```
 - whenever the z-score < -1, you long the spread.
@@ -188,7 +188,7 @@ spread = first series - (hedge ratio * second series)
 
 <br>
 
-* to test `cointbot`, you will need a testnet account from some cex. we currently have full support for **[bybit](https://testnet.bybit.com/en-US/)**. if you want to use any another cex, the code is free (or wait until i have time to implement them).
+* to test `cointbot`, you will need a testnet account from some cex. we currently have full support for **[bybit](https://testnet.bybit.com/en-US/)**. if you want to use any other cex, the code is free (or wait until i have time to implement them).
 * after cloning `cointbot`, add system and trading config to a `.env` file:
 
 <br>
@@ -262,7 +262,7 @@ cointbot -c usdt
 cointbot -p usdt
 ```
 
-> 💡 *in the context of trading, a **k-line** represents the **fluctuation of asset prices** in a given time frame. It shows **close price, open price, high price, and low price**. if the close price > open price, the k-line has a positive line. otherwise, it is a negative line.*
+> 💡 *in the context of trading, a **k-line** represents the **fluctuation of asset prices** in a given time frame. It shows the **close price, open price, high price, and low price**. if the close price > open price, the k-line has a positive line. otherwise, it is a negative line.*
 
 
 * here is an example of output:
@@ -336,7 +336,7 @@ cointbot -t usdt bnbusdt algousdt usdt
 <br>
 
 
-* by the way, this command also generates their cointegration plots and backtest data, and save them at `OUTPUTDIR/`.
+* by the way, this command also generates their cointegration plots and backtest data, and saves them at `OUTPUTDIR/`.
 
 
 > 💡 *lil tip: if you are starting an entirely new run, clean up the current setup with `make clean_data`.*
