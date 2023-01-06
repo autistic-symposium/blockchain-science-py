@@ -21,13 +21,18 @@ install:
 install_deps:
 	pip3 install -r requirements.txt
 
-.PHONY: dc_clean
-dc_clean:
-	docker-compose build --no-cache
-
 .PHONY: dc_prune
 dc_prune:
 	docker system prune
+
+.PHONY: bot1
+bot1:
+	@echo "Deploying bot 1 on a docker container"
+	@bash ./docker/bot1/run_bot1.sh
+
+.PHONY: build_bot1
+build_bot1:
+	docker-compose -f ./docker/bot1/docker-compose.yml build --no-cache
 
 .PHONY: up_bot1
 up_bot1:
@@ -41,7 +46,4 @@ down_bot1:
 logs_bot1:
 	docker-compose -f ./docker/docker-compose-bot1.yml logs -f
 
-.PHONY: bot1
-bot1:
-	@echo "Deploying bot 1 on a docker container"
-	@bash ./docker/bot1/run_bot1.sh
+

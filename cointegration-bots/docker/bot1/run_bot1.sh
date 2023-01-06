@@ -7,6 +7,7 @@ cp -r .env ./docker/bot1/.env
 cp -r setup.py ./docker/bot1/setup.py
 cp -r Makefile ./docker/bot1/Makefile
 
-make up_bot1
+
+make build_bot1 && make up_bot1
 
 

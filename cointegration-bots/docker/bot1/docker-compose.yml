@@ -1,9 +1,6 @@
 version: '3.9'
 services:
-  bot1:
+  bot1_container:
     build: .
-    container_name: Bot1_Container
     restart: always
-    ports:
-      - "80:80"
-      - "443:443"
+    container_name: bot1

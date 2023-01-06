@@ -13,4 +13,4 @@ COPY Makefile .
 RUN make install
 RUN make install_deps
 
-CMD [ "cointbot", "-c", "usdt"]
+CMD [ "cointbot", "-b", "1"]
