@@ -5,8 +5,10 @@
 
 
 import matplotlib.pyplot as plt
-
 import src.utils.os as utils
+
+ 
+
 
 
 def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -> None:
@@ -33,7 +35,9 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
     series2 = data[f'{coin2}_perc']
     axis[0].plot(series1, color='red', label=f'{coin1}', linewidth=2)
     axis[0].plot(series2, color='blue', label=f'{coin2}', linewidth=2)
-    axis[0].grid(color="grey", axis="y", linestyle="dotted", linewidth=0.5)
+    axis[0].set_xlim([0, len(series2)])
+    axis[0].grid(color="grey", axis="x", linestyle="solid", linewidth=1)
+    axis[0].grid(color="grey", axis="y", linestyle="dotted", linewidth=1)
     axis[0].set_title(
         f'Price series for {coin1} vs. {coin2} ', 
         fontweight='bold',
@@ -42,12 +46,12 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
         loc="left",
     )
     axis[0].set_xlabel(
-        'k-line data', 
+        'close prices data', 
         fontweight ='bold',
         fontsize=12,
     )
     axis[0].set_ylabel(
-        'Percentage change', 
+        '％ change', 
         fontweight ='bold',
         fontsize=12,
     )
@@ -58,7 +62,9 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
     #############
 
     axis[1].plot(data['spread'], color='green', linewidth=3)
-    axis[1].grid(color="grey", axis="y", linestyle="dotted", linewidth=0.5)
+    axis[1].set_xlim([0, len(data['spread'])])
+    axis[1].grid(color="grey", axis="x", linestyle="solid", linewidth=1)
+    axis[1].grid(color="grey", axis="y", linestyle="dotted", linewidth=1)
     axis[1].set_title(
         'Spread', 
         fontweight='bold',
@@ -67,12 +73,12 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
         loc="left",
     )
     axis[1].set_ylabel(
-        'first set - second set * hedge ratio', 
+        'series1 - (series2 * hedge ratio)', 
         fontweight ='bold',
         fontsize=12,
     )
     axis[1].set_xlabel(
-        'k-line data', 
+        'close prices data', 
         fontweight ='bold',
         fontsize=12,
     )
@@ -82,7 +88,9 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
     ###############
     
     axis[2].plot(data['zscore'], color='magenta', linewidth=3)
-    axis[2].grid(color="grey", axis="y", linestyle="dotted", linewidth=0.5)
+    axis[2].grid(color="grey", axis="x", linestyle="solid", linewidth=1)
+    axis[2].grid(color="grey", axis="y", linestyle="dotted", linewidth=1)
+    axis[2].set_xlim([0, len(data['zscore'])])
     axis[2].set_title(
         'Z-score', 
         fontweight='bold',
@@ -91,12 +99,12 @@ def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -
         loc="left",
     )
     axis[2].set_xlabel(
-        'k-line data', 
+        'close prices data', 
         fontweight ='bold',
         fontsize=12,
     )
     axis[2].set_ylabel(
-        'standard deviations', 
+        'σ (current price from mean price) ', 
         fontweight ='bold',
         fontsize=12,
     )
