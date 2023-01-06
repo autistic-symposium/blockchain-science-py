@@ -210,6 +210,7 @@ make install
 cointbot
 ```
 
+<br>
 
 
 > ✅ you are now all set to explore `cointbot`:
