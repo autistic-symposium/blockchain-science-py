@@ -33,7 +33,7 @@
 * put it simply, when two or more **non-stationary series can be combined to make a stationary series, they are said to be cointegrated**.
 * in other words, this strategy allows you to find evidence of an underlying economic link for a pair of securities (say, A and B) within a timeframe. it also allows you to mathematically model this link, so that you can make trades on it.
 
-> 💡 ***series** are said to be stationary when the parameters of the data-generating process do not change over time.*
+> 💡 *a **series** are said to be stationary when the parameters of the data-generating process do not change over time.*
 
 <br>
 
