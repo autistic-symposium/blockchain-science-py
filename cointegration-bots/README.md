@@ -517,8 +517,7 @@ make bot1
 <br>
 
 
-* [notes on pair trading](https://robotwealth.com/practical-pairs-trading/)
 * [pybit documentation](https://openbase.com/python/pybit/documentation)
-* [nybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
+* [bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
 * [bybit postman setup](https://github.com/bybit-exchange/QuickStartWithPostman)
-* [interpreting cointegration](https://www.aptech.com/blog/how-to-interpret-cointegration-test-results/)
+
