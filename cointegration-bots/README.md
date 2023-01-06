@@ -3,8 +3,11 @@
 <br>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/1130416/210710893-9fe299e3-96cf-4f99-9bf1-1bf3bea1c944.png" width="30%" align="center" style="padding:1px;border:1px solid black;"/>
+<img src="https://user-images.githubusercontent.com/1130416/210929847-12a60847-954e-4d4e-a1eb-da5215e14ffb.jpeg" width="42%" align="center" style="padding:1px;border:1px solid black;"/>
  </p>
+ 
+
+
 
 <br>
 
@@ -492,6 +495,9 @@ make bot1
 <br>
 
 ⬛️
+
+
+<br>
 
 ----
 
