@@ -34,7 +34,7 @@ def run_menu() -> argparse.ArgumentParser:
                         help='Generates CSV and PNG backtests for a cointegrated pair \
                             and a currency. Example: cointbot -t ethusdt btcusdt usdt')
     parser.add_argument('-n', dest='network', nargs=3, 
-                        help='Test websockets for orderbooks, for either inverse, \
+                        help='Test websockets for orderbooks, for either spot, \
                             linear, or spot market, for a cointegrated pair. \
                             Example: cointbot -n ethusd btcusd inverse')
     parser.add_argument('-b', dest='bot', nargs=1, 
