@@ -207,6 +207,7 @@ virtualenv venv
 source venv/bin/activate
 make install_deps
 make install
+cointbot
 ```
 
 
