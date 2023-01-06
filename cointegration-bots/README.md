@@ -29,6 +29,12 @@
 
 <br>
 
+
+![annotely_image](https://user-images.githubusercontent.com/1130416/210931729-01e831a9-a6b4-465d-9c52-1524219aabd7.png)
+
+
+<br>
+
 * pair trading is a classic example of a strategy based on mathematical analysis.
 * put it simply, when two or more **non-stationary series can be combined to make a stationary series, they are said to be cointegrated**.
 * in other words, this strategy allows you to find evidence of an underlying economic link for a pair of securities (say, A and B) within a timeframe. it also allows you to mathematically model this link, so that you can make trades on it.
