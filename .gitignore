@@ -133,9 +133,3 @@ dmypy.json
 .env
 venv
 
-# bot1
-docker/bot1/src
-docker/bot1/requirements.txt
-docker/bot1/.env
-docker/bot1/setup.py
-docker/bot1/Makefile
