@@ -1,0 +1,11 @@
+venv
+README.md
+tests
+.env.example
+tox.ini
+Pipfile
+.gitignore
+results
+dist
+cointbot.egg-info
+build

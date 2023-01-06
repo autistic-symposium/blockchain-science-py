@@ -470,32 +470,36 @@ cointbot -n bnbusdt algousdt linear
 
 * this is how `Bot1` gets set up:
 
-<br>
 
 <img width="469" alt="Screen Shot 2023-01-05 at 8 09 14 PM" src="https://user-images.githubusercontent.com/1130416/210928356-78811616-a52a-427a-9888-133eef41b77b.png">
 
 
 <br>
-
+<br>
 
 * and this is how `Bot1` executes, inside a `while True` loop:
 
-<br>
 
 <img width="474" alt="Screen Shot 2023-01-05 at 8 23 52 PM" src="https://user-images.githubusercontent.com/1130416/210929707-6d41898e-c323-4100-84d7-5ad296e58a98.png">
 
 
 
 <br>
+<br>
 
 
-* you should check the code (the main class is called `BbBotOne`), and then spin it up:
+
+* you should check the code (the main class is called `BbBotOne`), and then spin this babe up:
 
 ```
 cointbot -b 1
 ```
 
-* by the way, you can also have Bot1 running inside a docker container with:
+<br>
+
+###### running on docker
+
+* if you would like to run bot1 on docker, make sure you have **[docker](https://docs.docker.com/compose/install/)** and **[docker compose](https://formulae.brew.sh/formula/docker-compose)** installed, and run:
 
 ```
 make bot1

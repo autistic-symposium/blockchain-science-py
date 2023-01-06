@@ -1,0 +1,6 @@
+version: '3.9'
+services:
+  bot1:
+    build: .
+    container_name: bot1
+    restart: always
