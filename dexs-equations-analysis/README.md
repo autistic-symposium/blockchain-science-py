@@ -2,11 +2,11 @@
 
 <br>
 
-This notebook is a work in progress on which we explore the various scenarios for DEXs, including:
+[This notebook](https://github.com/go-outside-labs/blockchain-science-py/blob/main/dexs-equations-analysis/dexs-equations-analysis.ipynb) is a work in progress on which we explore the various scenarios for DEXs, including:
 
-* PMM
-* AMM Uniswap
-* AMM Stableswap
+* PMM by Dodo 
+* AMM by Uniswap V2 (and forks)
+* AMM by Curve (stableswap)
 
 <br>
 
