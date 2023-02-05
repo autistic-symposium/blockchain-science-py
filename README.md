@@ -12,8 +12,10 @@
 
 ## bots
 
-* **[Cointegration trading bots and CLI](cointegration-bots):**
-  * Run **highly customized** trading bots with **statistical algorithmic strategies** such as **cointegration**. Include an option for **docker deployment**.
+
+* **[cointegration trading bots and CLI](cointegration-bots):**
+  * run **highly customized** trading bots with **statistical algorithmic strategies** such as **cointegration**. Include an option for **docker deployment**.
+
 
 
 
@@ -21,13 +23,13 @@
 
 ## notebooks
 
-* **[Extracting on-data from a list of Ethereum public addresses](on-chain-data-by-address):**
-    * Given a list of **public addresses**, extract the current **token balance**, and parse the **transaction history** for token transfers/swaps.
+* **[extracting on-data from a list of ethereum public addresses](on-chain-data-by-address):**
+    * given a list of **public addresses**, extract the current **token balance**, and parse the **transaction history** for token transfers/swaps.
 
 <br>
 
-* **[Leveraging Uniswap subgraph to extract token pair information](uniswap-data):**
-    * Utilize the **Graph Explorer** to access **Uniswap subgraph** and analyze the **UNI and WETH token pair** data. 
+* **[leveraging uniswap subgraph to extract token pair information](uniswap-data):**
+    * utilize the **graph explorer** to access **uniswap subgraph** and analyze the **UNI and WETH token pair** data. 
 
 <br>
 
@@ -38,20 +40,21 @@
 <br>
     
 
-* **[Retrieving DAO tokens and pools data](dao-data):**
-    * Utilize **Graph Explorer** to analyze the data related to a list of **DAO tokens**.
+* **[retrieving DAO tokens and pools data](dao-data):**
+    * utilize the **graph explorer** to analyze the data related to a list of **DAO tokens**.
+
 
 
 <br>
     
 
-* **[Messari API for token market data](messari-assets-data):**
-    * Utilize **[Messari API](https://messari.io/api)** to retrieve **market data** for a list of tokens.
+* **[messari API for token market data](messari-assets-data):**
+    * utilize **[messari API](https://messari.io/api)** to retrieve **market data** for a list of tokens.
 
 <br>
 
-* **[Leveraging Moralis API to extract on-chain transactions, tokens, events, defi](moralis-tokens-and-txs):**
-    * **Moralis API** is a nice wrapper for several **on-chain calls** that would instead use several other native APIs and tools.
+* **[leveraging moralis API to extract on-chain transactions, tokens, events, defi](moralis-tokens-and-txs):**
+    * **moralis API** is a nice wrapper for several **on-chain calls** that would instead use several other native APIs and tools.
 
 <br>
 

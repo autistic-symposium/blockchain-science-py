@@ -524,4 +524,6 @@ make bot1
 * [pybit documentation](https://openbase.com/python/pybit/documentation)
 * [bybit documentation](https://pub.dev/documentation/bybit/latest/bybit/bybit-library.html)
 * [bybit postman setup](https://github.com/bybit-exchange/QuickStartWithPostman)
+* [cointegration-based pairs trading strategy in the cryptocurrency market](https://arxiv.org/abs/2109.10662)
+* [constructing cointegrated cryptocurrency portfolios](https://towardsdatascience.com/constructing-cointegrated-cryptocurrency-portfolios-d0a27922891e)
 
