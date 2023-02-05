@@ -33,8 +33,8 @@
 
 <br>
 
-* **[DEXs analysis: PMM dodo, AMM uniswap V2, AMM Curve stableswap](dexs-equations-analysis):**
-    * maths go-to for **decentralized exchange analysis**.
+* **[DEXs analysis: PMM dodo, AMM uniswap V2, AMM curve stableswap](dexs-equations-analysis):**
+    * maths && plots go-to for **decentralized exchanges analysis**.
 
 
 <br>
