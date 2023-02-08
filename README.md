@@ -59,3 +59,10 @@
 <br>
 
 
+<br>
+
+## resources
+
+
+* **[list of crypto market data apis](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
+
