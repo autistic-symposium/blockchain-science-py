@@ -66,4 +66,5 @@
 
 * **[list of crypto market data apis](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
 * **[coinmarketcap historical data](https://coinmarketcap.com/currencies/ethereum/historical-data/)
+* **[uniswap extractooor data](https://www.uniswap.shippooor.xyz/)
 
