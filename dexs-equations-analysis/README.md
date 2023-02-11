@@ -30,5 +30,12 @@ jupyter notebook
 ```
 
 
-◼️
+<br>
 
+---
+
+### resources
+
+<br>
+
+* [a mathematical view of amm algorithms](https://medium.com/anchordao-lab/automated-market-maker-amm-algorithms-and-its-future-f2d5e6cc624a)
