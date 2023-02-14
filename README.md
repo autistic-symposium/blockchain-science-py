@@ -1,4 +1,4 @@
-# 🧱⛓ blockchain science: notebooks and bots
+# 🧱⛓ blockchain science
 
 
 <br>
@@ -7,21 +7,31 @@
 <img src="https://user-images.githubusercontent.com/1130416/210285240-704036f1-0a9a-41d7-bca8-a98de0be63a1.png" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
  </p>
 
+<br>
 
 <br>
 
-## bots
+## trading bots
 
 
 * **[cointegration trading bots and CLI](cointegration-bots):**
   * run **highly customized** trading bots with **statistical algorithmic strategies** such as **cointegration**. Include an option for **docker deployment**.
 
-
-
+<br>
 
 <br>
 
-## notebooks
+## foundry for historical data
+
+
+* **[inspecting old blocks in avalanche](avalanche_foundry):**
+  * leverage **foundry** to analyze **blocks history** in the **avalanche blockchain**. this can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
+
+<br>
+
+<br>
+
+## jupyter notebooks
 
 * **[extracting on-data from a list of ethereum public addresses](on-chain-data-by-address):**
     * given a list of **public addresses**, extract the current **token balance**, and parse the **transaction history** for token transfers/swaps.
