@@ -22,7 +22,8 @@
 <br>
 
 1. install [foundry](https://book.getfoundry.sh/getting-started/installation)
-2. add a config info to `.env`, including an RPC for avalanche (*e.g.*, [ankr's](https://www.ankr.com/rpc/avalanche/)):
+2. install a [solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)
+3. add a config info to `.env`, including an RPC for avalanche (*e.g.*, [infura's](https://avalanche-mainnet.infura.io/v3/) or  [ankr's](https://www.ankr.com/rpc/avalanche/)):
 
 ```
 cp .env_example .env
@@ -44,12 +45,18 @@ vim .env
 
 1. define the desired assets and/or protocols you want to research research, and find out the methods that update their prices.
 3. use any blockchain analytic tool (*e.g.,* [dune](https://dune.com/home) or [avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)) to search for past blocks with a considerable price movement. 
-4. create a list of the block numbers you want to analyze and add them to `data/blocks.txt`. there is one example there already to get you started.
+4. create a list of the block numbers you want to analyze and add them to `data/blocks.txt`. there is one example there already to get you started (on avalanche c-chain).
 
 <br>
 
-#### running this code 
+#### running
 
+<br>
 
+build the contracts and check test pass:
+
+```
+forge test -vvv
+```
 
 
