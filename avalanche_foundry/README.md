@@ -21,11 +21,8 @@
 
 <br>
 
-install [foundry](https://book.getfoundry.sh/getting-started/installation)
-
-
-
-add config info to `.env`, including an RPC for avalanche (*e.g.*, [ankr's](https://www.ankr.com/rpc/avalanche/)):
+1. install [foundry](https://book.getfoundry.sh/getting-started/installation)
+2. add a config info to `.env`, including an RPC for avalanche (*e.g.*, [ankr's](https://www.ankr.com/rpc/avalanche/)):
 
 ```
 cp .env_example .env
@@ -37,18 +34,22 @@ vim .env
 
 ---
 
-### examples
+### simulating sandwich attacks
 
 <br>
 
-#### simulating sandwich attack
+#### gathering data
 
 <br>
 
-1. follow the installation and setup above.
-2. define the desired assets and/or protocols to research, and find out the methods that update price.
+1. define the desired assets and/or protocols you want to research research, and find out the methods that update their prices.
 3. use any blockchain analytic tool (*e.g.,* [dune](https://dune.com/home) or [avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)) to search for past blocks with a considerable price movement. 
-4. take note of the block numbers you want to analyze and add them to `data/blocks.txt`. there is one example there already to get you started.
-5. run this code by following the instructions above, and check the results in `results/`.
+4. create a list of the block numbers you want to analyze and add them to `data/blocks.txt`. there is one example there already to get you started.
+
+<br>
+
+#### running this code 
+
+
 
 
