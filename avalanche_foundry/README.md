@@ -23,11 +23,10 @@
 
 1. install [foundry](https://book.getfoundry.sh/getting-started/installation)
 2. install a [solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)
-3. add a config info to `.env`, including an RPC for avalanche (*e.g.*, [infura's](https://avalanche-mainnet.infura.io/v3/) or [ankr's](https://www.ankr.com/rpc/avalanche/) or your own node):
+3. create an env variable for the RPC url for avalanche (*e.g.*, [infura's](https://avalanche-mainnet.infura.io/v3/) or [ankr's](https://www.ankr.com/rpc/avalanche/) or your own node):
 
 ```
-cp .env_example .env
-vim .env
+export URL=<URL>
 ```
 
 
@@ -56,7 +55,7 @@ vim .env
 build the contracts and check test pass:
 
 ```
-forge test -vvv
+make run
 ```
 
 
