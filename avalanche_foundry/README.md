@@ -8,7 +8,7 @@
 
 ##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze blocks history in the avalanche blockchain. this can be used for several purposes, including testing vulnerabilities or extracting mev data.
 
-##### 📚 for more details, check [this mirror post](https://mirror.xyz/steinkirch.eth/Nzlw7ub7HFVa-LnP4kEKeiDtPcmzUkYlI2BJG_StVX8).
+##### 📚 for more details, check my mirror post ["foundry, avalanche, and historical shenanigans"](https://mirror.xyz/steinkirch.eth/Nzlw7ub7HFVa-LnP4kEKeiDtPcmzUkYlI2BJG_StVX8).
 
 ##### 🚨 disclaimer: i am not responsible for anything you do with my free code.
 
