@@ -58,11 +58,13 @@ fs_permissions = [{ access = "read", path = "./"}]
 
 ---
 
-### running the test (the simulation)
+### running the simulation
 
 <br>
 
-build the contracts and run the test(s) with:
+1. adjust [the constants in the beginning of the test file](https://github.com/go-outside-labs/blockchain-science-py/blob/main/historical-with-foundry/avalanche-c-chain/test/Gmx.sol#L10)
+
+2. build the contracts and run with:
 
 ```
 > make run

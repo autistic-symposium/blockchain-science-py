@@ -22,7 +22,7 @@
 
 <br>
 
-* [inspecting historical data on avalanche c-chain to simulate sandwich attacks in the gmx protocol](avalanche-c-chain)
+* **[inspecting historical data on avalanche c-chain to simulate sandwich attacks in the gmx protocol](avalanche-c-chain)**
 
 <br>
 
@@ -32,6 +32,6 @@
 
 <br>
 
-* [foudry book](https://book.getfoundry.sh/)
+* **[foundry book](https://book.getfoundry.sh/)**
 
 
