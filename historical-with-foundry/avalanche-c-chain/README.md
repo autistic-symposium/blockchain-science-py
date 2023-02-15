@@ -6,7 +6,7 @@
 
 <br>
 
-##### in this project, we inspect historical data on avalanche c-chain to simulate sandwich attacks in the gmx protocol.
+#### in this project, we inspect historical data on avalanche c-chain to simulate sandwich attacks in the gmx protocol.
 
 
 <br>
@@ -21,11 +21,11 @@
 
 2. find out the **methods that trigger prices updates** (*e.g.* `swap()` on gmx's **[router](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/Router.sol#L88)**).
 
-2. add/clone all the contracts need for the methods above to `contracts/`. the main code we will be running is actually located inside `test/` (foundry is a solidity testing toolkit).
+2. add/clone all the contracts needed for the methods above to `contracts/`. the main code we will be running is located inside `test/` (foundry is a solidity testing platform).
 
 3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/home)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
-4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is already one example to get you started (on avalanche c-chain).
+4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is already one example to get you started.
 
 <br>
 
@@ -35,7 +35,7 @@
 
 <br>
 
-1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)** (this will create a `lib/forge-std`). besides running `forge`, the tests import `forge-std/Test.sol` from there. note that our directory setup is defined inside `foundry.toml`:
+1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)** (this will create `lib/forge-std`). this is not only needed for running `forge` per se, but also because our tests import `forge-std/Test.sol`. note that our directory setup is defined inside `foundry.toml`:
 
 ```
 [profile.default]
@@ -46,12 +46,12 @@ fs_permissions = [{ access = "read", path = "./"}]
 ```
 
 
-2. install a **[solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)**. you need to look at which solidity version your protocol is using. for instance, for gmx we have to use **[0.6.12](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/VaultPriceFeed.sol#L11)**).
+2. install a **[solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)**. you need to look at which solidity version your protocol is using. for instance, for gmx we have to use **[0.6.12](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/VaultPriceFeed.sol#L11)**.
 
-3. create an env variable for avalanche c-chain's RPC url (*e.g.*, from **[infura's](https://avalanche-mainnet.infura.io/v3/)** or **[ankr's](https://www.ankr.com/rpc/avalanche/)** or **your own node**):
+3. export an env variable for avalanche c-chain's RPC url (*e.g.*, from **[infura's](https://avalanche-mainnet.infura.io/v3/)** or **[ankr's](https://www.ankr.com/rpc/avalanche/)** or **your own node**):
 
 ```
-export URL=<URL>
+> export URL=<URL>
 ```
 
 <br>
@@ -62,7 +62,7 @@ export URL=<URL>
 
 <br>
 
-to build the contracts and run the test(s), run:
+build the contracts and run the test(s) with:
 
 ```
 > make run
