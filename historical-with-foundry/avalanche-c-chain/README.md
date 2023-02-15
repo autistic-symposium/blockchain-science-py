@@ -80,8 +80,8 @@ Logs:
   🧱 block number: 19443666
   🪙 token 1: USDC
   🪙 token 2: WETH.e
-  🔂 loops in the simulation: 7
-  🥪 possible $ profit: 9674
+  🔂 loops in the simulation: 12
+  🥪 possible $ profit: 9720
 
 Test result: ok. 1 passed; 0 failed; finished in 2.01s
 ```
