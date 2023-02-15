@@ -66,7 +66,7 @@ to build the contracts and run the test, run:
 Compiler run successful
 
 Running 1 test for test/Gmx.t.sol:getHistorical
-[PASS] testHistoricalGmx() (gas: 91522784)
+[PASS] Gmx() (gas: 91522784)
 Logs:
   🧱 block number: 19443666
   🪙 token 1: USDC
