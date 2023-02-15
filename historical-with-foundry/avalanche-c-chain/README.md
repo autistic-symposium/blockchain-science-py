@@ -17,7 +17,7 @@
 
 <br>
 
-1. define the **desired assets and/or protocols** you want to research. in this example, we are looking at **[gmx](https://github.com/gmx-io/gmx-contracts)** and running the test `test/testHistoricalGmx()`.
+1. define the **desired assets and/or protocols** you want to research. in this example, we are looking at **[gmx](https://github.com/gmx-io/gmx-contracts)** and running the test `test/testGmx()`.
 
 2. find out the **methods that trigger prices updates** (*e.g.* `swap()` on gmx's **[router](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/Router.sol#L88)**).
 
