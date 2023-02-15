@@ -1,5 +1,5 @@
 [profile.default]
 src = 'data'
-out = 'results'
+out = 'out'
 libs = ['lib']
 fs_permissions = [{ access = "read", path = "./"}]

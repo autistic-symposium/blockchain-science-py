@@ -42,7 +42,16 @@
 
 <br>
 
-1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)** (this will create a `lib/forge-std`). besides running `forge`, the tests import `forge-std/Test.sol` from there.
+1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)** (this will create a `lib/forge-std`). besides running `forge`, the tests import `forge-std/Test.sol` from there. note that our directory setup is defined inside `foundry.toml`:
+
+```
+[profile.default]
+src = 'data'
+out = 'out'
+libs = ['lib']
+fs_permissions = [{ access = "read", path = "./"}]
+```
+
 
 2. install a **[solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)**. you need to look at which solidity version your protocol is using. for instance, for gmx we have to use **[0.6.12](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/VaultPriceFeed.sol#L11)**).
 
