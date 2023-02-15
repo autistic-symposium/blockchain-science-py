@@ -2,3 +2,4 @@
 src = 'data'
 out = 'results'
 libs = ['lib']
+fs_permissions = [{ access = "read", path = "./"}]
