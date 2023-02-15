@@ -3,12 +3,8 @@
 # author: steinkirch
 # Methods to plot data.
 
-
 import matplotlib.pyplot as plt
 import src.utils.os as utils
-
- 
-
 
 
 def plot_cointegrated_pair(data: dict, coin1: str, coin2: str, env_vars: dict) -> None:
