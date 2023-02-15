@@ -1,4 +1,4 @@
-## 🧱👵🏽 inspecting old blocks on avalanche
+## 🧱👵🏽 inspecting blockchains with foundry's vm
 
 <br>
 
@@ -6,7 +6,10 @@
 
 <br>
 
-##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze blocks history on avalanche c-chain. this can be used for several purposes, including testing vulnerabilities or extracting mev data.
+##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze evm-based blockchains, such as avalanche c-chain. foundry provides **["vm cheatcodes"](https://www.paradigm.xyz/2021/12/introducing-the-foundry-ethereum-development-toolbox#you-should-be-able-to-override-vm-state-in-your-tests)** that allow easy methods to modify the state at test runtime (for instance, simulate previous blocks).
+
+
+##### 🕹 although this boilerplate contains only one test (looking at sandwich attacks in historical blocks data from avalanche c-chain), it could be expanded to be used for several purposes, including testing vulnerabilities or extracting mev data.
 
 ##### 🚨 disclaimer: i am not responsible for anything you do with my free code.
 
@@ -14,7 +17,7 @@
 <br>
 
 ----
-### example I: simulating sandwich attacks on avalanche c-chain
+### simulating sandwich attacks on avalanche c-chain
 
 <br>
 
@@ -30,7 +33,7 @@
 
 3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/home)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
-4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is one example there already to get you started (on avalanche c-chain).
+4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is already one example to get you started (on avalanche c-chain).
 
 <br>
 
