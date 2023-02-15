@@ -6,7 +6,7 @@
 
 <br>
 
-##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze evm-based blockchains. foundry provides **["vm cheatcodes"](https://www.paradigm.xyz/2021/12/introducing-the-foundry-ethereum-development-toolbox#you-should-be-able-to-override-vm-state-in-your-tests)** that allow easy methods to modify the state at test runtime (for instance, simulating previous blocks).
+##### 🛠 in this project, we leverage [foundry](https://github.com/foundry-rs/foundry) to analyze evm-based blockchains. foundry provides **["vm cheatcodes"](https://www.paradigm.xyz/2021/12/introducing-the-foundry-ethereum-development-toolbox#you-should-be-able-to-override-vm-state-in-your-tests)** that allow easy methods to modify the state at test runtime (for instance, simulating previous blocks).
 
 
 ##### 🕹 although this boilerplate contains only one test (looking at sandwich attacks in historical blocks data from avalanche c-chain), it could be expanded to be used for several purposes, including testing vulnerabilities or extracting mev data.
@@ -42,7 +42,7 @@
 
 <br>
 
-1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)**.
+1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)** (this will create a `lib/forge-std`). besides running `forge`, the tests import `forge-std/Test.sol` from there.
 
 2. install a **[solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)**. you need to look at which solidity version your protocol is using. for instance, for gmx we have to use **[0.6.12](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/VaultPriceFeed.sol#L11)**).
 

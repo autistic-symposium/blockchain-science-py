@@ -25,7 +25,7 @@
 
 
 * **[inspecting evm-based chains with foundry](avalanche_foundry):**
-  * leverage **foundry** to analyze blockchain data. for example, **blocks history** on **avalanche c-chain**. this can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
+  * leverage **foundry** to analyze blockchain data. for example, **blocks history** on **evm-based chains**. this can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
 
 <br>
 
