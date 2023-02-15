@@ -19,8 +19,8 @@ contract getHistorical is Test {
     // define all constants in the test
     ///////////////////////////////////
 
-    uint32 constant T1_VALUE = 1560;
-    uint32 constant T2_VALUE = 1;
+    uint256 constant T1_VALUE = 1560;
+    uint256 constant T2_VALUE = 1;
     uint256 constant T1_QTY = 1;
     uint256 constant T2_QTY = 1e6;
     uint32 constant SIMULATION_CUTOFF = 20;
