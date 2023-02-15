@@ -22,15 +22,15 @@
 
 <br>
 
-1. define the **desired assets and/or protocols** you want to research, in this example, we looking at **[gmx](https://github.com/gmx-io/gmx-contracts)** and writing the test `testHistoricalGmx()`.
+1. define the **desired assets and/or protocols** you want to research. in this example, we are looking at **[gmx](https://github.com/gmx-io/gmx-contracts)** and writing the test `testHistoricalGmx()`.
 
-2. find out the **methods that trigger prices updates** (e.g. `swap()` on gmx's **[router](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/Router.sol#L88)**).
+2. find out the **methods that trigger prices updates** (*e.g.* `swap()` on gmx's **[router](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/Router.sol#L88)**).
 
 2. add/clone all the contracts need for the methods above to `lib/`. the main code we will be running is actually located inside `test/` (foundry is a solidity testing toolkit).
 
 3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/home)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
-4. create a **list with all the block** you found and add them to `data/blocks.txt`. there is one example there already to get you started (on avalanche c-chain).
+4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is one example there already to get you started (on avalanche c-chain).
 
 <br>
 
