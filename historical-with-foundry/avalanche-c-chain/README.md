@@ -23,7 +23,7 @@
 
 2. add/clone all the contracts needed for the methods above to `contracts/`. the main code we will be running is located inside `test/` (foundry is a solidity testing platform).
 
-3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/home)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
+3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/queries/1243615)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
 4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is already two examples to get you started (a block from this week and another from last summer).
 
