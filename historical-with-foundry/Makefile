@@ -1,6 +1,6 @@
 .PHONY: run
 run:
-	forge test --fork-url ${URL} -vv
+	forge test --fork-url ${URL} -vvv
 
 
 .PHONY: clean

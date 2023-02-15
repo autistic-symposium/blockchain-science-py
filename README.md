@@ -24,8 +24,8 @@
 ## foundry science
 
 
-* **[inspecting evm-based chains with foundry](avalanche_foundry):**
-  * leverage **foundry** to analyze blockchain data. for example, **blocks history** on **evm-based chains**. this can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
+* **[inspecting evm-based blockchains history](historical-with-foundry ):**
+  * leverage **foundry** to analyze blockchain historical data. this type of strategy can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
 
 <br>
 
