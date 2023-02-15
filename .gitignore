@@ -17,7 +17,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+lib/forge-std
 lib64/
 parts/
 sdist/
