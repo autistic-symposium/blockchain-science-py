@@ -43,13 +43,13 @@ contract getHistorical is Test {
 
     function log_tokens(swapStruct memory this_swap) internal 
     {
-        log_named_string("🪙 token 1", this_swap.t1.symbol());
-        log_named_string("🪙 token 2", this_swap.t2.symbol());
+        log_named_string("  🪙 token 1", this_swap.t1.symbol());
+        log_named_string("  🪙 token 2", this_swap.t2.symbol());
     }
 
     function log_profit(uint256 profit) internal 
     {
-        log_named_uint("🥪 possible $ profit (usd)", profit);
+        log_named_uint("    🥪 possible $ profit (usd)", profit);
     }
 
     function log_block(uint256 this_block) internal 
@@ -59,7 +59,7 @@ contract getHistorical is Test {
 
     function log_simulation_info(uint32 simulation_loop_num) internal 
     {
-        log_named_uint("🔂 loops in the simulation", simulation_loop_num);
+        log_named_uint("    🔂 loops in the simulation", simulation_loop_num);
     }
 
     ////////////////////////////////

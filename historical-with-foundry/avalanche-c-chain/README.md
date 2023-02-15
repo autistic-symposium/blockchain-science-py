@@ -25,7 +25,7 @@
 
 3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/home)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
-4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is already one example to get you started.
+4. create a **list with all the blocks** you found and add them to `data/blocks.txt`. there is already two examples to get you started (a block from this week and another from last summer).
 
 <br>
 
@@ -78,10 +78,12 @@ Running 1 test for test/Gmx.sol:getHistorical
 [PASS] testHistoricalGmx() (gas: 81654567)
 Logs:
   🧱 block number: 19443666
-  🪙 token 1: USDC
-  🪙 token 2: WETH.e
-  🔂 loops in the simulation: 12
-  🥪 possible $ profit (usd): 9720
+    🪙 token 1: USDC
+    🪙 token 2: WETH.e
+      🔂 loops in the simulation: 12
+  🧱 block number: 19905430
+      🔂 loops in the simulation: 10
+      🥪 possible $ profit (usd): 9720
 
 Test result: ok. 1 passed; 0 failed; finished in 2.01s
 ```
