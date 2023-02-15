@@ -225,7 +225,7 @@ contract getHistorical is Test {
             if (this_block != 0)
             {
                 log_block(this_block);
-                profit = profit + simulateProfit(this_block);
+                profit += simulateProfit(this_block);
             }
         }
 
