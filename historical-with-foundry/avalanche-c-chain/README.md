@@ -62,7 +62,7 @@ fs_permissions = [{ access = "read", path = "./"}]
 
 <br>
 
-1. adjust [the constants in the beginning of the test file](https://github.com/go-outside-labs/blockchain-science-py/blob/main/historical-with-foundry/avalanche-c-chain/test/Gmx.sol#L10)
+1. adjust [the constants in the beginning of the test file](https://github.com/go-outside-labs/blockchain-science-py/blob/main/historical-with-foundry/avalanche-c-chain/test/Gmx.sol#L19)
 
 2. build the contracts and run with:
 
