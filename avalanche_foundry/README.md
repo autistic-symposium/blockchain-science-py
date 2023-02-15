@@ -41,7 +41,7 @@
 
 1. install **[foundry](https://book.getfoundry.sh/getting-started/installation)**.
 
-2. install a **[solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)**. you need to look which solidity version that your protocol is using. for instance, for gmx we have to use **[0.6.12](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/VaultPriceFeed.sol#L11)**).
+2. install a **[solidity compiler](https://docs.soliditylang.org/en/latest/installing-solidity.html#installing-the-solidity-compiler)**. you need to look at which solidity version your protocol is using. for instance, for gmx we have to use **[0.6.12](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/VaultPriceFeed.sol#L11)**).
 
 3. create an env variable for avalanche c-chain's RPC url (*e.g.*, from **[infura's](https://avalanche-mainnet.infura.io/v3/)** or **[ankr's](https://www.ankr.com/rpc/avalanche/)** or **your own node**):
 
@@ -71,7 +71,7 @@ Logs:
   🧱 block number: 19443666
   🪙 token 1: USDC
   🪙 token 2: WETH.e
-  💰 possible $ profit: 10351
+  💰 possible $ profit: 9674
 
 Test result: ok. 1 passed; 0 failed; finished in 2.33s
 ```
