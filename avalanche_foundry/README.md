@@ -6,7 +6,7 @@
 
 <br>
 
-##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze evm-based blockchains, such as avalanche c-chain. foundry provides **["vm cheatcodes"](https://www.paradigm.xyz/2021/12/introducing-the-foundry-ethereum-development-toolbox#you-should-be-able-to-override-vm-state-in-your-tests)** that allow easy methods to modify the state at test runtime (for instance, simulate previous blocks).
+##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze evm-based blockchains. foundry provides **["vm cheatcodes"](https://www.paradigm.xyz/2021/12/introducing-the-foundry-ethereum-development-toolbox#you-should-be-able-to-override-vm-state-in-your-tests)** that allow easy methods to modify the state at test runtime (for instance, simulating previous blocks).
 
 
 ##### 🕹 although this boilerplate contains only one test (looking at sandwich attacks in historical blocks data from avalanche c-chain), it could be expanded to be used for several purposes, including testing vulnerabilities or extracting mev data.
@@ -25,11 +25,11 @@
 
 <br>
 
-1. define the **desired assets and/or protocols** you want to research. in this example, we are looking at **[gmx](https://github.com/gmx-io/gmx-contracts)** and writing the test `testHistoricalGmx()`.
+1. define the **desired assets and/or protocols** you want to research. in this example, we are looking at **[gmx](https://github.com/gmx-io/gmx-contracts)** and running the test `test/testHistoricalGmx()`.
 
 2. find out the **methods that trigger prices updates** (*e.g.* `swap()` on gmx's **[router](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/Router.sol#L88)**).
 
-2. add/clone all the contracts need for the methods above to `lib/`. the main code we will be running is actually located inside `test/` (foundry is a solidity testing toolkit).
+2. add/clone all the contracts need for the methods above to `contracts/`. the main code we will be running is actually located inside `test/` (foundry is a solidity testing toolkit).
 
 3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/home)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
