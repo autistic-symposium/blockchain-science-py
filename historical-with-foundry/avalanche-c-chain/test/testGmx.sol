@@ -49,7 +49,7 @@ contract getHistorical is Test {
 
     function log_profit(uint256 profit) internal 
     {
-        log_named_uint("🥪 possible $ profit", profit);
+        log_named_uint("🥪 possible $ profit (usd)", profit);
     }
 
     function log_block(uint256 this_block) internal 
