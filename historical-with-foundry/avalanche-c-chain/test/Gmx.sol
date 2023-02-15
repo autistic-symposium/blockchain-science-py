@@ -5,16 +5,26 @@ import "forge-std/Test.sol";
 import "contracts/Router.sol";
 
 
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+// note: this test is not meant to be optimized for gas
+// it is meant to be a easy to read test for this problem
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+
+
 contract getHistorical is Test {
 
     ////////////////////////////////////
     // define all constants in the test
     ///////////////////////////////////
 
-    uint256 constant T1_VALUE = 1560;
-    uint256 constant T2_VALUE = 1;
+    uint32 constant T1_VALUE = 1560;
+    uint32 constant T2_VALUE = 1;
     uint256 constant T1_QTY = 1;
     uint256 constant T2_QTY = 1e6;
+    uint32 constant SIMULATION_CUTOFF = 20;
+    uint32 constant SIMULATION_STEP = 3;
     string constant blocks_path = 'data/blocks.txt';
 
     // define all erc20 tokens you would like to analyze
@@ -24,51 +34,66 @@ contract getHistorical is Test {
 
     // gmx contracts
     Router constant router = Router(0x5F719c2F1095F7B9fc68a68e35B51194f4b6abe8);
-    uint256 constant ROUTER_MIN_OUT = 0;
-
+    uint32 constant ROUTER_MIN_OUT = 0;
 
 
     ////////////////////
     // utils: logging
     ////////////////////
 
-    function log_tokens(tokenStruct memory this_pair) internal {
-        log_named_string("🪙 token 1", this_pair.t1.symbol());
-        log_named_string("🪙 token 2", this_pair.t2.symbol());
+    function log_tokens(swapStruct memory this_swap) internal 
+    {
+        log_named_string("🪙 token 1", this_swap.t1.symbol());
+        log_named_string("🪙 token 2", this_swap.t2.symbol());
     }
 
-    function log_profit(uint256 profit) internal {
-        log_named_uint("💰 possible $ profit", profit);
+    function log_profit(uint256 profit) internal 
+    {
+        log_named_uint("🥪 possible $ profit", profit);
     }
 
-    function log_block(uint256 this_block) internal {
+    function log_block(uint256 this_block) internal 
+    {
         log_named_uint("🧱 block number", this_block);
     }
 
-    function uint2str(string memory s) internal pure returns (uint) {
-        bytes memory b = bytes(s);
-        uint result = 0;
-        for (uint256 i = 0; i < b.length; i++) {
-            uint256 c = uint256(uint8(b[i]));
-            if (c >= 48 && c <= 57) {
-                result = result * 10 + (c - 48);
-            }
-        }
-        return result;
+    function log_simulation_info(uint32 simulation_loop_num) internal 
+    {
+        log_named_uint("🔂 loops in the simulation", simulation_loop_num);
     }
-
 
     ////////////////////////////////
     // utils: forge storage methods
-    //////////////////////////////
+    ////////////////////////////////
 
-    function createStorage(address token, address signer, uint256 qty) internal {
+    function createStorage(address token, address signer, uint256 qty) internal 
+    {
         // https://github.com/foundry-rs/forge-std/blob/master/src/StdStorage.sol#L6
         stdstore
             .target(token)
             .sig(IERC20(token).balanceOf.selector)
             .with_key(signer)
             .checked_write(qty);
+    }
+
+
+    ////////////////////
+    // utils: maths
+    ////////////////////
+
+    function uint2str(string memory s) internal pure returns (uint) 
+    {
+        bytes memory b = bytes(s);
+        uint result = 0;
+        for (uint256 i = 0; i < b.length; i++) 
+        {
+            uint256 c = uint256(uint8(b[i]));
+            if (c >= 48 && c <= 57) 
+            {
+                result = result * 10 + (c - 48);
+            }
+        }
+        return result;
     }
 
 
@@ -120,27 +145,67 @@ contract getHistorical is Test {
         // start a snapshot of the state of the chain, and revert to it at the end of the function
         // https://book.getfoundry.sh/cheatcodes/snapshots?highlight=vm.snapshot#snapshot-cheatcodes
         uint256 vm_id = vm.snapshot();
+        uint256 result = 0;
+        uint32 simulation_loop_num = 0;
 
+        // run this loop for each token in our list 
+        // (for now only USDC and WETH, but more if more tokens are added)
+        for (uint token_i = 0; token_i < swapDict.length; token_i++) 
+        {
+            bool simulation_stop = false;
+        
+            swapStruct memory this_swap = swapDict[token_i];
+            uint256 this_amount = this_swap.quantity;
+            uint256 this_t1_balance = 10 ** uint256(this_swap.t1.decimals());
+            
+            uint256 _amountOut = 0;
+            uint256 _amountOutBefore = 0;
+
+            while (!simulation_stop && simulation_loop_num < SIMULATION_CUTOFF)
+            {
+                try this.extractBlockData(this_block, this_amount, this_swap.t1, this_swap.t2) returns (uint256 t1_balance)
+                {
+                    _amountOut = t1_balance;
+                    _amountOutBefore = this_amount;
+                    this_amount *= SIMULATION_STEP;
+                }
+                catch
+                {
+                    simulation_stop = true; 
+                    _amountOutBefore *= this_t1_balance;
+                    // sandwich
+                    if (_amountOut > _amountOutBefore)
+                    {
+                        log_tokens(this_swap);
+                        result = this_swap.value * (_amountOut - _amountOutBefore) / this_t1_balance;
+                    }
+                }  
+                simulation_loop_num += 1;  
+                vm.revertTo(vm_id);        
+            }
+        }
+        log_simulation_info(simulation_loop_num);
         return result;
     }
-
 
 
     //////////////////
     // TESTS: setup
     //////////////////
 
-    struct tokenStruct {
+    struct swapStruct 
+    {
         IERC20 t1;
         IERC20 t2;
         uint256 value;
         uint256 quantity;
     }
-    tokenStruct[] public tokenDict;
+    swapStruct[] public swapDict;
 
-    function setUp() public {
-        tokenDict.push(tokenStruct({t1: WETH, t2: USDC, value: T1_VALUE, quantity: T1_QTY }));
-        tokenDict.push(tokenStruct({t1: USDC, t2: WETH, value: T2_VALUE, quantity: T2_QTY }));
+    function setUp() public
+    {
+        swapDict.push(swapStruct({t1: WETH, t2: USDC, value: T1_VALUE, quantity: T1_QTY }));
+        swapDict.push(swapStruct({t1: USDC, t2: WETH, value: T2_VALUE, quantity: T2_QTY }));
     }
 
 
