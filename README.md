@@ -24,8 +24,8 @@
 ## foundry for historical data
 
 
-* **[inspecting old blocks in avalanche](avalanche_foundry):**
-  * leverage **foundry** to analyze **blocks history** in the **avalanche blockchain**. this can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
+* **[inspecting old blocks on avalanche](avalanche_foundry):**
+  * leverage **foundry** to analyze **blocks history** on **avalanche c-chain blockchain**. this can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
 
 <br>
 
