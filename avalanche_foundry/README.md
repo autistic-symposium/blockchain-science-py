@@ -6,7 +6,7 @@
 
 <br>
 
-##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze blocks history in the avalanche blockchain. this can be used for several purposes, including testing vulnerabilities or extracting mev data.
+##### 🛠 in this project, we use [foundry](https://github.com/foundry-rs/foundry) to analyze blocks history on avalanche c-chain. this can be used for several purposes, including testing vulnerabilities or extracting mev data.
 
 ##### 🚨 disclaimer: i am not responsible for anything you do with my free code.
 
@@ -18,7 +18,7 @@
 
 <br>
 
-#### gathering data
+#### gathering input data
 
 <br>
 
@@ -35,7 +35,7 @@
 <br>
 
 
-#### installing 
+#### installing deps
 
 <br>
 
@@ -51,29 +51,29 @@ export URL=<URL>
 
 <br>
 
-#### running
+#### running the test (the simulation)
 
 <br>
 
-to build the contracts and run the test, run:
+to build the contracts and run the test(s), run:
 
 ```
 > make run
 
-[⠆] Compiling...
-[⠆] Compiling 1 files with 0.6.12
-[⠰] Solc 0.6.12 finished in 889.97ms
+[⠢] Compiling...
+[⠔] Compiling 17 files with 0.6.12
+[⠑] Solc 0.6.12 finished in 2.31s
 Compiler run successful
 
-Running 1 test for test/Gmx.t.sol:getHistorical
-[PASS] testGmx() (gas: 91522784)
+Running 1 test for test/Gmx.sol:getHistorical
+[PASS] testHistoricalGmx() (gas: 81654567)
 Logs:
   🧱 block number: 19443666
   🪙 token 1: USDC
   🪙 token 2: WETH.e
   💰 possible $ profit: 9674
 
-Test result: ok. 1 passed; 0 failed; finished in 2.33s
+Test result: ok. 1 passed; 0 failed; finished in 2.01s
 ```
 
 <br>
