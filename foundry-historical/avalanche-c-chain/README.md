@@ -21,7 +21,7 @@
 
 2. find out the **methods that trigger prices updates** (*e.g.* `swap()` on gmx's **[router](https://github.com/gmx-io/gmx-contracts/blob/master/contracts/core/Router.sol#L88)**).
 
-2. add/clone all the contracts needed for the methods above to `contracts/`. the main code we will be running is located inside `test/` (foundry is a solidity testing platform).
+2. add/clone all the contracts needed for the methods above to `contracts/`. the main code we will be running is located inside `test/` (foundry's forge is a testing framework).
 
 3. use any **blockchain analytics tools** (*e.g.,* **[dune](https://dune.com/queries/1243615)** or **[avax apis](https://docs.avax.network/apis/avalanchego/public-api-server)**) to search for **past blocks** with a suspecting price movement (*e.g.,* set a threshold that could be interesting to look at). 
 
