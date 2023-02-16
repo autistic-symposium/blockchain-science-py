@@ -25,7 +25,7 @@
 
 
 * **[comparisons of flashloans fees and functions on ethereum](foundry-flashloans):**
-  * leverage **foundry** to compare flashloans from **lending protocols on ethereum**, including fees, deployment cost, and deployment size. this work is based on **[jeiwan's code](https://github.com/Jeiwan/flash-loans-comparison)**.
+  * leverage **foundry** to compare flashloans from **leading lending protocols on ethereum**, including fees, deployment cost, and deployment size. 
 
 <br>
 

@@ -7,12 +7,12 @@
 
 <br>
 
-##### 🛠 we leverage [foundry](https://github.com/foundry-rs/foundry) to compare flashloans from **lending protocols on ethereum**, including fees, deployment cost, and deployment size. 
+#### 🛠 we leverage [foundry](https://github.com/foundry-rs/foundry) to compare flashloans from **lending protocols on ethereum**, including fees, deployment cost, and deployment size. 
 
 
-##### 🕹 these boilerplates can be expanded for several purposes, including testing vulnerabilities or extracting mev data. this particular work is based on **[jeiwan's code](https://github.com/Jeiwan/flash-loans-comparison)**.
+#### 🕹 these boilerplates can be expanded for several purposes, including testing vulnerabilities or extracting mev data. this work is adapted from **[jeiwan's code](https://github.com/Jeiwan/flash-loans-comparison)**.
 
-##### 🚨 disclaimer: i am not responsible for anything you do with my free code.
+#### 🚨 disclaimer: i am not responsible for anything you do with my free code.
 
 
 <br>
@@ -40,11 +40,11 @@
 
 <br>
 
-1. adjust [the constants in the beginning of the test file](https://github.com/go-outside-labs/blockchain-science-py/blob/main/historical-with-foundry/avalanche-c-chain/test/Gmx.sol#L19)
+1. adjust the constants in the beginning of the test file.
 
 2. build the contracts and run with:
 
-```
+```shell
 >  make test 
 
 [⠆] Compiling...

@@ -33,7 +33,6 @@ contract Balancer {
         bytes calldata /* userData */
     ) public payable {
         if (msg.sender != balancerAddress) revert();
-
         tokens[0].transfer(balancerAddress, amounts[0]);
     }
 }
