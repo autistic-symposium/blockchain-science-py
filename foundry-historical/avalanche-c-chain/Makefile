@@ -1,6 +1,6 @@
-.PHONY: run
-run:
-	forge test --fork-url ${URL} -vvv
+.PHONY: test
+test:
+	forge test --fork-url ${RPC_URL} -vvv
 
 
 .PHONY: clean

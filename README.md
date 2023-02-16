@@ -24,8 +24,14 @@
 ## foundry science
 
 
+* **[comparisons of flashloans fees and functions on ethereum](foundry-flashloans):**
+  * leverage **foundry** to compare flashloans from **lending protocols on ethereum**, including fees, deployment cost, and deployment size. this work is based on **[jeiwan's code](https://github.com/Jeiwan/flash-loans-comparison)**.
+
+<br>
+
 * **[inspecting evm-based blockchains history](foundry-historical):**
   * leverage **foundry** to analyze blockchain historical data. this type of strategy can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
+
 
 <br>
 
@@ -77,4 +83,6 @@
 * **[crypto market data apis list](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
 * **[coinmarketcap historical data](https://coinmarketcap.com/currencies/ethereum/historical-data/)**
 * **[uniswap extractooor data](https://www.uniswap.shippooor.xyz/)**
+* **[the foundry book](https://book.getfoundry.sh/)**
+
 
