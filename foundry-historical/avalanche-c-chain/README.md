@@ -51,7 +51,7 @@ fs_permissions = [{ access = "read", path = "./"}]
 3. export an env variable for avalanche c-chain's RPC url (*e.g.*, from **[infura's](https://avalanche-mainnet.infura.io/v3/)** or **[ankr's](https://www.ankr.com/rpc/avalanche/)** or **your own node**):
 
 ```
-> export URL=<URL>
+> export RPC_URL=<RPC_URL>
 ```
 
 <br>
@@ -67,7 +67,7 @@ fs_permissions = [{ access = "read", path = "./"}]
 2. build the contracts and run with:
 
 ```
-> make run
+> make test
 
 [⠢] Compiling...
 [⠔] Compiling 17 files with 0.6.12
