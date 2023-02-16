@@ -24,7 +24,7 @@
 ## foundry science
 
 
-* **[inspecting evm-based blockchains history](historical-with-foundry ):**
+* **[inspecting evm-based blockchains history](foundry-historical):**
   * leverage **foundry** to analyze blockchain historical data. this type of strategy can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
 
 <br>
