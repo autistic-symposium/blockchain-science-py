@@ -47,19 +47,62 @@
 ```shell
 >  make test 
 
-[⠆] Compiling...
-No files changed, compilation skipped
+⠢] Compiling...
+[⠆] Compiling 6 files with 0.8.18
+[⠰] Solc 0.8.18 finished in 961.13ms
+Compiler run successful
 
-Running 1 test for test/testFlashloans.sol:FlashloansTest
-[PASS] testBalancer() (gas: 264732)
-Test result: ok. 1 passed; 0 failed; finished in 1.66s
+Running 5 tests for test/testFlashloans.sol:getFlashloansData
+[PASS] testAAVE() (gas: 1516951)
+[PASS] testBalancer() (gas: 518202)
+[PASS] testEulerFinance() (gas: 399865)
+[PASS] testUniswapV2() (gas: 466843)
+[PASS] testUniswapV3() (gas: 509303)
+Test result: ok. 5 passed; 0 failed; finished in 6.13s
+
+| src/AAVE.sol:AAVE contract |                 |       |        |        |         |
+|----------------------------|-----------------|-------|--------|--------|---------|
+| Deployment Cost            | Deployment Size |       |        |        |         |
+| 290331                     | 1482            |       |        |        |         |
+| Function Name              | min             | avg   | median | max    | # calls |
+| executeOperation           | 24562           | 24667 | 24562  | 26662  | 20      |
+| flashLoan                  | 69779           | 75882 | 69779  | 191845 | 20      |
+
+
 | src/Balancer.sol:Balancer contract |                 |       |        |       |         |
 |------------------------------------|-----------------|-------|--------|-------|---------|
 | Deployment Cost                    | Deployment Size |       |        |       |         |
 | 247087                             | 1266            |       |        |       |         |
 | Function Name                      | min             | avg   | median | max   | # calls |
-| flashLoan                          | 24407           | 25727 | 24407  | 37608 | 10      |
-| receiveFlashLoan                   | 4150            | 4150  | 4150   | 4150  | 10      |
+| flashLoan                          | 24407           | 25067 | 24407  | 37608 | 20      |
+| receiveFlashLoan                   | 4150            | 4150  | 4150   | 4150  | 20      |
+
+
+| src/Euler.sol:Euler contract |                 |       |        |       |         |
+|------------------------------|-----------------|-------|--------|-------|---------|
+| Deployment Cost              | Deployment Size |       |        |       |         |
+| 187632                       | 969             |       |        |       |         |
+| Function Name                | min             | avg   | median | max   | # calls |
+| flashLoan                    | 18570           | 19582 | 18570  | 38812 | 20      |
+| onFlashLoan                  | 3627            | 3627  | 3627   | 3627  | 20      |
+
+
+| src/UniswapV2.sol:UniswapV2 contract |                 |       |        |       |         |
+|--------------------------------------|-----------------|-------|--------|-------|---------|
+| Deployment Cost                      | Deployment Size |       |        |       |         |
+| 171614                               | 889             |       |        |       |         |
+| Function Name                        | min             | avg   | median | max   | # calls |
+| flashLoan                            | 20153           | 22493 | 20153  | 66969 | 20      |
+| uniswapV2Call                        | 4501            | 4501  | 4501   | 4501  | 20      |
+
+
+| src/UniswapV3.sol:UniswapV3 contract |                 |       |        |       |         |
+|--------------------------------------|-----------------|-------|--------|-------|---------|
+| Deployment Cost                      | Deployment Size |       |        |       |         |
+| 171014                               | 886             |       |        |       |         |
+| Function Name                        | min             | avg   | median | max   | # calls |
+| flashLoan                            | 22899           | 24619 | 22899  | 57299 | 20      |
+| uniswapV3FlashCallback               | 4348            | 4348  | 4348   | 4348  | 20      |
 
 ```
 

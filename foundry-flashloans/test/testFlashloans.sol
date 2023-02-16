@@ -2,7 +2,11 @@
 pragma solidity ^0.8.16;
 
 import "forge-std/Test.sol";
+import "../src/AAVE.sol";
 import "../src/Balancer.sol";
+import "../src/Euler.sol";
+import "../src/UniswapV2.sol";
+import "../src/UniswapV3.sol";
 
 
 /////////////////////////////////////////////////////////
@@ -21,9 +25,15 @@ contract getFlashloansData is Test {
     ///////////////////////////////////
 
     uint32 constant SIMULATION_CUTOFF = 20;
+    uint256 constant INTEREST_RATE = 0;
+    uint256 constant AMOUNT = 1 ether;
     address constant WETH_ADDRESS = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-    Balancer balancer;
 
+    AAVE aave;
+    Balancer balancer;
+    Euler euler;
+    UniswapV2 uniswapv2;
+    UniswapV3 uniswapv3;
 
     ////////////////////
     // utils: logging
@@ -53,9 +63,20 @@ contract getFlashloansData is Test {
     //////////////////
 
     function setUp() public {
+        aave = new AAVE();
+        create_weth_storage(address(aave));
+
         balancer = new Balancer();
         create_weth_storage(address(balancer));
 
+        euler = new Euler();
+        create_weth_storage(address(euler));
+
+        uniswapv2 = new UniswapV2();
+        create_weth_storage(address(uniswapv2));
+
+        uniswapv3 = new UniswapV3();
+        create_weth_storage(address(uniswapv3));
     }
 
    
@@ -63,15 +84,49 @@ contract getFlashloansData is Test {
     // TESTS: run
     //////////////
 
+    function testAAVE() public {
+        address[] memory assets = new address[](1);
+        assets[0] = WETH_ADDRESS;
+
+        uint256[] memory amounts = new uint256[](1);
+        amounts[0] = AMOUNT;
+
+        uint256[] memory modes = new uint256[](1);
+        modes[0] = INTEREST_RATE; 
+
+        for (uint32 i; i < SIMULATION_CUTOFF; i++) {
+            aave.flashLoan(assets, amounts, modes);
+        }
+    }
+
     function testBalancer() public {
         address[] memory assets = new address[](1);
         assets[0] = WETH_ADDRESS;
 
         uint256[] memory amounts = new uint256[](1);
-        amounts[0] = 1 ether;
+        amounts[0] = AMOUNT;
 
         for (uint32 i; i < SIMULATION_CUTOFF; i++) {
             balancer.flashLoan(assets, amounts);
         }
     }
+
+    function testEulerFinance() public {
+        for (uint32 i; i < SIMULATION_CUTOFF; i++) {
+            euler.flashLoan(AMOUNT);
+        }
+    }
+
+    function testUniswapV2() public {
+        for (uint32 i; i < SIMULATION_CUTOFF; i++) {
+            uniswapv2.flashLoan(AMOUNT);
+        }
+    }
+
+    function testUniswapV3() public {
+        for (uint32 i; i < SIMULATION_CUTOFF; i++) {
+            uniswapv3.flashLoan(AMOUNT);
+        }
+    }
+
 }

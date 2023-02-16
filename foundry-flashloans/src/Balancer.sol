@@ -15,10 +15,16 @@ interface IBalancer {
 
 
 contract Balancer {
-    address constant balancerAddress =
+
+    ////////////////////////
+    // define all constants 
+    ////////////////////////
+
+    address constant BALANCER_ADDRESS =
         0xBA12222222228d8Ba445958a75a0704d566BF2C8;
 
-    IBalancer constant balancer = IBalancer(balancerAddress);
+
+    IBalancer constant balancer = IBalancer(BALANCER_ADDRESS);
 
     function flashLoan(address[] calldata tokens, uint256[] calldata amounts)
         public
@@ -32,7 +38,7 @@ contract Balancer {
         uint256[] calldata, /* feeAmounts */
         bytes calldata /* userData */
     ) public payable {
-        if (msg.sender != balancerAddress) revert();
-        tokens[0].transfer(balancerAddress, amounts[0]);
+        if (msg.sender != BALANCER_ADDRESS) revert();
+        tokens[0].transfer(BALANCER_ADDRESS, amounts[0]);
     }
 }
