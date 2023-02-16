@@ -23,11 +23,13 @@ contract AAVE {
 
     address constant LENDING_POOL_ADDRESS =
         0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9;
-
-
     IAAVELendingPool constant lendingPool =
         IAAVELendingPool(LENDING_POOL_ADDRESS);
 
+    ////////////////////////
+    // run flashloan 
+    ////////////////////////
+    
     function flashLoan(
         address[] calldata assets,
         uint256[] calldata amounts,
@@ -49,11 +51,10 @@ contract AAVE {
         uint256[] calldata amounts,
         uint256[] calldata premiums,
         address initiator,
-        bytes calldata /* params */
+        bytes calldata 
     ) external returns (bool) {
         if (msg.sender != LENDING_POOL_ADDRESS) revert();
         if (initiator != address(this)) revert();
-
         IERC20(assets[0]).approve(LENDING_POOL_ADDRESS, amounts[0] + premiums[0]);
         return true;
     }

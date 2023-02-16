@@ -7,12 +7,22 @@
 
 <br>
 
-#### 🛠 we leverage [foundry](https://github.com/foundry-rs/foundry) to compare flashloans from **lending protocols on ethereum**, including fees, deployment cost, and deployment size. 
+#### 🛠 we leverage [foundry](https://github.com/foundry-rs/foundry) to compare flashloans from **lending protocols on ethereum**, including deployment cost, and deployment size. 
 
 
 #### 🕹 these boilerplates can be expanded for several purposes, including testing vulnerabilities or extracting mev data. this work is adapted from **[jeiwan's code](https://github.com/Jeiwan/flash-loans-comparison)**.
 
-#### 🚨 disclaimer: i am not responsible for anything you do with my free code.
+#### 💰protocol fees:
+
+<br>
+
+| protocol           | fees |
+| -----------        | ----------- |
+| aave               | 0.09%       |
+| balancer           | free        |
+| euler              | free        |
+| uniswap v2         | 0.3009027%  |
+| uniswap v3         | 0.05%, 0.3%, 1% fee, depending on pool        |
 
 
 <br>

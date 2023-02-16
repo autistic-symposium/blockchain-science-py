@@ -14,11 +14,12 @@ contract Euler {
     ////////////////////////
     address constant EULER_ADDRESS = 0x27182842E098f60e3D576794A5bFFb0777E025d3;
     address constant WETH_ADDRESS = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
-
-    // WETH DToken
     address constant DTOKEN_ADDRESS = 0x62e28f054efc24b26A794F5C1249B6349454352C;
     IEulerDToken constant dToken = IEulerDToken(DTOKEN_ADDRESS);
 
+    ////////////////////////
+    // run flashloan 
+    ////////////////////////
     function flashLoan(uint256 amount) public {
         dToken.flashLoan(amount, abi.encode(WETH_ADDRESS, amount));
     }
@@ -29,7 +30,6 @@ contract Euler {
             data,
             (address, uint256)
         );
-
         IERC20(underlying).transfer(msg.sender, amount); // repay
     }
 }

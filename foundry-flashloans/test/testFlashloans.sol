@@ -2,7 +2,7 @@
 pragma solidity ^0.8.16;
 
 import "forge-std/Test.sol";
-import "../src/AAVE.sol";
+import "../src/AaveV2.sol";
 import "../src/Balancer.sol";
 import "../src/Euler.sol";
 import "../src/UniswapV2.sol";
@@ -35,14 +35,6 @@ contract getFlashloansData is Test {
     UniswapV2 uniswapv2;
     UniswapV3 uniswapv3;
 
-    ////////////////////
-    // utils: logging
-    ////////////////////
-
-    function log_protocol_info(string memory protocol, uint256 data) internal 
-    {
-        emit log_named_uint(protocol, data);
-    }
 
     ////////////////////////////////////////////////////////////////
     // simulation: create a vm storage for testing weth flashloans
@@ -122,7 +114,7 @@ contract getFlashloansData is Test {
             uniswapv2.flashLoan(AMOUNT);
         }
     }
-
+        
     function testUniswapV3() public {
         for (uint32 i; i < SIMULATION_CUTOFF; i++) {
             uniswapv3.flashLoan(AMOUNT);
