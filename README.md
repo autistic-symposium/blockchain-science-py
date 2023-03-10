@@ -39,7 +39,7 @@
 
 ## jupyter notebooks
 
-* **[extracting on-data from a list of ethereum public addresses](on-chain-data-by-address):**
+* **[extracting on-chain data from a list of ethereum public addresses](on-chain-data-by-address):**
     * given a list of **public addresses**, extract the current **token balance**, and parse the **transaction history** for token transfers/swaps.
 
 <br>
