@@ -64,7 +64,7 @@
 
 ## resources
 
-* **[checkout my blockchain data engineering repo](https://github.com/go-outside-labs/blockchain-data-engineering)**
+* **[blockchain data engineering repo](https://github.com/go-outside-labs/blockchain-data-engineering)**
 * **[crypto market data apis list](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
 * **[coinmarketcap historical data](https://coinmarketcap.com/currencies/ethereum/historical-data/)**
 * **[uniswap extractooor data](https://www.uniswap.shippooor.xyz/)**
