@@ -1,5 +1,0 @@
-[profile.default]
-src = 'data'
-out = 'out'
-libs = ['lib']
-fs_permissions = [{ access = "read", path = "./"}]

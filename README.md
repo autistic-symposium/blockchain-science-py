@@ -1,4 +1,4 @@
-# ⛓📊 blockchain science
+# ⛓📊🐍 blockchain science - python edition
 
 
 <br>
@@ -9,7 +9,6 @@
 
 <br>
 
-<br>
 
 ## trading bots
 
@@ -19,23 +18,9 @@
 
 <br>
 
-<br>
-
-## foundry science
 
 
-* **[comparisons of flashloans fees and functions on ethereum](foundry-flashloans):**
-  * leverage **foundry** to compare flashloans from **leading lending protocols on ethereum**, including deployment cost and deployment size. 
 
-<br>
-
-* **[inspecting evm-based blockchains history](foundry-historical):**
-  * leverage **foundry** to analyze blockchain historical data. this type of strategy can be used for several purposes, including **testing vulnerabilities or extracting mev data.**
-
-
-<br>
-
-<br>
 
 ## jupyter notebooks
 
@@ -75,7 +60,7 @@
 <br>
 
 
-<br>
+
 
 ## resources
 
@@ -83,6 +68,6 @@
 * **[crypto market data apis list](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
 * **[coinmarketcap historical data](https://coinmarketcap.com/currencies/ethereum/historical-data/)**
 * **[uniswap extractooor data](https://www.uniswap.shippooor.xyz/)**
-* **[the foundry book](https://book.getfoundry.sh/)**
+
 
 
