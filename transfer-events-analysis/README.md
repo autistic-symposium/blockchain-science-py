@@ -2,7 +2,7 @@
 
 <br>
 
-In this notebook, we leverage any [rpc provider url](https://github.com/arddluma/awesome-list-rpc-nodes-providers) to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
+In this notebook, we leverage [Infura API](https://app.infura.io/dashboard/ethereum/), particularly [`eth_getLogs`](https://docs.infura.io/infura/networks/ethereum/json-rpc-methods/eth_getlogs), to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
 
 
 To run this notebook locally, follow the steps below:
