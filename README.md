@@ -44,6 +44,11 @@
 
 <br>
 
+* **[transfer events analysis through infura's `eth_getLogs`](transfer-events-analysis):**
+    * leverage [infura]'s rpc url to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
+
+<br>
+
 * **[leveraging uniswap subgraph to extract token pair information](uniswap-data):**
     * utilize the **graph explorer** to access **uniswap subgraph** and analyze the **UNI and WETH token pair** data. 
 
@@ -52,17 +57,12 @@
 * **[DEXs analysis: PMM dodo, AMM uniswap V2, AMM curve stableswap](dexs-equations-analysis):**
     * maths && plots go-to for **decentralized exchanges analysis**.
 
-
 <br>
     
-
 * **[retrieving DAO tokens and pools data](dao-data):**
     * utilize the **graph explorer** to analyze the data related to a list of **DAO tokens**.
 
-
-
 <br>
-    
 
 * **[messari API for token market data](messari-assets-data):**
     * utilize **[messari API](https://messari.io/api)** to retrieve **market data** for a list of tokens.
