@@ -45,7 +45,7 @@
 <br>
 
 * **[transfer events analysis through infura's `eth_getLogs`](transfer-events-analysis):**
-    * leverage [infura]'s rpc url to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
+    * leverage **[infura](https://docs.infura.io/infura/)**'s rpc url to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
 
 <br>
 
