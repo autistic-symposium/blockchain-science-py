@@ -10,8 +10,10 @@
 <br>
 
 
-## trading bots
+## my trading bots
 
+
+<br>
 
 * **[cointegration trading bots and CLI](cointegration-bots):**
   * run **highly customized** trading bots with **statistical algorithmic strategies** such as **cointegration**. Include an option for **docker deployment**.
@@ -19,10 +21,12 @@
 <br>
 
 
+----
 
 
+## my jupyter notebooks
 
-## jupyter notebooks
+<br>
 
 * **[extracting on-chain data from a list of ethereum public addresses](on-chain-data-by-address):**
     * given a list of **public addresses**, extract the current **token balance**, and parse the **transaction history** for token transfers/swaps.
@@ -61,8 +65,11 @@
 
 
 
+---
 
-## resources
+## external resources
+
+<br>
 
 * **[blockchain data engineering repo](https://github.com/go-outside-labs/blockchain-data-engineering)**
 * **[crypto market data apis list](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
