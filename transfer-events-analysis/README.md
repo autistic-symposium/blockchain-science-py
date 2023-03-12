@@ -2,7 +2,7 @@
 
 <br>
 
-in this notebook, we leverage [Infura API](https://app.infura.io/dashboard/ethereum/), particularly [`eth_getLogs`](https://docs.infura.io/infura/networks/ethereum/json-rpc-methods/eth_getlogs), to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
+in this notebook, we leverage [ethreum RPC methods (endpoints)](https://app.infura.io/dashboard/ethereum/), particularly [`eth_getLogs`](https://docs.infura.io/infura/networks/ethereum/json-rpc-methods/eth_getlogs), to retrieve and parse transfer events logs for a given erc20 token, calculating balances and token holders.
 
 
 <br>
