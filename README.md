@@ -67,11 +67,15 @@
 
 ---
 
-## usefu external resources
+## useful resources
 
 <br>
 
-* **[go-outside-labs blockchain data engineering](https://github.com/go-outside-labs/blockchain-data-engineering)**
+#### go-outside-labs
+* **[blockchain data engineering](https://github.com/go-outside-labs/blockchain-data-engineering)**
+
+#### external
+
 * **[crypto market data apis list](https://mixedanalytics.com/knowledge-base/top-free-crypto-apis/)**
 * **[coinmarketcap historical data](https://coinmarketcap.com/currencies/ethereum/historical-data/)**
 * **[uniswap extractooor data](https://www.uniswap.shippooor.xyz/)**
