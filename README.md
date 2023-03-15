@@ -67,7 +67,7 @@
 
 ---
 
-## external resources
+## usefu external resources
 
 <br>
 
