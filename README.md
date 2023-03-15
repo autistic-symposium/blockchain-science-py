@@ -10,7 +10,7 @@
 <br>
 
 
-## my trading bots
+## go-outside-labs trading bots
 
 
 <br>
@@ -24,7 +24,7 @@
 ----
 
 
-## my jupyter notebooks
+## go-outside-labs jupyter notebooks
 
 <br>
 
