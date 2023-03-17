@@ -74,7 +74,7 @@
 #### go-outside-labs
 
 * **[blockchain data engineering](https://github.com/go-outside-labs/blockchain-data-engineering)**
-* **[in-depth dune and sql analytics](https://mirror.xyz/steinkirch.eth/xriMcUpwvsrMZramD2G-Kp0UZINEshoELUPHoWQeEME)**
+
 
 #### external
 
