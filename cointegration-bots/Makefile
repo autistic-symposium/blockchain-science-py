@@ -1,4 +1,4 @@
-.PHONY: clean
+.PHONY: 
 clean:
 	@find . -iname '*.py[co]' -delete
 	@find . -iname '__pycache__' -delete
