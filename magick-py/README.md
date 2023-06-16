@@ -15,14 +15,20 @@
 <br>
 <br> 
 
+
 ----
 
-### Theoretical introduction 
-
-<br>
+### Intro to PIR
 
 **Private Information Retrieval** (PIR) refers to the ability to query a database without revealing which item is looked up or whether it exists. Among applications of interest are: law enforcement, health providers, banks, stock exchanges, and many others.
 
+In the simplest setup, we have a server that holds an embedded database, and we have a client that holds an index `i` between `1` and `n`. The client wants to privately read the `ith` database item by interacting with a server following a PIR protocol, *i.e.*, without letting the server learn anything about the index `i` that the client is reading.
+
+PIR schemes are generally divided into **single server schemes** and **multiple server schemes** (when you remove the trust of a subset of the servers). For now, we are working with a vanilla setup for a simple single server. This CLI tool sets successive small experiments diving into the moving pieces until a final PIR experiment, where the “database” is represented by a square matrix whose elements are under a modulo constant.
+
+<br>
+
+### Lattice-based Cryptography
 
 **Lattice-based cryptography** refers to a series of quantum-resistant cryptographic primitives that involve lattices, either in their construction or in the security proof.
 
@@ -30,12 +36,42 @@
 > 💡 *In group theory, a lattice in the R^n is an infinite set of points in this space in which coordinate-wise addition or subtraction of two points produces another point, so every point in the space is within some maximum distance of any lattice point. A lattice can also be described as a free abelian (commutative) group of dimension n, spanning the vector space R^n; or the symmetry group of a discrete translation symmetry in n directions.*
 
 
-In 2005, Oded Regev introduced the first lattice-based public-key encryption scheme, and the **learning with errors** (LWE) problem. Following this work, research has been done to improve Regev's security proof and the efficiency of the scheme, including Craig Gentry's 2009 first **fully homomorphic encryption scheme**.
+<br>
 
-> 💡 *Homomorphic encryption is a form of encryption with evaluation capability for computing over encrypted data without access to the secret key, *i.e.*, it supports arbitrary computation on ciphers. **Fully homomorphic encryption (FHE)** is the evaluation of arbitrary circuits of multiple types of (unbounded depth) gates.*
+### Fully Homomorphic Encryption
 
-The LWE problem can be thoughtof as a search in a *noisy modular set of equations* whose solutions can be very difficult to solve. In other others, given `m` samples of coefficients `(bi, ai)` in the linear equation `bi = <ai, s> + ei`, with error `ei` sampled from a small range `[-bound, bound]`, the problem is to find the secret key `s` is hard.
 
+
+To understand homomorphism, think of an example of a server that can `XOR` a client’s data. The client could send their cipher `c0`, obtained from their plaintext data `m0` and their key `k0`,
+
+```
+c = m0 ⌖ k0
+```
+
+**Homomorphism** comes from the fact that if a client sends two encrypted messages, say `c1` and `c2` (from messages `m0` and `m1`, respectively), the server can return `c1 ⌖ c2` so that the client can then retrieve `m0 ⌖ m1`.
+
+**Partially homomorphic encryption** is easily achieved as it can accept the possibility of not all the data being encrypted, or homomorphic through other operations (such as multiplication). **Fully homomorphic encryption (FHE)** is achieved when a server operates on encrypted data without seeing any content of the data (or if the data exists at all).
+
+In a **[quintessential paper in 2005](https://dl.acm.org/doi/10.1145/1060590.1060603)**, Oded Regev introduced the first lattice-based public-key encryption scheme, and the **learning with errors** (LWE) problem. 
+
+The LWE problem can be thought of as a search in a **noisy modular set of equations** whose solutions can be very difficult to solve. For instance, given `m` samples of coefficients `(bi, ai)` in the linear equation `bi = <ai, s> + ei`, with the error `ei` sampled from a small range `[-bound, bound]`, the problem of finding the secret key `s` is hard.
+
+In the last years, research has been done to improve Regev's security proof and the efficiency of the scheme, including Craig Gentry's 2009 **first fully homomorphic encryption scheme**.
+
+<br>
+
+> 💡 *In a more formal definition, homomorphic encryption is a form of encryption with evaluation capability for computing over encrypted data without access to the secret key, i.e., it supports arbitrary computation on ciphers. fully homomorphic encryption is the evaluation of arbitrary circuits of multiple types of (unbounded depth) gates.*
+
+<br>
+
+### Single-server setup with a square matrix representation
+
+The basic gist of these experiments is:
+
+  * a *single-server* database is represented by a square matrix `(m x m)`
+  * our query is represented by a vector filled by 0s, except at the asking row and column `(m x 1)`
+  * the server retrieves the queried item by looping over every column and multiplying their values to the value in the same row of the query vector. then, by adding up the values for each column in its own matrix. the result has the same dimension as the query vector (*i.e.*, we reduce the space to the column where the data is located).
+  * finally, privacy is guaranteed by adding fully homomorphic encryption with respect to addition to the setup (i.e. additive homomorphism).
 
 
 <br>
@@ -69,9 +105,10 @@ vim .env
 LWE parameters needed are:
 
 
-* size of msg vector `n` and `m`
-* message `mod` and `p`
-* sampling errors as the standard variation `sigma` of a Gaussian distribution with zero mean `sigma`, or a `bound` range for these sampling errors
+* size of msg vector, `m` and `n`
+* message’s modulo `mod` and `p`
+* a work around the sampling errors (*i.e.*, the standard variation sigma of a Gaussian distribution with zero mean sigma) by setting a bound range for them
+
 
 To pick adequate parameters, you can use tools such as a [lattice estimator](https://github.com/malb/lattice-estimator).
 
@@ -115,11 +152,11 @@ options:
 
 #### Simple linear encryption and decryption of a msg vector with a sampled error vector
 
-In this simple experiment of learning with error (LWE), we operate our message vector over a ring modulo `mod`, so some information is lost. This is not a problem since Gaussian elimination can be used to recover the original message vector (*i.e.*, it works over a ring modulo `mod`).
+In this simple experiment of learning with error (LWE), we operate our message vector over a ring modulo `mod`, so some information is lost. Luckily, Gussian elimination can still be used to recover the original message vector as it works over a ring modulo `mod`.
 
 The steps of this experiment are the following:
 
-1. Represent a message vector `m0` of size `m`, where each element has a modulus `mod`.
+1. Represent a message vector `m0` of size `m`, where each element has modulo `mod`.
 2. Encrypt this message with a simple `B = A * s + e + m0`, where `s` is the secret and `e` is the error vector.
 3. Set the ciphertext as the tuple `c = (B, A)`
 4. Decrypt `c = (B, A)` for a given `s`, such that `m1 = m0 + e`.
@@ -158,11 +195,11 @@ bound: [-4, 4]
 #### Secret key Regev encryption by scaling a message vector
 
 
-In this another simple example of learning with error (LWE), we lose information on the least significant bits by adding noise, *i.e.*, by scaling the message vector by `delta = mod / p` before adding it to encryption. Then, during the decryption, we scale the message vector by `1 / delta`. 
+In this another simple example of learning with error (LWE), we lose information on the least significant bits by adding noise, *i.e.*, by scaling the message vector by `delta = mod / p` before adding it to encryption. Then, during the decryption, we scale the message vector back by `1 / delta`. 
 
-The scaling ensures that m is in the highest bits of the message vector, without losing information by adding the error vector e.
+The scaling ensures that `m` is in the highest bits of the message vector, without losing information by adding the error vector `e`.
 
- Now, the message m0 vector has each element module p (not mod), where `p < q`. The scaled message is now `m0_scaled = m0 * delta = m0 * mod / p`. The cipertext `c` is `B = A * s + e + m0_scaled`, which can be decrypted as `c = (B, A)`, *i.e.*, `m0 = (B - A * s) / delta = (delta * m0 + e) / delta`.
+Consequently, the message `m0` vector has each element module `p` (not `mod`), where `p < q`. The scaled message is now `m0_scaled = m0 * delta = m0 * mod / p`. The cipertext `c` is `B = A * s + e + m0_scaled`, which can be decrypted as `c = (B, A)`, *i.e.*, `m0 = (B - A * s) / delta = (delta * m0 + e) / delta`.
 
 
 <br>  
@@ -238,9 +275,9 @@ bound: [-4, 4]
 
 #### Proving that the secret key Regev encryption scheme supports plaintext inner product
 
-This experiment shows that given a cipher `c` and a message vector `m0`, `c -> c1` can be transformed such that it also encrypts the inner product of `m0` and a plaintext vector `k` of size `m` and element modulo `p`.
+This experiment shows that given a cipher `c` and a message vector `m0`, `c -> c1` can be transformed such that it also encrypts the **inner product** of `m0` with a plaintext vector `k` of size `m` and element modulo `p`.
 
-Because of noise growth with the vector `k`, fine-tuning the initial parameters is crucial for the message to be successfully retrieved. More specifically, to guarantee correct decryption, the following must hold:
+Because of **noise growth** with the vector `k`, fine-tuning the initial parameters is crucial for the message to be successfully retrieved. More specifically, to guarantee correct decryption, the following must hold:
 
 ```
 k * e0 < mod / (2 * p)
@@ -307,11 +344,16 @@ bound: [-4, 4]
 <br>
 
 ----
+
 #### Run an intro tutorial on how PIR should work (without encryption)
 
-We define a database as a vector of `m` rows with each entry module `p`. In this experiment, we query a value at a specific row `r` and col `c` in plaintext, by creating a query vector of size `m` that is filled with 0, with the exception of the desired column index `c`.
+In this experiment, we get the first taste of how PIR works, but without encryption yet.
 
-We then show that computing the dot product of the database vector to the query vector will give a result vector with all rows in the column index `c`, where you can retrieve the row `r`.
+We define our server's database as a square vector of size `m x m` with each entry module `p`. 
+
+We query a value at a specific row `r` and col `c` in plaintext, by creating a query vector of size `m x `` that is filled with `0`, with the exception of the desired column index `c`.
+
+We then show that computing the **dot product** of the database vector to the query vector will give a result vector with all rows in the column index `c`, where you can retrieve the row `r`.
 
 ```
 magick -t
@@ -358,13 +400,13 @@ Vector: [237, 58, 40, 24, 351, 16, 454, 88, 461, 13, 318, 73, 260, 280, 196, 143
 
 #### Run a simple PIR experiment with secret key Regev encryption
 
-We are ready to run our first simple PIR experiment. Here, we build a query vector as in the previous experiment, but encrypt it using the secret key from the Regev encryption scheme.
+We are ready to run our first simple PIR experiment, where we build a query vector as in the previous experiment, but encrypt it using the secret key `s` from the Regev encryption scheme.
 
 
 ```
 magick -p
 
-✨ 1. We start creating a random message vector as a square m x m database with mod p
+✨ 1. We start by magicreating a random message vector as a square m x m database with mod p
 ✨ db: 
 Rows: 100
 Cols: 100
@@ -384,7 +426,7 @@ Cols: 1
 Vector: [312, 175, 328, 381, 687, 681, 136, 814, 785, 441, 867, 601, 857, 961, 404, 209, 2, 555, 648, 437, 589, 391, 592, 318, 340, 94, 460, 981, 359, 968, 941, 171, 346, 812, 402, 413, 697, 278, 534, 808, 616, 606, 273, 849, 857, 198, 221, 81, 720, 890, 213, 364, 481, 93, 219, 324, 657, 391, 860, 865, 663, 194, 660, 298, 1, 677, 346, 164, 509, 564, 854, 1, 295, 197, 811, 175, 874, 944, 140, 641, 417, 379, 569, 532, 229, 934, 914, 889, 287, 134, 14, 360, 377, 728, 223, 335, 272, 24, 293, 777]
 
 
-✨ 5. We scale the query vector by delta=mod/p and db vecto to 1/p
+✨ 5. We scale the query vector by delta=mod/p and db vector to 1/p
 ✨ scaled_query: 
 Rows: 100
 Cols: 1
@@ -446,17 +488,13 @@ Vector: [1, 1, 0, 1, 2, 0, 2, 0, 0, 1, 3, 1, 2, 3, 1, 3, 0, 1, 3, 1, 2, 3, 2, 2,
 
 ### What's next?
 
-Today we went over a quick introduction to how PIR works. There is a lot of work to be done and complex problems to be solved, and we do as we do everything else: humbly, diligently, one step at a time.
+There is a lot of work to be done and complex problems to be solved, and we do as we do everything else: humbly, diligently, one step at a time.
 
-<br>
+<p align="center">
+<img src="https://github.com/privacy-scaling-explorations/pir-research/assets/1130416/c80a7438-e4c1-4b74-b0aa-8016dcfd150d" width="60%" align="center"/>
+</p>
 
-![](https://github.com/privacy-scaling-explorations/pir-research/assets/1130416/68ff8e7b-4b37-4702-9bc5-3aa153472ea9)
 
-
-
-<br>
-
-◼️
 
 <br>
 
@@ -465,3 +503,8 @@ Today we went over a quick introduction to how PIR works. There is a lot of work
 ### Acknowledgment 
 
 We would like to thank **[Alexandra Henzinger](https://github.com/ahenzinger/simplepir)** and **[@Janmajayamall](https://github.com/Janmajayamall)** for the seeds of this project.
+
+<br>
+
+◼️
+
