@@ -4,8 +4,11 @@
 <br>
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/1130416/210285240-704036f1-0a9a-41d7-bca8-a98de0be63a1.png" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
+<img src="https://github.com/go-outside-labs/blockchain-science-py/assets/138340846/9d7ad936-2ddd-49a9-a8f0-3483099350e0" width="50%" align="center" style="padding:1px;border:1px solid black;"/>
  </p>
+
+
+
 
 
 <br>
