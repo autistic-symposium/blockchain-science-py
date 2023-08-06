@@ -15,7 +15,7 @@
 
 ----
 
-## go-outside-labs cryptography experiments
+## our cryptography experiments
 
 
 <br>
@@ -28,7 +28,7 @@
 
 -----
 
-## go-outside-labs trading bots
+## our trading bots
 
 
 <br>
@@ -42,7 +42,7 @@
 ----
 
 
-## go-outside-labs jupyter notebooks
+## our jupyter notebooks
 
 <br>
 
@@ -85,7 +85,7 @@
 
 ---
 
-## other resources
+## external resources
 
 <br>
 
