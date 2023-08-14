@@ -9,8 +9,10 @@
 <br>
 
 <p align="center">
-<img src="https://github.com/privacy-scaling-explorations/pir-research/assets/1130416/02669661-889e-4ffe-9992-1d7de5734527" width="70%" align="center"/>
+<img src="https://github.com/go-outside-labs/blockchain-science-py/assets/1130416/129266fe-78c0-4923-ba6a-748034ae4278" width="70%" align="center"/>
 </p>
+
+
 
 <br>
 <br> 
