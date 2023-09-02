@@ -15,7 +15,7 @@
 
 ----
 
-## our cryptography experiments
+## my cryptography experiments
 
 
 <br>
@@ -28,7 +28,7 @@
 
 -----
 
-## our trading bots
+## my trading bots
 
 
 <br>
@@ -42,7 +42,7 @@
 ----
 
 
-## our jupyter notebooks
+## my jupyter notebooks
 
 <br>
 
