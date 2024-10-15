@@ -1,7 +1,10 @@
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+poetry.lock
 
 # C extensions
 *.so
@@ -14,7 +17,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+lib/forge-std
 lib64/
 parts/
 sdist/
@@ -25,6 +28,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+lib/
 MANIFEST
 
 # PyInstaller
@@ -127,3 +131,15 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.env
+venv
+
+.DS_Store
+out
+cache
+!/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+docs/
